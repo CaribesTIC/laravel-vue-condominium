@@ -1,0 +1,54 @@
+version: "3.7"
+
+services:
+  condominium:
+    build: ./httpd/
+    container_name: phplaravel_condominium
+    ports:
+      - "8082:80"
+    environment:
+      VIRTUALHOST: ${VIRTUALHOST}
+    volumes:
+      - './httpd/php-laravel-condominium:/var/www/html'
+    networks:
+      - web_condominium
+      - postgresql_condominium
+    restart: always
+
+  pgsql:
+    container_name: postgresql_condominium
+    image: postgres:13
+    ports:
+      - '5434:5432'
+    environment:
+      PGPASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - './postgresql:/var/lib/postgresql/data'
+    networks:
+      - postgresql_condominium
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "condominium", "-U", "postgres"]
+    restart: always
+  
+  pgadmin:
+    container_name: pgadmin_condominium
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - './pgadmin:/root/.pgadmin'
+    ports:
+      - "8081:80"
+    networks:
+      - postgresql_condominium
+    restart: always
+
+networks:
+  web_condominium:
+    external: true
+  postgresql_condominium:
+    external: true

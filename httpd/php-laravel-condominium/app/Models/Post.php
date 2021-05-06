@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\PostsController;
+
+class Post extends Model
+{
+    use HasFactory;
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'body'
+    ];
+    
+    //protected $appends = [ 'links', ];
+    
+    /*public function getLinksAttribute()
+    {
+        //https://sebastiandedeyne.com/handling-routes-in-a-laravel-inertia-application/
+    }*/
+    
+}
