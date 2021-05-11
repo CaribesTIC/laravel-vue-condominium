@@ -4,7 +4,7 @@
 /httpd/php-laravel-condominium/yarn-error.log
 /httpd/php-laravel-condominium/storage/*.key
 /httpd/php-laravel-condominium/.env
-/httpd/php-laravel-condominium/.phpunit.result.cach
+/httpd/php-laravel-condominium/.phpunit.result.cache
 /postgresql/
 /pgadmin/
 /backups/
