@@ -4,11 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-use App\Models\MenuTrait;
-
 class Menu extends Model
 {
-    use HasFactory, MenuTrait;
+    use HasFactory;
     
     protected $hidden = [ 'created_at', 'updated_at' ];
     

@@ -8,7 +8,7 @@ use Laravel\Jetstream\Features;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class MenuTest extends TestCase
+class MenuListTest extends TestCase
 {
     use RefreshDatabase;
 
