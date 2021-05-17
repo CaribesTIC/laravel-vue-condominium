@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Session;
-use App\Models\Menu;
+use App\Repositories\Menu\RecursiveMenuRepository;
 
 class MenuMiddleware
 {
@@ -18,7 +18,7 @@ class MenuMiddleware
     public function handle($request, Closure $next)
     {
         if (auth()->check() && !Session::has('menus'))
-            Session::put('menus', Menu::recursive());
+            Session::put('menus', RecursiveMenuRepository::recursive());
 
         return $next($request);
     }
