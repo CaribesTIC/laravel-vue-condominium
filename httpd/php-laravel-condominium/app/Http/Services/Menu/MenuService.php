@@ -16,10 +16,17 @@ class MenuService
    * @return \Inertia\Response
    */
   static public function execute(): \Inertia\Response
-  {        
-      $menus = \App\Paginate::get( ListMenuRepository::list( RecursiveMenuRepository::recursive() ));
+  {
+      $menus = \App\Paginate::get(
+          ListMenuRepository::list(
+              RecursiveMenuRepository::recursive()
+          )
+      );
       
-      return \Inertia\Inertia::render('Menus/Index', compact('menus'));
+      return \Inertia\Inertia::render(
+        'Menus/Index',
+        compact('menus')
+      );
   }
 
 }
