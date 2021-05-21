@@ -24,11 +24,12 @@ To install this project, follow these steps once the project is cloned and insid
 
 Linux:
 
-- create docker-compose's .env file copy .env.example to .env
-- run "docker network create web_condominium"
-- run "docker network create postgresql_condominium"
-- run "docker compose up -d"
-- change permission to exectute and run "./script.sh"
+- Create docker-compose's .env file from .env.example `cp .env.example .env`
+- Run `docker network create web_condominium`
+- Run `docker network create postgresql_condominium`
+- Run `docker-compose up -d`
+- Change permission to exectute script.sh file `sudo chmod +x script.sh`
+- Run `./script.sh`
 
 ## Contributing to laravel-vue-condominium
 
@@ -52,7 +53,7 @@ Thanks to the following people who have contributed to this project:
 
 ## Contact
 
-If you want to contact me you can reach me at <your_email@address.com>.
+If you want to contact me you can reach me at <email@address.com>.
 
 ## License
 
