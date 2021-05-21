@@ -16,7 +16,7 @@ It is a software development project that seeks to consolidate a technological t
 
 Before you begin, ensure you have met the following requirements:
 
-- You have a `Linux machine with Docker installed
+- You have a `Linux machine with Docker installed`
 
 ## Installing laravel-vue-condominium
 
