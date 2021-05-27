@@ -28,15 +28,6 @@ docker exec -w /var/www/html phplaravel_condominium php artisan storage:link
 
 docker exec -w /var/www/html phplaravel_condominium php artisan optimize
 
-HAS_VIRTUALHOST=$(cat /etc/hosts | grep "0.0.0.0    $VIRTUALHOST    www.$VIRTUALHOST" | wc -w)
-
-if [[ $HAS_VIRTUALHOST == "0" ]]
-then
-    echo "Adding an entry to the hosts file requires root privilege (administrator)"
-
-    su -c "echo \"0.0.0.0    $VIRTUALHOST    www.$VIRTUALHOST\" >> /etc/hosts"
-fi
-
 docker exec -w /var/www/html phplaravel_condominium npm run dev
 
 echo "Script execution completed successfully"
