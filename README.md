@@ -1,8 +1,8 @@
 # Condominium Administration System
 
 ### laravel-vue-condominium
-<img src="https://laravel.com/img/logomark.min.svg" width="100" height="100"/><img src="https://vuejs.org/images/logo.svg" width="100" height="100"/>
 
+<img src="https://laravel.com/img/logomark.min.svg" width="100" height="100"/><img src="https://vuejs.org/images/logo.svg" width="100" height="100"/>
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/CaribesTIC/laravel-vue-condominium)
 ![GitHub contributors](https://img.shields.io/github/contributors/CaribesTIC/laravel-vue-condominium)
@@ -30,6 +30,7 @@ Linux:
 - Run `docker-compose up -d`
 - Change permission to exectute script.sh file `sudo chmod +x script.sh`
 - Run `./script.sh`
+- Create an alias in the `/etc/hosts` file for the location set in the `VIRTUALHOST`s variable of your web server
 
 ## Contributing to laravel-vue-condominium
 
