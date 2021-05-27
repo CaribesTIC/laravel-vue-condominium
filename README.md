@@ -30,7 +30,7 @@ Linux:
 - Run `docker-compose up -d`
 - Change permission to exectute script.sh file `sudo chmod +x script.sh`
 - Run `./script.sh`
-- Create an alias in the `/etc/hosts` file for the location set in the `VIRTUALHOST`s variable of your web server
+- Create an alias in the `/etc/hosts` file for the location set in the VIRTUALHOST environment variable of your web server
 
 ## Contributing to laravel-vue-condominium
 
