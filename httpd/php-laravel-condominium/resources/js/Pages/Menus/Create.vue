@@ -15,20 +15,15 @@
 
           <table style="width: 100%" id="main">                
             <tr>
-              <th colspan="">Crear nueva opción del menú</th>
-              <th colspan="">
-                <button type="button" class="close" data-dismiss="modal">
-                  <span>&times;</span>
-                </button>
-              </th>
+              <th colspan="2" class="bg-gray-200 text-center font-bold py-2">Crear nueva opción del menú</th>
             </tr>
             <tr>
               <td colspan="2">
                 <table id="id_table_padre" style="width: 100%">                       
                   <tr v-for="(selTex, index) in selTexs">
-                    <td width="50%">{{ selTex.title }}</td>
-                    <td>( nivel {{ selTex.nivel }} )</td>
-                    <td>
+                    <td width="50%" class="bg-gray-100 py-2">{{ selTex.title }}</td>
+                    <td class="bg-gray-100 py-2">( nivel {{ selTex.nivel }} )</td>
+                    <td class="bg-gray-100 py-2">
                       <span 
                         v-if="index==selTexs.length-1"
                         title="Retroceder un paso"
@@ -37,7 +32,7 @@
                         @click="stepBackward(selTex.id)">&lt;</span>
                       <span v-else >&nbsp;</span>
                     </td>
-                    <td>                                   
+                    <td class="bg-gray-100 py-2">                                   
                       <span
                         v-if="index==selTexs.length-1 && index!=0"
                         title="Retroceder todos los pasos"
@@ -51,8 +46,8 @@
               </td>                   
             </tr>
             <tr style="display:{DISPLAY}">
-              <td id="id_td_seleccion" width="50%">Selección (nivel {{ nivel }})</td>
-              <td>
+              <td id="id_td_seleccion" width="50%" class="bg-gray-100 py-2">Selección (nivel {{ nivel }})</td>
+              <td class="bg-gray-100 py-2">
                 <select
                   style="width: 100%;cursor:pointer;"
                   title="Seleccione una opción"
@@ -130,6 +125,7 @@
           <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <button
               @click="submit"
+              :disabled="isDisabled"
               class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
               Create
             </button>
@@ -159,6 +155,7 @@ export default {
       selVal : 0,
       selTexs : [],
       nivel: 0,
+      isDisabled: false,
       form: {
         title: '',
         menu_id: 0,
@@ -187,6 +184,7 @@ export default {
       });
     },   
     stepFrontward: function (menuId = 0, step = true ) {
+      menuId= !menuId ? 0 : menuId;      
       Service.Menu.children(menuId).then(response => {
         if (step) {
           if (this.selVal) {                    
@@ -212,10 +210,14 @@ export default {
       this.stepFrontward(0);
     },
     submit() {
+      this.isDisabled = true;
       this.form._method = 'POST';           
       this.$inertia.post(this.route('menus.store'), this.form, {         
         onStart: () => this.sending = true,
-        onFinish: () => this.sending = false,
+        onFinish: () => {
+            this.sending = false;
+            this.isDisabled = false;
+        },
         onSuccess: () => {
           if (Object.keys(this.$page.props.errors).length === 0) {
             this.$emit('closeModal0');

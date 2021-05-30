@@ -18,8 +18,9 @@ class CreateMenusTable extends Migration
             $table->string('title');
             $table->string('path');
             $table->integer('sort');
-            $table->unsignedBigInteger('menu_id')->nullable();
+            $table->unsignedBigInteger('menu_id')->nullable();            
             $table->foreign('menu_id')->references('id')->on('menus');
+            $table->unique(['title', 'menu_id']);
             $table->timestamps();
         });
     }
