@@ -18,13 +18,13 @@
             </div>
 
             <div class="mt-4">
-                <jet-label for="password_confirmation" value="Confirm Password" />
+                <jet-label for="password_confirmation" value="Confirma tu Password" />
                 <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
+                <jet-button class="btn btn-primary" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Guardar
                 </jet-button>
             </div>
         </form>

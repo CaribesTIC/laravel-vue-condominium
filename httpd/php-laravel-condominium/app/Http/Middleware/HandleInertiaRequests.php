@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Session;
+use App\GeneralSettings;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -14,7 +14,7 @@ class HandleInertiaRequests extends Middleware
      * @see https://inertiajs.com/server-side-setup#root-template
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = "app";
 
     /**
      * Determines the current asset version.
@@ -27,7 +27,7 @@ class HandleInertiaRequests extends Middleware
     {
         return parent::version($request);
     }
- 
+
     /**
      * Defines the props that are shared by default.
      *
@@ -35,48 +35,19 @@ class HandleInertiaRequests extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
     public function share(Request $request)
-    {       
-        /*return array_merge(parent::share($request), [
-            'flash' => [
-                'message' => fn () => $request->session()->get('message')
-            ],
-        ]);*/        
-        
+    {
+        $settings = new GeneralSettings();
         return array_merge(parent::share($request), [
-            'menu' => function () use ($request) {                
-                return [
-                    'data' => $request->session()->get('menus')
-                ];                
-            },
-            'auth' => function () use ($request) {
-                return [
-                    'user' => $request->user() ? [
-                        'id' => $request->user()->id,
-                        'first_name' => $request->user()->name, //$request->user()->first_name,
-                        'last_name' => $request->user()->name, //$request->user()->last_name,
-                        'email' => $request->user()->email,
-                        'role' => $request->user()->role,
-                        
-                        'account' => [
-                            'id' => 1,
-                            'name' => 'Account Name',
-                        ], 
-                        
-                       // 'account' => [
-                       //     'id' => $request->user()->account->id,
-                       //     'name' => $request->user()->account->name,
-                       // ],
-                    ] : null,
-                ];
-            },
-            'flash' => function () use ($request) {
-                return [
-                    'success' => $request->session()->get('success'),
-                    'error' => $request->session()->get('error'),
-                ];
-            },
-        ]);        
+            "flash" => fn() => [
+                "success" => $request->session()->get("success"),
+                "error" => $request->session()->get("error"),
+            ],
+            "settings" => fn() => [
+                "footer_message" => $settings->footer_message,
+            ],
+            "username" => $request->user() ? $request->user()->name : "",
+        ]);
     }
-    
 }

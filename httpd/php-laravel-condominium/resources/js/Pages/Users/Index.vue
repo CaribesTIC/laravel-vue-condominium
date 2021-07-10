@@ -1,123 +1,122 @@
 <template>
-  <div>      
-    <page-header>Usuarios</page-header>
-    <div class="py-2">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-        
-          <div class="mb-6 flex justify-between items-center">
-            <search-filter v-model="form.search" class="w-full max-w-md mr-4" @reset="reset">
-              <label class="block text-gray-700">Role:</label>
-              <select v-model="form.role" class="mt-1 w-full form-select">
-                <option :value="null" />
-                <option value="user">User</option>
-                <option value="owner">Owner</option>
-              </select>
-              <label class="mt-4 block text-gray-700">Trashed:</label>
-              <select v-model="form.trashed" class="mt-1 w-full form-select">
-                <option :value="null" />
-                <option value="with">With Trashed</option>
-                <option value="only">Only Trashed</option>
-              </select>
-            </search-filter>
-            <inertia-link
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3"
-              :href="route('users.create')">
-                <span>Crear</span>
-                <span class="hidden md:inline">Usuario</span>
-            </inertia-link>
+  <div>
+    <page-header> Usuarios </page-header>
+
+    <div class="flex space-x-2">
+      <inertia-link class="btn btn-primary" :href="route('users.create')">
+        <span>Crear</span>
+      </inertia-link>
+    </div>
+
+    <div class="overflow-hidden panel mt-6">
+      <div class="mb-6 flex justify-between items-center">
+        <div class="flex items-center">
+          <div class="flex w-full bg-white shadow rounded">
+            <!-- Note: can't use v-model here, because search is a prop. -->
+            <!-- Also, setSearch is debounced 300ms -->
+            <input
+              class=""
+              type="text"
+              :value="search"
+              @input="setSearch"
+              placeholder="Filtrar…"
+            />
           </div>
-          <div class="bg-white rounded shadow overflow-x-auto">      
-            <table class="table-fixed w-full whitespace-no-wrap">
-              <thead>
-                <tr class="bg-gray-200 text-left font-bold">
-                <th class="px-6 pt-6 pb-4">Nombre</th>
-                <th class="px-6 pt-6 pb-4">Correo</th>
-                <th class="px-6 pt-6 pb-4" colspan="2">Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
-                <td class="border-t">
-                  <inertia-link class="px-6 py-4 flex items-center focus:text-indigo-500" :href="route('users.edit', user.id)">
-                    <img v-if="user.photo" class="block w-5 h-5 rounded-full mr-2 -my-2" :src="user.photo">
-                    {{ user.name }}
-                    <icon v-if="user.deleted_at" name="trash" class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2" />
-                  </inertia-link>
-                </td>
-                <td class="border-t">
-                  <inertia-link class="px-6 py-4 flex items-center" :href="route('users.edit', user.id)" tabindex="-1">
-                    {{ user.email }}
-                  </inertia-link>
-                </td>
-                <td class="border-t">
-                  <inertia-link class="px-6 py-4 flex items-center" :href="route('users.edit', user.id)" tabindex="-1">
-                    {{ user.owner==1 ? 'Owner' : 'User' }}
-                  </inertia-link>
-                </td>
-                <td class="border-t w-px">
-                  <inertia-link class="px-4 flex items-center" :href="route('users.edit', user.id)" tabindex="-1">
-                    <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-                  </inertia-link>
-                </td>
-              </tr>
-              <tr v-if="users.length === 0">
-                <td class="border-t px-6 py-4" colspan="4">Usuarios no encontrados.</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
+      <div class="table-data__wrapper">
+        <table class="table-data">
+          <thead>
+            <tr class="">
+              <th class="">
+                <a href="#" @click.prevent="setSort('name')">Nombre</a>
+              </th>
+              <th class="">
+                <a href="#" @click.prevent="setSort('email')">Correo</a>
+              </th>
+              <th class="">
+                <a href="#" @click.prevent="setSort('role')">Role</a>
+              </th>
+              <th class="">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="user in rows.data" :key="user.id" class="">
+              <td class="">
+                <inertia-link
+                  class="text-indigo-600 hover:text-indigo-800 underline"
+                  :href="route('users.show', user.id)"
+                  tabindex="-1"
+                >             
+                  {{ user.name }}
+                </inertia-link>
+              </td>
+              <td class="">
+                {{ user.email }}
+              </td>
+              <td class="">
+                {{ user.role }}
+              </td>
+              <td class="">
+                <div class="flex items-center space-x-1">
+                
+                  <inertia-link
+                    :href="route('users.show', user.id)"
+                    tabindex="-1"
+                  >
+                    <button class="btn btn-success btn-xs">Mostrar</button>
+                  </inertia-link>
+                  
+                  <inertia-link
+                    :href="route('users.edit', user.id)"
+                    tabindex="-1"
+                  >
+                    <button class="btn btn-primary btn-xs">Editar</button>
+                  </inertia-link>
+                  
+                  <button
+                    @click="deleteRow(user.id)"
+                    class="btn btn-danger btn-xs"
+                  >
+                    Eliminar
+                  </button>
+                  
+                </div>
+              </td>
+            </tr>
+            <tr v-if="rows.length === 0">
+              <td class="" colspan="4">Usuarios no encontrados.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <Pagination :links="rows.links" />
     </div>
-  </div>
   </div>
 </template>
 
 <script>
-import Icon from '@/Shared/Icon'
-import Layout from '@/Shared/Layout'
-import mapValues from 'lodash/mapValues'
-import pickBy from 'lodash/pickBy'
-import PageHeader from '@/Shared/PageHeader'
-import SearchFilter from '@/Shared/SearchFilter'
-import throttle from 'lodash/throttle'
-import FlashMessages from '@/Shared/FlashMessages'
+import { defineComponent } from "vue";
+import { Inertia } from "@inertiajs/inertia";
+import Layout from "@/Layouts/AppLayout";
+import PageHeader from "@/Shared/PageHeader";
+import Pagination from "@/Shared/Pagination";
+import { useSearch, useDeleteRow } from "@/hooks/useTableGrid";
 
-export default {
-  metaInfo: { title: 'Users' },
+export default defineComponent({
+  metaInfo: { title: "Users" },
+  name: "Users",
   layout: Layout,
   components: {
-    Icon,
-    SearchFilter,
-    FlashMessages,
-    PageHeader
+    PageHeader,
+    Pagination,
   },
-  props: {
-    users: Array,
-    filters: Object,
-  },
-  data() {
+  props: ["rows", "errors", "search", "sort", "direction"],
+  setup(props) {
     return {
-      form: {
-        search: this.filters.search,
-        role: this.filters.role,
-        trashed: this.filters.trashed,
-      },
-    }
+      ...useDeleteRow("users.destroy"),
+      ...useSearch(props, "users"),
+    };
   },
-  watch: {
-    form: {
-      handler: throttle(function() {
-        let query = pickBy(this.form)
-        this.$inertia.replace(this.route('users.index', Object.keys(query).length ? query : { remember: 'forget' }))
-      }, 150),
-      deep: true,
-    },
-  },
-  methods: {
-    reset() {
-      this.form = mapValues(this.form, () => null)
-    },
-  },
-}
+});
 </script>

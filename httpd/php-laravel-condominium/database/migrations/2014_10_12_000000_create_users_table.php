@@ -21,10 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->integer('owner')->default(2);
-            $table->text('profile_photo_path')->nullable();
+            $table->string('role')->default('user');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,9 +33,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-        Schema::dropIfExists('users');        
+        Schema::dropIfExists('users');
     }
 }

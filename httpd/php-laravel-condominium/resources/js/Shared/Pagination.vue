@@ -20,7 +20,7 @@ export default {
     links: Array,
   },
   mounted() {
-    console.log(this.links);
+    //console.log(this.links);
   }
 }
 </script>

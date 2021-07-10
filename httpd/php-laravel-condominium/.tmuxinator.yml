@@ -1,0 +1,21 @@
+# run: tmuxinator start -p .tmuxinator.yml
+name: quimiapan
+
+# Runs on project start, always
+on_project_start: docker-compose up -d
+
+windows:
+  - server:
+      layout: tiled # even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled
+      panes: 
+        - pane1:
+          - composer install
+          - php artisan key:generate
+          - php artisan storage:link
+          - php artisan serve
+        - pane2:
+          - npm install
+          - open http://localhost:8025 # mailhog
+          - open http://localhost:8000 # app
+          - npm run watch
+  - editor: $EDITOR

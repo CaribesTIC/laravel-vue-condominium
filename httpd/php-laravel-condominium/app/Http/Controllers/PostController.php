@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
- 
+
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Post;
-use Illuminate\Support\Facades\Validator;
+
 
 class PostController extends Controller
 {
@@ -13,10 +15,40 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function index()
-    {    
-        $data = Post::all();
-        return Inertia::render('posts', ['data' => $data]);
+    public function index(Request $request)
+    {
+        
+        /* Initialize query */
+        $query = Post::query();
+
+        /* search */
+        $search = $request->input("search");
+        if ($search) {
+            $query
+                ->where("title", "like", "%$search%")
+                ->orWhere("body", "like", "%$search%");
+        }
+
+        /* sort */
+        $sort = $request->input("sort");
+        $direction = $request->input("direction") == "desc" ? "desc" : "asc";
+        if ($sort) {
+            $query->orderBy($sort, $direction);
+        }
+
+        /* get paginated results */
+        $posts = $query
+            ->paginate(config("query-builder.pag_num"))
+            ->appends(request()->query());
+
+        return Inertia::render("Posts/Index", [
+            "rows" => $posts,
+            "sort" => $request->query("sort"),
+            "direction" => $request->query("direction"),
+            "search" => $request->query("search"),
+        ]);
+        
+        
     }
 
     /**
@@ -27,14 +59,15 @@ class PostController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'title' => ['required'],
-            'body' => ['required'],
+            "title" => ["required"],
+            "body" => ["required"],
         ])->validate();
 
         Post::create($request->all());
 
-        return redirect()->back()
-                    ->with('message', 'Post Created Successfully.');
+        return redirect()
+            ->back()
+            ->with("success", "Publicación creada.");
     }
 
     /**
@@ -45,14 +78,15 @@ class PostController extends Controller
     public function update(Request $request)
     {
         Validator::make($request->all(), [
-            'title' => ['required'],
-            'body' => ['required'],
+            "title" => ["required"],
+            "body" => ["required"],
         ])->validate();
 
-        if ($request->has('id')) {
-            Post::find($request->input('id'))->update($request->all());
-            return redirect()->back()
-                    ->with('message', 'Post Updated Successfully.');
+        if ($request->has("id")) {
+            Post::find($request->input("id"))->update($request->all());
+            return redirect()
+                ->back()
+                ->with("success", "Publicación Actualizada.");
         }
     }
 
@@ -63,8 +97,8 @@ class PostController extends Controller
      */
     public function destroy(Request $request)
     {
-        if ($request->has('id')) {
-            Post::find($request->input('id'))->delete();
+        if ($request->has("id")) {
+            Post::find($request->input("id"))->delete();
             return redirect()->back();
         }
     }

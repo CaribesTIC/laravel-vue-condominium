@@ -1,15 +1,13 @@
 <template>
-  <div class="bg-white shadow mb-2">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+  <div class="bg-gray200 mb-1">
+    <div class="py-4">
+      <h1 class="font-bold text-2xl text-gray-800">
         <slot></slot>
-      </h2>
+      </h1>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>

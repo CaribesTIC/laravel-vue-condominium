@@ -19,11 +19,4 @@ class Post extends Model
         'title', 'body'
     ];
     
-    //protected $appends = [ 'links', ];
-    
-    /*public function getLinksAttribute()
-    {
-        //https://sebastiandedeyne.com/handling-routes-in-a-laravel-inertia-application/
-    }*/
-    
 }
