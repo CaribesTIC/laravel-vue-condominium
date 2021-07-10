@@ -115,5 +115,35 @@ class ZonesModuleTest extends TestCase
                      ->has("zone")
                  );
     }
+    
+    public function test_it_updates_a_record()
+    {
+        $this->actingAs(self::_userAdmin());
+
+        $zone = Zone::factory()->create(["name"=>"Land"]);
+        $this->from("/zones/{$zone->id}/edit")
+             ->put("/zones/{$zone->id}",[
+                 "name" => "Parcel"
+            ])->assertRedirect(route("zones.index"));
+        
+        $this->assertEquals($zone->fresh()->name, "Parcel");        
+    }
+
+    public function test_field_is_required_when_update_record()
+    {   
+        $this->actingAs(self::_userAdmin());
+
+        $zone = Zone::factory()->create(["name"=>"Land"]);
+        $this->from("/zones/{$zone->id}/edit")
+             ->post("/zones/",[
+                'name' => null
+            ])
+            ->assertRedirect(route("zones.edit", $zone->id))
+            ->assertStatus(302);
+            
+         $errors = session('errors');            
+         $this->assertEquals($errors->get('name')[0],"El campo Nombre es obligatorio.");
+         $this->assertEquals($zone->fresh()->name, "Land");       
+    }
 
 }

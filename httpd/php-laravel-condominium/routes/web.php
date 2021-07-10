@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\{
@@ -11,7 +10,8 @@ use App\Http\Controllers\{
   PostController,
   TaskController,
   UserController,  
-  ZoneController
+  ZoneController,
+  SearchController,
 };
 
 /*
@@ -105,5 +105,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/{zone}', [ZoneController::class, 'update'])->name('zones.update');
         Route::delete('/{zone}', [ZoneController::class, 'destroy'])->name('zones.destroy');
     });
+
+    Route::get('search', SearchController::class)->name('search');
     
 });

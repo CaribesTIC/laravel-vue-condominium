@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\GeneralSettings;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request, GeneralSettings $settings)
     {
         
         /* Initialize query */
@@ -38,7 +39,7 @@ class PostController extends Controller
 
         /* get paginated results */
         $posts = $query
-            ->paginate(config("query-builder.pag_num"))
+            ->paginate($settings->default_pagination)
             ->appends(request()->query());
 
         return Inertia::render("Posts/Index", [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\GeneralSettings;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, GeneralSettings $settings)
     {
         /* Initialize query */
         $query = User::query();
@@ -18,9 +19,11 @@ class UserController extends Controller
         /* search */
         $search = $request->input("search");
         if ($search) {
-            $query
-                ->where("name", "like", "%$search%")
-                ->orWhere("email", "like", "%$search%");
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where("name", "like", "%$search%")
+                    ->orWhere("email", "like", "%$search%");
+            });
         }
 
         /* sort */
@@ -32,7 +35,7 @@ class UserController extends Controller
 
         /* get paginated results */
         $users = $query
-            ->paginate(config("query-builder.pag_num"))
+            ->paginate($settings->default_pagination)
             ->appends(request()->query());
 
         return Inertia::render("Users/Index", [
@@ -73,17 +76,16 @@ class UserController extends Controller
             ->with("success", "Usuario creado.");
     }
 
-
     public function show(User $user)
-    {        
-        return Inertia::render("Users/Show", [            
-            "user" => $user->only(["name", "email", "role"])
+    {
+        return Inertia::render("Users/Show", [
+            "user" => $user->only(["name", "email", "role"]),
         ]);
     }
-    
+
     public function edit(User $user)
-    {        
-        return Inertia::render("Users/Edit", [            
+    {
+        return Inertia::render("Users/Edit", [
             "user" => $user->only(["id", "name", "email", "role"]),
             "roles" => config("roles.types"),
         ]);
@@ -117,12 +119,13 @@ class UserController extends Controller
             ->route("users.index")
             ->with("success", "Usuario actualizado.");
     }
-    
+
     public function destroy(User $user)
     {
         $user->delete();
 
-        return redirect()->route("users.index")->with("success", "Usuario eliminado.");        
+        return redirect()
+            ->route("users.index")
+            ->with("success", "Usuario eliminado.");
     }
 }
-

@@ -27,7 +27,7 @@ class JournalFactory extends Factory
     public function definition()
     {
         return [
-            'date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+            'date' => $this->faker->dateTimeBetween($startDate = '-6 months', $endDate = 'now'),
             'user_id' => $this->faker->randomElement(User::all()->pluck('id')->toArray()),
             'task_id' => $this->faker->randomElement(Task::all()->pluck('id')->toArray()),
             'zone_id' => $this->faker->randomElement(Zone::all()->pluck('id')->toArray()),

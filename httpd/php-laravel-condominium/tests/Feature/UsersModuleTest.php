@@ -185,7 +185,7 @@ class UsersModuleTest extends TestCase
             $this->assertEquals(1, User::count());        
     }
     
-    public function test_it_load_the_edit_user_page()
+    public function test_it_load_the_edit_page()
     {
         $this->actingAs(self::_userAdmin());
  
@@ -205,7 +205,7 @@ class UsersModuleTest extends TestCase
                  );            
     }
     
-    public function test_it_updates_a_user()
+    public function test_it_updates_a_record()
     {
         $this->actingAs(self::_userAdmin());
 

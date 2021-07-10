@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\GeneralSettings;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, GeneralSettings $settings)
     {
-        
         /* Initialize query */
         $query = Category::query();
-        
+
         /* search */
         $search = $request->input("search");
         if ($search) {
-            $query->where("name", "like", "%$search%");
+            $query->where(function ($query) use ($search) {
+                $query->where("name", "like", "%$search%");
+            });
         }
 
         /* sort */
@@ -29,7 +31,7 @@ class CategoryController extends Controller
 
         /* get paginated results */
         $categories = $query
-            ->paginate(config("query-builder.pag_num"))
+            ->paginate($settings->default_pagination)
             ->appends(request()->query());
 
         return Inertia::render("Categories/Index", [
@@ -38,20 +40,18 @@ class CategoryController extends Controller
             "direction" => $request->query("direction"),
             "search" => $request->query("search"),
         ]);
-        
-        
     }
-    
+
     public function create()
     {
         return Inertia::render("Categories/Create");
     }
-    
-    public function store(Request $request)
-    {      
-        $data = $request->validate([ "name" => ["required", "max:50"] ]);
 
-        Category::create([ "name" => $data["name"] ]);
+    public function store(Request $request)
+    {
+        $data = $request->validate(["name" => ["required", "max:50"]]);
+
+        Category::create(["name" => $data["name"]]);
 
         return redirect()
             ->route("categories.index")
@@ -59,23 +59,23 @@ class CategoryController extends Controller
     }
 
     public function show(Category $category)
-    {        
-        return Inertia::render("Categories/Show", [            
-            "category" => $category->only(["name", "tasks"])
+    {
+        return Inertia::render("Categories/Show", [
+            "category" => $category->only(["name", "tasks"]),
         ]);
     }
-    
+
     public function edit(Category $category)
-    {    
-        return Inertia::render("Categories/Edit", [            
-            "category" => $category->only(["id", "name", "tasks"])
+    {
+        return Inertia::render("Categories/Edit", [
+            "category" => $category->only(["id", "name", "tasks"]),
         ]);
     }
-    
+
     public function update(Category $category, Request $request)
     {
         $data = $request->validate([
-            "name" => ["required", "max:50"]
+            "name" => ["required", "max:50"],
         ]);
 
         $category->update($data);
@@ -84,22 +84,19 @@ class CategoryController extends Controller
             ->route("categories.index")
             ->with("success", "Categoría actualizada.");
     }
-    
+
     public function destroy(Category $category)
     {
-        
-        if ($category->tasks()->count()) {            
+        if ($category->tasks()->count()) {
             return redirect()
                 ->route("categories.index")
                 ->with("error", "Esta categoría tiene tareas.");
         }
-    
+
         $category->delete();
 
         return redirect()
             ->route("categories.index")
             ->with("success", "Categoría eliminada.");
     }
-    
 }
-

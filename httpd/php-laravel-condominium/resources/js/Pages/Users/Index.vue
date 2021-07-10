@@ -47,7 +47,7 @@
                   class="text-indigo-600 hover:text-indigo-800 underline"
                   :href="route('users.show', user.id)"
                   tabindex="-1"
-                >             
+                >
                   {{ user.name }}
                 </inertia-link>
               </td>
@@ -59,28 +59,26 @@
               </td>
               <td class="">
                 <div class="flex items-center space-x-1">
-                
                   <inertia-link
                     :href="route('users.show', user.id)"
                     tabindex="-1"
                   >
                     <button class="btn btn-success btn-xs">Mostrar</button>
                   </inertia-link>
-                  
+
                   <inertia-link
                     :href="route('users.edit', user.id)"
                     tabindex="-1"
                   >
                     <button class="btn btn-primary btn-xs">Editar</button>
                   </inertia-link>
-                  
+
                   <button
                     @click="deleteRow(user.id)"
                     class="btn btn-danger btn-xs"
                   >
                     Eliminar
                   </button>
-                  
                 </div>
               </td>
             </tr>
@@ -101,7 +99,7 @@ import { Inertia } from "@inertiajs/inertia";
 import Layout from "@/Layouts/AppLayout";
 import PageHeader from "@/Shared/PageHeader";
 import Pagination from "@/Shared/Pagination";
-import { useSearch, useDeleteRow } from "@/hooks/useTableGrid";
+import { useSearch } from "@/hooks/useTableGrid";
 
 export default defineComponent({
   metaInfo: { title: "Users" },
@@ -113,9 +111,29 @@ export default defineComponent({
   },
   props: ["rows", "errors", "search", "sort", "direction"],
   setup(props) {
+    const load = (newParams) => {
+      // mix defaults and new parameters
+      const params = {
+        search: props.search || "",
+        sort: props.sort || "",
+        direction: props.direction || "",
+        ...newParams,
+      };
+      // convert obj into url
+      const urlQuery = new URLSearchParams(params).toString();
+      Inertia.get(`/users?${urlQuery}`, [], {
+        preserveState: true,
+      });
+    };
+    const deleteRow = (rowId) => {
+      if (confirm("¿Estás seguro de que quieres eliminar?")) {
+        Inertia.delete(route("users.destroy", rowId));
+      }
+    };
+
     return {
-      ...useDeleteRow("users.destroy"),
-      ...useSearch(props, "users"),
+      deleteRow,
+      ...useSearch(props, load),
     };
   },
 });

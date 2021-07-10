@@ -115,5 +115,35 @@ class CategoriesModuleTest extends TestCase
                      ->has("category")
                  );
     }
+    
+    public function test_it_updates_a_record()
+    {
+        $this->actingAs(self::_userAdmin());
+
+        $category = Category::factory()->create(["name"=>"Principal"]);
+        $this->from("/categories/{$category->id}/edit")
+             ->put("/categories/{$category->id}",[
+                 "name" => "Secondary"
+            ])->assertRedirect(route("categories.index"));
+        
+        $this->assertEquals($category->fresh()->name, "Secondary");        
+   }
+
+    public function test_field_is_required_when_update_record()
+    {   
+        $this->actingAs(self::_userAdmin());
+
+        $category = Category::factory()->create(["name"=>"Principal"]);
+        $this->from("/categories/{$category->id}/edit")
+             ->post("/categories/",[
+                'name' => null
+            ])
+            ->assertRedirect(route("categories.edit", $category->id))
+            ->assertStatus(302);
+            
+         $errors = session('errors');            
+         $this->assertEquals($errors->get('name')[0],"El campo Nombre es obligatorio.");
+         $this->assertEquals($category->fresh()->name, "Principal");       
+    }
 
 }

@@ -1,65 +1,35 @@
-import { toRefs } from "vue";
-import { Inertia } from "@inertiajs/inertia";
+export function useSearch(props, load) {
 
-export function useDeleteRow(routeName) {
+  // search
+  let searchDebounceTimer;
+  const setSearch = (e) => {
+    // clear previous timer and set new
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => {
+      load({search: e.target.value});
+    }, 300);
+  };
 
-    const deleteRow = rowId => {
-      if (confirm("¿Estás seguro de que quieres eliminar?")) {
-        Inertia.delete(route(routeName, rowId));
-      }
+  // sort
+  const setSort = (s) => { // "s" is abbreviation of "sort"
+    // reverse direction if clicked twice on column
+    let d = "asc";         // "d" is abbreviation of "direction"
+    if (props.sort == s) {
+      d = props.direction == "asc" ? "desc" : "asc";
     }
+    load({direction: d, sort: s});
+  };
 
-    return { deleteRow };
-    
-}
+  // filter
+  const setFilter = (filter) => {
+    load(filter);
+  };
 
-export function useSearch(props, path) {
-
-    const { rows, errors } = props;
-
-    const { search, sort, direction } = toRefs(props);
-
-    let searchDebounceTimer;
-    const setSearch = (e) => {
-      // clear previous searchDebounceTimer
-      clearTimeout(searchDebounceTimer);
-
-      // set new timer
-      searchDebounceTimer = setTimeout(() => {
-        load({ search: e.target.value });
-      }, 300);
-    };
-
-    const setSort = (s) => { // "s" is abbreviation of "sort"
-                             // reverse direction if clicked twice on column
-      let d = "asc";         // "d" is abbreviation of "direction"
-      if (sort.value == s) {
-        d = direction.value == "asc" ? "desc" : "asc";
-      }
-      load({ direction: d, sort: s });
-    };
-
-    const load = (newParams) => {
-      // mix defaults and new parameters
-      const params = {
-        search: search.value || "",
-        sort: sort.value || "",
-        direction: direction.value || "",
-        ...newParams,
-      };
-      // convert obj into url
-      const urlQuery = new URLSearchParams(params).toString();
-
-      const url = `/${path}?${urlQuery}`;
-      Inertia.get(url, [], {
-        preserveState: true,
-      });
-    };
-
-    return {      
-      setSearch,
-      setSort
-    };
+  return {
+    setSearch,
+    setSort,
+    setFilter,
+  };
 
 }
 

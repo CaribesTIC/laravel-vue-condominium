@@ -27,13 +27,13 @@ class TasksModuleTest extends TestCase
 
         Task::factory()->create([ 'name' => 'Sow' ]);
         Task::factory()->create([ 'description' => 'Plant the seeds' ]);
-        Task::factory()->create([ 'category_id' => Category::create([ 'name' => 'Land' ])->id ]);
+        Task::factory()->create([ 'category_id' => Category::create([ 'name' => 'Principal' ])->id ]);
 
         $response = $this->get('/tasks')
             ->assertStatus(200)
             ->assertSee('Sow')
             ->assertSee('Plant the seeds')
-            ->assertSee('Land');
+            ->assertSee('Principal');
         
         $response->assertInertia(fn (Assert $page) => $page->component('Tasks/Index'))
                  ->assertInertia(fn (Assert $page) => $page->url('/tasks')
@@ -48,14 +48,14 @@ class TasksModuleTest extends TestCase
         $taskId = Task::factory()->create([
             'name' => 'Sow',
             'description' => 'Plant the seeds',
-            'category_id' => Category::create([ 'name' => 'Land' ])->id
+            'category_id' => Category::create([ 'name' => 'Principal' ])->id
         ])->id;
 
         $response = $this->get("/tasks/{$taskId}/show") 
             ->assertStatus(200)
             ->assertSee('Sow')
             ->assertSee('Plant the seeds')
-            ->assertSee('Land');
+            ->assertSee('Principal');
         
         $response->assertInertia(fn (Assert $page) => $page->component("Tasks/Show"))
                  ->assertInertia(fn (Assert $page) => $page->url("/tasks/{$taskId}/show")
@@ -80,7 +80,7 @@ class TasksModuleTest extends TestCase
     {
         $this->actingAs(self::_userAdmin());
         
-        $categoryId = Category::create([ 'name' => 'Land' ])->id;
+        $categoryId = Category::create([ 'name' => 'Principal' ])->id;
         
         $this->post('/tasks/',[            
             "name" => "Sow",
@@ -127,20 +127,71 @@ class TasksModuleTest extends TestCase
         $taskId = Task::factory()->create([
             'name' => 'Sow',
             'description' => 'Plant the seeds',
-            'category_id' => Category::create([ 'name' => 'Land' ])->id
+            'category_id' => Category::create([ 'name' => 'Principal' ])->id
         ])->id;
 
         $response = $this->get("/tasks/{$taskId}/edit") 
             ->assertStatus(200)
             ->assertSee('Sow')
             ->assertSee('Plant the seeds')
-            ->assertSee('Land');
+            ->assertSee('Principal');
         
         $response->assertInertia(fn (Assert $page) => $page->component("Tasks/Edit"))
                  ->assertInertia(fn (Assert $page) => $page->url("/tasks/{$taskId}/edit")
                      ->has("task")
                      ->has("categories")
                  ); 
+    }
+    
+    public function test_it_updates_a_record()
+    {
+        $this->actingAs(self::_userAdmin());        
+
+        $task = Task::factory()->create([
+            "name"=>"Sow",
+            "description" => "Plant the seeds",
+            "category_id" => Category::create([ "name" => "Principal" ])->id
+            ]);
+            
+        $this->from("/tasks/{$task->id}/edit")
+             ->put("/tasks/{$task->id}",[
+                 "name" => "Harvest",
+                 "description" => "Collect fruits",
+                 "category_id" => Category::create([ "name" => "Secondary" ])->id
+            ])->assertRedirect(route("tasks.index"));
+        
+        $task = $task->fresh();
+        $this->assertEquals($task->name, "Harvest");
+        $this->assertEquals($task->description, "Collect fruits");
+        $this->assertEquals($task->category->name, "Secondary");   
+   }
+
+    public function test_field_is_required_when_update_record()
+    {   
+        $this->actingAs(self::_userAdmin());
+
+        $task = Task::factory()->create([
+            "name"=>"Sow",
+            "description" => "Plant the seeds",
+            "category_id" => Category::create([ "name" => "Principal" ])->id
+            ]);
+        $this->from("/tasks/{$task->id}/edit")
+             ->post("/tasks/",[
+                'name' => null,
+                'description' => null,
+                'category_id' => null
+            ])
+            ->assertRedirect(route("tasks.edit", $task->id))
+            ->assertStatus(302);
+
+         $task = $task->fresh();
+         $errors = session('errors');            
+         $this->assertEquals($errors->get('name')[0],"El campo Nombre es obligatorio.");
+         $this->assertEquals($errors->get('description')[0],"El campo Descripción es obligatorio.");
+         $this->assertEquals($errors->get('category_id')[0],"El campo Categoría es obligatorio.");
+         $this->assertEquals($task->name, "Sow");    
+         $this->assertEquals($task->description, "Plant the seeds");
+         $this->assertEquals($task->category->name, "Principal");   
     }
     
 }

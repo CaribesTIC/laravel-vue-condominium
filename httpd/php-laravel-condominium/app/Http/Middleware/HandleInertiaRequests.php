@@ -44,9 +44,7 @@ class HandleInertiaRequests extends Middleware
                 "success" => $request->session()->get("success"),
                 "error" => $request->session()->get("error"),
             ],
-            "settings" => fn() => [
-                "footer_message" => $settings->footer_message,
-            ],
+            "settings" => fn() => $settings->toArray(),
             "username" => $request->user() ? $request->user()->name : "",
         ]);
     }

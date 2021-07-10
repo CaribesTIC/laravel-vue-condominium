@@ -5,6 +5,16 @@
     <div class="panel mt-4">
       <form class="p-4" @submit.prevent="submit">
         <div class="grid gap-4">
+
+          <!-- default_pagination -->
+          <label class="block">
+            <span class="text-gray-700">Paginación default</span>
+            <input v-model="default_pagination" type="text" class="" />
+            <div v-if="errors.default_pagination" class="form-error">
+              {{ errors.default_pagination }}
+            </div>
+          </label>
+
           <!-- footer_message -->
           <label class="block">
             <span class="text-gray-700">Mensaje pie de página</span>
@@ -41,6 +51,7 @@ export default {
     PageHeader,
   },
   props: {
+    default_pagination: Number,
     footer_message: String,
     errors: Object,
   },
@@ -55,6 +66,7 @@ export default {
       this.$inertia.put(
         this.route("settings.update"),
         {
+          default_pagination: this.default_pagination,
           footer_message: this.footer_message,
         },
         {
