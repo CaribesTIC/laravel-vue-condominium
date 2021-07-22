@@ -12,9 +12,36 @@
       :class="isOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
       class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 bg-gray-800 bg-gradient-to-b from-gray-700 to-gray-900"
     >
-      <div class="px-6 py-8 w-full">
-        <inertia-link :href="route('dashboard')">
-          <img src="/img/logo-white.png" alt="logo" />
+      <div class="px-1 py-1 w-full">
+        <inertia-link :href="route('dashboard')">          
+          <svg class="h-60 w-60" version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="220.000000pt" height="229.000000pt" viewBox="0 0 220.000000 229.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,229.000000) scale(0.100000,-0.100000)"
+fill="#FFFFFF" stroke="none">
+<path d="M1396 2017 l-226 -172 40 -3 40 -3 0 -224 0 -224 165 -128 c166 -128
+184 -150 153 -181 -7 -7 -27 -12 -45 -12 l-33 0 0 -415 0 -415 233 0 c127 0
+238 4 244 8 10 6 13 181 15 798 l3 789 41 5 42 5 -132 101 c-72 56 -172 133
+-223 172 l-91 71 -226 -172z m214 -272 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45
+0 0 -45z m110 0 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m-110 -115 l0
+-40 -45 0 -45 0 0 40 0 40 45 0 45 0 0 -40z m110 0 l0 -40 -45 0 -45 0 0 40 0
+40 45 0 45 0 0 -40z"/>
+<path d="M853 1303 c-122 -93 -222 -171 -222 -175 -1 -5 17 -8 39 -8 l40 0 0
+-114 0 -114 173 -132 c169 -130 207 -163 207 -181 0 -20 -42 -49 -70 -49 l-30
+0 0 -145 0 -145 209 0 c115 0 216 3 225 6 14 5 16 54 16 440 l0 433 47 3 48 3
+-218 168 c-119 92 -223 170 -230 172 -6 3 -112 -70 -234 -162z m217 -233 l0
+-40 -45 0 -45 0 0 40 0 40 45 0 45 0 0 -40z m110 0 l0 -40 -45 0 -45 0 0 40 0
+40 45 0 45 0 0 -40z m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z
+m110 0 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z"/>
+<path d="M361 756 l-224 -171 39 -5 39 -5 3 -160 c2 -112 6 -161 15 -167 21
+-13 691 -10 705 4 8 8 12 60 12 169 l0 158 40 3 40 3 -207 160 c-114 88 -214
+165 -222 171 -13 9 -57 -20 -240 -160z m209 -206 l0 -40 -45 0 -45 0 0 40 0
+40 45 0 45 0 0 -40z m110 0 l0 -40 -45 0 -45 0 0 40 0 40 45 0 45 0 0 -40z
+m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
+0 -45 0 0 45 0 45 45 0 45 0 0 -45z"/>
+</g>
+</svg>
         </inertia-link>
       </div>
 
@@ -116,6 +143,24 @@ fill="currentColor" />
         <inertia-link
           class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
           :class="[
+            route().current('dwelling-types.index*') ? activeClass : inactiveClass,
+          ]"
+          :href="route('dwelling-types.index')"
+        >
+        
+        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 3C6.44772 3 6 3.44772 6 4C6 4.55228 6.44772 5 7 5H13C13.5523 5 14 4.55228 14 4C14 3.44772 13.5523 3 13 3H7Z" fill="currentColor" />
+          <path d="M4 7C4 6.44772 4.44772 6 5 6H15C15.5523 6 16 6.44772 16 7C16 7.55228 15.5523 8 15 8H5C4.44772 8 4 7.55228 4 7Z" fill="currentColor" />
+          <path d="M2 11C2 9.89543 2.89543 9 4 9H16C17.1046 9 18 9.89543 18 11V15C18 16.1046 17.1046 17 16 17H4C2.89543 17 2 16.1046 2 15V11Z"
+fill="currentColor" />
+        </svg>
+        
+          <span class="mx-4">Tipos de Vivienda</span>
+        </inertia-link>
+        
+        <inertia-link
+          class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4"
+          :class="[
             route().current('users.index*') ? activeClass : inactiveClass,
           ]"
           :href="route('users.index')"
@@ -131,7 +176,7 @@ fill="currentColor" />
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 640 512"
           ><path fill="currentColor" d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"></path>
-          </svg>          
+          </svg>        
                     
           <span class="mx-4">Usuarios</span>
         </inertia-link>        
