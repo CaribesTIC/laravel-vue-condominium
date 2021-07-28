@@ -63,6 +63,10 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
           >Cerrar sesión</inertia-link
         >
       </div>
+      
+                <div class="mt-8 py-2 px-6">
+    <recursive-menu></recursive-menu>
+    </div>
 
       <nav class="mt-8">
      
@@ -203,15 +207,25 @@ fill="currentColor" />
         </inertia-link>
 
       </nav>
+      
+
     </div>
+    
+
+    
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useSidebar } from "../hooks/useSidebar.js";
+import RecursiveMenu from "@/Layouts/RecursiveMenu/Index";
 
 export default defineComponent({
+components: {
+    //Icon,
+    RecursiveMenu
+  },
   setup() {
     const { isOpen } = useSidebar();
     const activeClass = ref(
