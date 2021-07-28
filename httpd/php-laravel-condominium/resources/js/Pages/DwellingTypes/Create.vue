@@ -1,8 +1,8 @@
 <template>
   <div>
-    <page-header> Crear zona </page-header>
+    <page-header> Crear tipos de vivienda  </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('zones.index')">
+      <inertia-link class="btn btn-primary" :href="route('dwelling-types.index')">
         Ver todas
       </inertia-link>
     </div>
@@ -19,6 +19,15 @@
             </div>
           </label>          
         </div>
+        <div class="grid lg:grid-cols-2 gap-4 my-2">
+          <!-- is_active -->
+          <label class="block">
+            <span class="text-gray-700">Activo</span>
+            <input v-model="form.is_active" type="checkbox" class="ml-2" />
+          </label>          
+        </div>        
+
+        
 
         <div class="mt-6 px-2 border-gray-100 flex justify-end space-x-2">
           <loading-button
@@ -40,7 +49,7 @@ import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
 
 export default {
-  metaInfo: { title: "Create Zone" },
+  metaInfo: { title: "Create DwellingTypes" },
   layout: Layout,
   components: {
     LoadingButton,
@@ -54,13 +63,14 @@ export default {
     return {
       sending: false,
       form: {
-        name: null
+        name: null,
+        is_active: false
       }
     };
   },
   methods: {
     submit() {
-      this.$inertia.post(this.route("zones.store"), this.form, {
+      this.$inertia.post(this.route("dwelling-types.store"), this.form, {
         onStart: () => (this.sending = true),
         onFinish: () => (this.sending = false),
         onSuccess: () => {

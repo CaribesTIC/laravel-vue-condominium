@@ -90,8 +90,8 @@ import Pagination from "@/Shared/Pagination";
 import { useSearch } from "@/hooks/useTableGrid";
 
 export default defineComponent({
-  metaInfo: { title: "Zones" },
-  name: "Zones",
+  metaInfo: { title: "DwellingTypes" },
+  name: "DwellingTypes",
   layout: Layout,
   components: {
     PageHeader,

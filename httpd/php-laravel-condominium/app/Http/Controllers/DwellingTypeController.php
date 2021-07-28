@@ -35,12 +35,12 @@ class DwellingTypeController extends Controller
         }
 
         /* get paginated results */
-        $zones = $query
+        $dwellingTypes = $query
             ->paginate($settings->default_pagination)
             ->appends(request()->query());
 
         return Inertia::render("DwellingTypes/Index", [
-            "rows" => $zones,
+            "rows" => $dwellingTypes,
             "sort" => $request->query("sort"),
             "direction" => $request->query("direction"),
             "search" => $request->query("search"),
@@ -54,7 +54,7 @@ class DwellingTypeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("DwellingTypes/Create");    
     }
 
     /**
@@ -65,7 +65,19 @@ class DwellingTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            "name" => ["required", "max:50"], 
+            "is_active" => ["required"]
+        ]);
+
+        DwellingType::create([
+            "name" => $data["name"],
+            "is_active" => $data["is_active"]
+        ]);
+
+        return redirect()
+            ->route("dwelling-types.index")
+            ->with("success", "Tipo de vivienda creada.");    
     }
 
     /**
@@ -89,8 +101,9 @@ class DwellingTypeController extends Controller
      */
     public function edit(DwellingType $dwellingType)
     {
-        //
-    }
+        return Inertia::render("DwellingTypes/Edit", [
+            "dwellingType" => $dwellingType->only(["id", "name", "is_active"]),
+        ]);    }
 
     /**
      * Update the specified resource in storage.
@@ -101,7 +114,16 @@ class DwellingTypeController extends Controller
      */
     public function update(Request $request, DwellingType $dwellingType)
     {
-        //
+        $data = $request->validate([
+            "name" => ["required", "max:50"],
+            "is_active" => ["required"]
+        ]);
+
+        $dwellingType->update($data);
+
+        return redirect()
+            ->route("dwelling-types.index")
+            ->with("success", "Tipo de vivienda actualizada.");
     }
 
     /**
@@ -112,6 +134,9 @@ class DwellingTypeController extends Controller
      */
     public function destroy(DwellingType $dwellingType)
     {
-        //
-    }
+        $dwellingType->delete();
+
+        return redirect()
+            ->route("dwelling-types.index")
+            ->with("success", "Tipo de vivienda eliminada.");    }
 }
