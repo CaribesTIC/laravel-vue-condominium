@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   condominium:
@@ -13,7 +13,7 @@ services:
     networks:
       - web_condominium
       - postgresql_condominium
-    restart: always
+    #restart: always
 
   pgsql:
     container_name: postgresql_condominium
@@ -31,7 +31,7 @@ services:
       - postgresql_condominium
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "condominium", "-U", "postgres"]
-    restart: always
+    #restart: always
 
   pgadmin:
     container_name: pgadmin_condominium
@@ -45,7 +45,7 @@ services:
       - "${PGADMIN_PORT}:80"
     networks:
       - postgresql_condominium
-    restart: always
+    #restart: always
 
 networks:
   web_condominium:

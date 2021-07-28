@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.0-apache
 
 RUN apt-get update
 
@@ -41,7 +41,8 @@ RUN docker-php-ext-install \
     zip \
     gd xml \
     pgsql pdo_pgsql \
-    tokenizer ctype json 
+    tokenizer ctype 
+    #json 
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && docker-php-ext-install imap
 
