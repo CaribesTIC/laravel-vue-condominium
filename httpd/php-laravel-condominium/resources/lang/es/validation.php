@@ -160,7 +160,8 @@ return [
         'role' => 'Role',        
         'task_id' => 'Tarea',
         'user_id' => 'Usuario',
-        'zone_id' => 'Zona'
+        'zone_id' => 'Zona',
+        'is_active' => 'Activo'
     ],
 
 ];
