@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="mt-8 py-2 px-6">
     <ul v-if="menus.length>0">
       <tree-menu
         v-for="(menu, index) in menus"

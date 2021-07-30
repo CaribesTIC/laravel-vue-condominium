@@ -17,6 +17,7 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('path');
+            $table->string('icon')->default('dashboard');
             $table->integer('sort');
             $table->unsignedBigInteger('menu_id')->nullable();            
             $table->foreign('menu_id')->references('id')->on('menus');

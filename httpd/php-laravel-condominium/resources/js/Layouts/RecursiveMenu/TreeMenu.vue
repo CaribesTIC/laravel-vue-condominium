@@ -1,14 +1,16 @@
 <template>
   <li>
-    <div v-if="menu.path==='#'" class="mb-0">
-      <a href="#" @click="toggleChildren" style="color:white" class="flex items-center group py-0">
-        <!--icon :name="menu.icon" class="w-4 h-4 mr-2" :class="'fill-white'" /-->
+    <div v-if="menu.path==='#'" class="mb-2">
+      <a href="#" @click="toggleChildren" style="color:white" class="flex items-center group py-0">                
         {{ menu.title }}
       </a>
     </div>
-    <div v-else class="mb-0">  
-      <inertia-link class="items-center py-0" :href="route(menu.path)" preserve-scroll>        
-        <div :class="'text-indigo-300 group-hover:text-white'">{{ menu.title }}</div>
+    <div v-else class="mb-2">  
+      <inertia-link class="items-center py-0" :href="route(menu.path)" preserve-scroll @click="activeNow">
+        <spam :class="[ isActive ? activeClass : inactiveClass]" class="flex items-center group py-0">
+          <icon :name="menu.icon" class="w-5 h-5 mr-2"/>
+          {{ menu.title }}
+        </spam>
       </inertia-link>
     </div>  
     <ul v-if="menu.children_menus.length>0" style="padding-left: 21px">
@@ -22,17 +24,26 @@
 </template>
 
 <script>
-//import Icon from '@/Shared/Icon'
+import Icon from './IconMenu'
 export default {
   name: 'tree-menu',  
   components: {
-    //Icon
+    Icon
   },  
   props: [ 'menu' ],
     data() {
      return {
-       showChildren: false
+       isActive:false,
+       valor: false,
+       pathNameUrl: window.location.pathname,     
+       showChildren: false,
+       activeClass: "bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100",
+       inactiveClass: "border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
      }
+  },
+  mounted(){
+    this.pathNameUrl = window.location.pathname;
+    console.log(this.menu);
   },
   computed: {
     iconClasses() {
@@ -49,9 +60,13 @@ export default {
     }
   },
   methods: {
+    activeNow(){
+      this.isActive = this.route().current(this.menu.path+'*');      
+    },
     toggleChildren() {
-       true; this.showChildren = !this.showChildren;
+       true; this.showChildren = !this.showChildren;       
     }    
   } 
 }
 </script>
+
