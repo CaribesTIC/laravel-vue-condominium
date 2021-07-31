@@ -10,7 +10,7 @@ class Menu extends Model
     
     protected $hidden = [ 'created_at', 'updated_at' ];
     
-    protected $fillable = [ 'title', 'menu_id', 'path', 'sort' ];    
+    protected $fillable = [ 'title', 'menu_id', 'path', 'icon', 'sort' ];    
     
     public function menus()
     {

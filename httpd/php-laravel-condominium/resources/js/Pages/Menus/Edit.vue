@@ -57,6 +57,19 @@
                   </tr>
                   <tr class="hover:bg-gray-100 focus-within:bg-gray-100">
                     <td align="left" width="50%">
+                      Icon (level {{ nivel }})
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="icon"
+                        class="form-control"
+                        v-model="form.icon"
+                        placeholder="Icon..." />
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-100 focus-within:bg-gray-100">
+                    <td align="left" width="50%">
                       Sort (level {{ nivel }})
                     </td>
                     <td>
@@ -107,6 +120,7 @@ export default {
       form: {
         title: this.menu.title,
         path: this.menu.path,
+        icon: this.menu.icon,
         sort: this.menu.sort
       }
     }
@@ -144,6 +158,7 @@ export default {
           data.append('_method', 'PUT');                    
           data.append('title', this.form.title);
           data.append('path', this.form.path);
+          data.append('path', this.form.icon);
           data.append('sort', this.form.sort);             
           Service.Menu.update(data, this.menu.id).then(response => {
             this.toProcessResponse(response);          

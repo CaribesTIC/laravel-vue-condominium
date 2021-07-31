@@ -94,6 +94,19 @@
                   </tr>
                   <tr>
                     <td align="left" width="50%">
+                      Icon (nivel {{ nivel }})
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="icon"
+                        class="form-control"
+                        v-model="form.icon"
+                        placeholder="Icon..." />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" width="50%">
                       Orden (nivel {{ nivel }})
                     </td>
                     <td>
@@ -158,6 +171,7 @@ export default {
         title: '',
         menu_id: 0,
         path: '#',
+        icon: 'icon',
         sort: 0
       }   
     }
@@ -232,6 +246,7 @@ export default {
         menu_id: this.form.menu_id,
         title  : this.form.title,
         path: this.form.path,
+        icon: this.form.icon,
         sort: this.form.sort
       }).then(response => {
         gridViewModel.getMenus();

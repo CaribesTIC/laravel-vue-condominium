@@ -20,6 +20,7 @@ class StoreMenuService
               "title" => $request->title,
               "menu_id" => $request->menu_id===0 ? null : $request->menu_id,
               "path" => $request->path,
+              "icon" => $request->icon,
               "sort" => $request->sort
           ]);         
 

@@ -14,6 +14,7 @@ class StoreMenuValidator
             'menu_id' => 'required',
             'title' => 'required',             
             'path' => 'required',
+            //'icon' => 'required',
             'sort' => 'required'            
         ]);
         

@@ -13,6 +13,7 @@ class UpdateMenuValidator
         $validator = Validator::make($request->all(), [
             'title' => 'required',             
             'path' => 'required',
+            //'icon' => 'required',
             'sort' => 'required'
         ]);
         

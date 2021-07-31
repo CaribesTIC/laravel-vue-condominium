@@ -1,49 +1,54 @@
 <template>
-  <div>      
-    <div class="py-2">
-      <page-header>Menus</page-header>
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-          <button
-            @click="openModalCreate"            
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">
-              Create
-          </button>          
-          <div class="bg-white rounded shadow overflow-x-auto">      
-            <table class="table-fixed w-full whitespace-no-wrap">
-              <thead>
-                <tr class="bg-gray-200 text-left font-bold"> 
-                  <th class="px-6 pt-6 pb-4">Menu Options</th>                                                      
-                  <th class="px-6 pt-6 pb-4">Path</th>
-                  <th class="px-6 pt-6 pb-4">Sort</th>               
-                  <th class="px-6 pt-6 pb-4">Atcion(s)</th>               
-              </tr>
-            </thead>
-            <tbody>              
-              <tr v-for="menu in menus" :key="menu.id" class="hover:bg-gray-100 focus-within:bg-gray-100">               
-                <td class="border-t text-sm">{{ menu.alias }}</td>                                
-                <td class="border-t text-sm">{{ menu.path }}</td>      
-                <td class="border-t text-sm">{{ menu.sort }}</td>                          
-                <td class="border-t w-px text-sm">
-                  <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    @click="edit(menu)">Edit</button>
-                  <button                  
-                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    @click="remove(menu.id)"
-                   >Delete</button>
-                </td>               
-              </tr>                
-            </tbody>            
-          </table>
-        </div>
-        <!--pagination :links="menus.links" /-->
-      </div>
+  <div>  
+    <page-header> Menús </page-header>
+    
+    <div class="flex space-x-2">
+      <button
+        @click="openModalCreate()"
+        class="btn btn-primary"
+      >
+        Crear
+      </button>
+    </div>
+    
+    <div class="overflow-hidden panel mt-6">
+      <div class="table-data__wrapper">
+        <table class="table-data">
+          <thead>
+            <tr class=""> 
+              <th class="">Menu Options</th>                                                      
+              <th class="">Path</th>
+              <th class="">Icon</th>
+              <th class="">Sort</th>               
+              <th class="">Atcion(s)</th>               
+            </tr>
+          </thead>
+        <tbody>              
+          <tr v-for="menu in menus.data" :key="menu.id" class="hover:bg-gray-100 focus-within:bg-gray-100">               
+            <td class="">{{ menu.alias }}</td>                                
+            <td class="">{{ menu.path }}</td>
+            <td class="">{{ menu.icon }}</td>  
+            <td class="">{{ menu.sort }}</td>                          
+            <td class="">              
+              <div class="flex items-center space-x-1">
+                <button @click="edit(menu)" class="btn btn-primary btn-xs">
+                  Editar
+                </button>
+                <button @click="remove(menu.id)" class="btn btn-danger btn-xs">
+                  Eliminar
+                </button>
+              </div>
+            </td>               
+          </tr>                
+        </tbody>            
+      </table>
+        
+      
+      <Pagination :links="menus.links" />
       
       <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpenCreate">
-          <Create @closeModal0="closeModalCreate"/>
+        <Create @closeModal0="closeModalCreate"/>
       </div>
-      
       <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen">
         <Edit :menu="menu" @closeModal1="closeModal"/>
       </div>
@@ -54,21 +59,19 @@
 </template>
 
 <script>
+import Layout from "@/Layouts/AppLayout";
+import PageHeader from "@/Shared/PageHeader";
+import Pagination from "@/Shared/Pagination";
 import Create from './Create'
 import Edit from './Edit'
-import Layout from "@/Layouts/AppLayout";
-//import PageHeader from '@/Shared/PageHeader'
-//import Pagination from '@/Shared/Pagination'
-//import FlashMessages from '@/Shared/FlashMessages'
 export default {
   metaInfo: { title: 'Menus' },
   layout: Layout,
   components: {
+    PageHeader,
+    Pagination,
     Create,
-    Edit,  
-    //PageHeader,
-    //Pagination,    
-    //FlashMessages
+    Edit,    
   },
   props: {
     menus: Object    
@@ -81,6 +84,8 @@ export default {
       menu:{}
     }
   },
+  mounted(){console.log(this.menus)},
+  
   methods: {
     openModalCreate: function () {
       this.isOpenCreate = true;
@@ -105,7 +110,7 @@ export default {
       this.openModal();
     },
     remove(id) {
-       Notification.confirm(() => {       
+      Notification.confirm(() => {       
         this.$inertia.delete(this.route('menus.destroy', id));
       });
     }
