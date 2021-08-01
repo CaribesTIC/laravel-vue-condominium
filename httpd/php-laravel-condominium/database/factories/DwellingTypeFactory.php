@@ -22,7 +22,8 @@ class DwellingTypeFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->unique()->sentence(1),
+            'is_active' => $this->faker->boolean(1)
         ];
     }
 }
