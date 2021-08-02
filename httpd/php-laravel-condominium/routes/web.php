@@ -7,6 +7,7 @@ use App\Http\Controllers\{
   DwellingTypeController,
   JournalController,  
   GeneralSettingsController,
+  MenuController,
   MyProfileController,
   PostController,
   TaskController,
@@ -57,7 +58,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::delete('/{journal}', [JournalController::class, 'destroy'])->name('journals.destroy');
     });
      
-    Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');  
+    Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
+    
+    Route::prefix('menus')->group(function () {
+        Route::get('/', [MenuController::class, 'index'])->name('menus');
+        Route::get('/children/{menuId}', [MenuController::class, 'children']);
+        Route::post('/store', [MenuController::class, 'store'])->name('menus.store');  
+        Route::put('/{menu}', [MenuController::class, 'update'])->name('menus.update');
+        Route::delete('/{id}', [MenuController::class,'destroy'])->name('menus.destroy');
+    });
 
     Route::prefix('myprofile')->group(function () {
       Route::get('/edit', [MyProfileController::class, 'edit'])->name('myprofile.edit');      
