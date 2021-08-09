@@ -1,8 +1,8 @@
 <template>
   <div>
-    <page-header> Mostrar zona </page-header>
+    <page-header> Mostrar rol </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('zones.index')">
+      <inertia-link class="btn btn-primary" :href="route('roles')">
         Ver todos
       </inertia-link>
     </div>
@@ -18,9 +18,17 @@
           </thead>      
           <tbody>
             <tr class="">
-              <th class="">Nombre</th>
-              <td class="">{{ zone.name }}</td>
-            </tr>    
+              <th class="">Nombre del rol</th>
+              <td class="">{{ form.name }}</td>
+            </tr>
+            <tr class="">
+              <th valign="top">Opciones del menú</th>
+              <td class="">             
+                <ol class="list-disc list-inside" v-for="menu in menus" :key="menu.id">
+                  <li v-if="form.menu_ids.includes(menu.id)">{{ menu.alias }}</li> 
+                </ol>
+              </td>
+            </tr>   
           </tbody>
         </table>
       </div>
@@ -31,10 +39,27 @@
 
 <script>
 import Layout from "@/Layouts/AppLayout";
+import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
 export default {
+  metaInfo: { title: "Show Role" },
+  name: "Show Role",
   layout: Layout,
-  components: { PageHeader },
-  props: { zone: Object }
+  components: {
+    LoadingButton,
+    PageHeader,
+  },
+  props: {
+    menus: Array,
+    role: Object,
+  },
+  data() {
+    return {      
+      form: {
+        name: this.role.name,
+        menu_ids: this.role.menu_ids,
+      },
+    };
+  },
 };
 </script>

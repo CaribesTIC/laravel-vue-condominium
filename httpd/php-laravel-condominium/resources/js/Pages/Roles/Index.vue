@@ -32,7 +32,7 @@
                 <a href="#" @click.prevent="setSort('name')">Nombre</a>
               </th>
               <th class="">
-                Página predeterminada
+                <a href="#" @click.prevent="setSort('description')">Descripción</a>
               </th>
               <th class="">Acción</th>
             </tr>
@@ -43,7 +43,7 @@
                 {{ row.name }}
               </td>
               <td class="">
-                {{ row.pag_ini_default }}
+                {{ row.description }}
               </td>
               <td class="">
                 <div class="flex items-center space-x-1">
