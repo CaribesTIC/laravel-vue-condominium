@@ -17,7 +17,7 @@ class MenuMiddleware
      */
     public function handle($request, Closure $next)
     {
-        //if (auth()->check() && !Session::has('menus'))
+        if (auth()->check() && !Session::has('menus'))
             Session::put('menus', RecursiveMenuRepository::recursive());
 
         return $next($request);
