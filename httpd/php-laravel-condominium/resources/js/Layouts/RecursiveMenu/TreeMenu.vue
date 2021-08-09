@@ -36,14 +36,14 @@ export default {
        isActive:false,
        valor: false,
        pathNameUrl: window.location.pathname,     
-       showChildren: false,
+       showChildren: true,
        activeClass: "bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100",
        inactiveClass: "border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
      }
   },
   mounted(){
     this.pathNameUrl = window.location.pathname;
-    console.log(this.menu);
+    //console.log(this.menu);
   },
   computed: {
     iconClasses() {

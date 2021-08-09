@@ -100,13 +100,13 @@ class MenuSeeder extends Seeder
             "sort" => 5
         ]);
 
-        /*Menu::create([
+        Menu::create([
             "title" => "Roles",
             "menu_id" => 3,
-            "path" => "users.index",
+            "path" => "roles",
             "icon" => "dashboard",
             "sort" => 6
-        ]);*/
+        ]);
 
         Menu::create([
             "title" => "Usuarios",

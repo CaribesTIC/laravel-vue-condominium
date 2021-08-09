@@ -50,18 +50,22 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
       </div>
 
       <div class="flex justify-evenly mt-3 text-gray-100 text-xs">
+
         <inertia-link
           :href="route('myprofile.edit')"
           class="block border border-gray-500 hover:bg-gray-500 px-2 py-1 rounded-sm"
-          >Mi cuenta</inertia-link
         >
+          Mi cuenta
+        </inertia-link>
 
         <inertia-link
           :href="route('logout')"
           class="block border border-gray-500 hover:bg-gray-500 px-2 py-1 rounded-sm"
           method="post"
-          >Cerrar sesión</inertia-link
-        >
+          as="button">
+            Cerrar sesión
+        </inertia-link>
+
       </div>      
     
       <RecursiveMenu />    

@@ -10,6 +10,7 @@ use App\Http\Controllers\{
   MenuController,
   MyProfileController,
   PostController,
+  RoleController,
   TaskController,
   UserController,  
   ZoneController,
@@ -66,6 +67,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/store', [MenuController::class, 'store'])->name('menus.store');  
         Route::put('/{menu}', [MenuController::class, 'update'])->name('menus.update');
         Route::delete('/{id}', [MenuController::class,'destroy'])->name('menus.destroy');
+    });
+
+    Route::prefix('roles')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('roles');
+        Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::get('/{role}/show', [RoleController::class, 'show'])->name('roles.show');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');  
+        Route::post('/store', [RoleController::class, 'store'])->name('roles.store');  
+        Route::put('/{role}', [RoleController::class, 'update'])->name('roles.update');
+        Route::delete('/{id}', [RoleController::class,'destroy'])->name('roles.destroy');
     });
 
     Route::prefix('myprofile')->group(function () {
