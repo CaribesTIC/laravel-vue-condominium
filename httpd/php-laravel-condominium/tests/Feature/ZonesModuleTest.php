@@ -17,7 +17,8 @@ class ZonesModuleTest extends TestCase
     
     private function _userAdmin()
     {
-        return \App\Models\User::factory()->create([ "role" => "admin" ]);
+        \App\Models\Role::factory()->create();
+        return \App\Models\User::factory()->create([ "role" => "admin", "role_id" => 1 ]);
     }
 
     public function test_it_shows_the_tasks_list()

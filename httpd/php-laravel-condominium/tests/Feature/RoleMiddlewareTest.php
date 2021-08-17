@@ -19,8 +19,14 @@ class RoleMiddlewareTest extends TestCase
 
     public function test_role_middleware_deny_role()
     {
+        \App\Models\Role::create([            
+            "name" => "user",
+            "description" => "User",
+            "menu_ids" => [ 1, 4, 5, 6 ],
+        
+        ]);
         $user = User::factory()->create([
-            "role" => "user",
+            "role" => "user", "role_id" => 1
         ]);
         $this->actingAs($user);
         $response = $this->get(route("users.index"));
@@ -29,8 +35,9 @@ class RoleMiddlewareTest extends TestCase
 
     public function test_role_middleware_allow_role()
     {
+        \App\Models\Role::factory()->create();
         $user = User::factory()->create([
-            "role" => "admin",
+            "role" => "admin", "role_id" => 1
         ]);
         $this->actingAs($user);
         $response = $this->get(route("users.index"));

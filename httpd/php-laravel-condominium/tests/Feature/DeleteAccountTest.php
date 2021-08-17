@@ -2,22 +2,24 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use App\Models\{Role, User};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Jetstream\Features;
 use Tests\TestCase;
+
 
 class DeleteAccountTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_user_accounts_can_be_deleted()
-    {
+    {    
         if (! Features::hasAccountDeletionFeatures()) {
             return $this->markTestSkipped('Account deletion is not enabled.');
         }
 
-        $this->actingAs($user = User::factory()->create());
+        Role::factory()->create();
+        $this->actingAs($user = User::factory()->create( ["role" => "admin", "role_id" => 1 ]));
 
         $response = $this->delete('/user', [
             'password' => 'password',
@@ -32,6 +34,7 @@ class DeleteAccountTest extends TestCase
             return $this->markTestSkipped('Account deletion is not enabled.');
         }
 
+        Role::factory()->create();
         $this->actingAs($user = User::factory()->create());
 
         $response = $this->delete('/user', [

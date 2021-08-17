@@ -17,9 +17,11 @@ class MenuMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && !Session::has('menus'))
-            Session::put('menus', RecursiveMenuRepository::recursive());
-
+        if (auth()->check() && !Session::has('menus')) {
+            $user = $request->user();
+            $role = \App\Models\Role::select('menu_ids')->find($user->role_id);            
+            Session::put('menus', RecursiveMenuRepository::recursive($role->menu_ids));
+        }
         return $next($request);
     }
 }

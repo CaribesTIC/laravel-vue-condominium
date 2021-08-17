@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use App\Models\{Role, User};
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
 
@@ -17,7 +17,10 @@ class UsersModuleTest extends TestCase
     
     private function _userAdmin()
     {
-        return User::factory()->create([ "role" => "admin" ]);
+        Role::factory()
+            ->create();
+        return User::factory()
+            ->create([ "role" => "admin", "role_id" => 1 ]);
     }
 
     public function test_it_shows_the_users_list()
