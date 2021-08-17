@@ -1,19 +1,28 @@
 <?php
 
-namespace Database\Seeders;
+namespace Tests\Feature;
 
-use Illuminate\Database\Seeder;
-use App\Models\Role;
+use App\Models\{Role, User};
 
-class RoleSeeder extends Seeder
+trait UserTestable
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {        
+    
+    public static function userAdmin(): User
+    {   
+        self::roleSeeder();
+        
+        return User::factory()->create([ "role" => "admin", "role_id" => 1 ]);        
+    }
+    
+    public static function userCommon(): User
+    {   
+        self::roleSeeder();
+        
+        return User::factory()->create([ "role" => "user", "role_id" => 2 ]);        
+    }
+    
+    public static function roleSeeder()
+    {
         Role::create([
             "name" => "admin",
             "description" => "Administrator",
@@ -37,5 +46,7 @@ class RoleSeeder extends Seeder
             "description" => "Web user",
             "menu_ids" => [ 1, 4, 5, 6 ],
         ]);
+        
+        return;
     }
 }

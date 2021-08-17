@@ -1,19 +1,16 @@
 <?php
-
 namespace Tests\Feature;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TwoFactorAuthenticationSettingsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTestable;
 
     public function test_two_factor_authentication_can_be_enabled()
     {
-        \App\Models\Role::factory()->create();
-        $this->actingAs($user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]));
+        $this->actingAs($user = UserTestable::userAdmin());
 
         $this->withSession(['auth.password_confirmed_at' => time()]);
 
@@ -25,8 +22,7 @@ class TwoFactorAuthenticationSettingsTest extends TestCase
 
     public function test_recovery_codes_can_be_regenerated()
     {
-        \App\Models\Role::factory()->create();
-        $this->actingAs($user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]));
+        $this->actingAs($user = UserTestable::userAdmin());
 
         $this->withSession(['auth.password_confirmed_at' => time()]);
 
@@ -43,8 +39,7 @@ class TwoFactorAuthenticationSettingsTest extends TestCase
 
     public function test_two_factor_authentication_can_be_disabled()
     {
-        \App\Models\Role::factory()->create();
-        $this->actingAs($user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]));
+        $this->actingAs($user = UserTestable::userAdmin());
 
         $this->withSession(['auth.password_confirmed_at' => time()]);
 

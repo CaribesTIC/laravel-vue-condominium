@@ -3,38 +3,29 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
-use App\Models\{
-    Task,
-    Zone,
-    Journal,
-    User
-};
+use App\Models\{Task, Zone, Journal, User};
 
 class JournalsModuleTest extends TestCase
 {
 
-    use RefreshDatabase;
-    
-    private function _userAdmin()
-    {
-        \App\Models\Role::factory()->create();
-        return \App\Models\User::factory()->create([ "role" => "admin", "role_id" => 1 ]);
-    }
+    use RefreshDatabase, UserTestable;    
 
     public function test_it_shows_the_journals_list()
-    {
-        $this->actingAs($userId = self::_userAdmin());
+    {        
+        
+        $this->actingAs($user =  UserTestable::userAdmin());
 
         Journal::factory()->create([
             "date" => "2021-01-01",
             "input" => "08:00:00",
             "output" => "18:00:00",
-            "user_id" => $userId,
+            "user_id" => $user->id,
             "task_id" => Task::factory()->create([ 'name' => 'Sow' ])->id,
             "zone_id" => Zone::factory()->create([ 'name' => 'Land' ])->id
         ]);
@@ -55,13 +46,13 @@ class JournalsModuleTest extends TestCase
     
     public function test_it_show_the_journal_detail()
     {
-        $this->actingAs($userId = self::_userAdmin());
+        $this->actingAs($user =  UserTestable::userAdmin());
 
         $journalId = Journal::factory()->create([
             "date" => "2021-01-01",
             "input" => "08:00:00",
             "output" => "18:00:00",
-            "user_id" => $userId,
+            "user_id" => $user->id,
             "task_id" => Task::factory()->create([ 'name' => 'Sow' ])->id,
             "zone_id" => Zone::factory()->create([ 'name' => 'Land' ])->id
         ])->id;
@@ -82,7 +73,7 @@ class JournalsModuleTest extends TestCase
     
     public function test_it_loads_the_new_journal_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $response = $this->get('/journals/create')            
             ->assertStatus(200);
@@ -97,7 +88,7 @@ class JournalsModuleTest extends TestCase
     
     public function test_it_creates_a_new_journal()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs($user =  UserTestable::userAdmin());
         
         $userId = User::factory()->create([ "name" => "John Doe" ])->id;
         $taskId = Task::factory()->create([ "name" => "Sow" ])->id;
@@ -106,7 +97,7 @@ class JournalsModuleTest extends TestCase
             "date" => "2021-01-01",
             "input" => "08:00:00",
             "output" => "18:00:00",
-            "user_id" => $userId,
+            "user_id" => $user->id,
             "task_id" => $taskId,
             "zone_id" => $zoneId
         ])->assertRedirect(route("journals.index"));
@@ -123,7 +114,7 @@ class JournalsModuleTest extends TestCase
             "date" => "2021-01-01",
             "input" => "08:00:00",
             "output" => "18:00:00",
-            "user_id" => $userId,
+            "user_id" => $user->id,
             "task_id" => $taskId,
             "zone_id" => $zoneId
         ]);
@@ -131,7 +122,7 @@ class JournalsModuleTest extends TestCase
     
     public function test_fields_are_required_when_create_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from("/journals/create")
             ->post("/journals/",[
@@ -148,7 +139,7 @@ class JournalsModuleTest extends TestCase
          $errors = session("errors");
          $this->assertEquals($errors->get("date")[0],"El campo Fecha es obligatorio.");
          $this->assertEquals($errors->get("input")[0],"El campo Entrada es obligatorio.");
-         $this->assertEquals($errors->get('output')[0],"El campo Salida es obligatorio.");
+         $this->assertEquals($errors->get("output")[0],"El campo Salida es obligatorio.");
          $this->assertEquals($errors->get("user_id")[0],"El campo Usuario es obligatorio.");
          $this->assertEquals($errors->get("task_id")[0],"El campo Tarea es obligatorio.");
          $this->assertEquals($errors->get("zone_id")[0],"El campo Zona es obligatorio.");
@@ -157,13 +148,13 @@ class JournalsModuleTest extends TestCase
     
     public function test_it_load_the_edit_page()
     {
-        $this->actingAs($userId = self::_userAdmin());
+        $this->actingAs($user =  UserTestable::userAdmin());
 
         $journalId = Journal::factory()->create([
             "date" => "2021-01-01",
             "input" => "08:00:00",
             "output" => "18:00:00",
-            "user_id" => $userId,
+            "user_id" => $user->id,
             "task_id" => Task::factory()->create([ 'name' => 'Sow' ])->id,
             "zone_id" => Zone::factory()->create([ 'name' => 'Land' ])->id
         ])->id;
@@ -184,7 +175,7 @@ class JournalsModuleTest extends TestCase
     
     public function test_it_updates_a_record()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $journal = Journal::factory()->create([
             "date" => "2021-01-01",
@@ -216,7 +207,7 @@ class JournalsModuleTest extends TestCase
 
     public function test_field_is_required_when_update_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $journal = Journal::factory()->create([
             "date" => "2021-01-01",

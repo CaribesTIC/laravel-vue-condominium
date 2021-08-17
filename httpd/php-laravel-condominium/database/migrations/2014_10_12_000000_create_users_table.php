@@ -22,10 +22,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('role')->default('user');
-            /*$table->foreignId('role_id')
+            $table->foreignId('role_id')->default(2)
                   ->references('id')
-                  ->on('roles')
-                  ->default(3);*/
+                  ->on('roles');
             $table->timestamps();
         });
     }

@@ -1,31 +1,23 @@
 <?php
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use App\Models\{Role, User};
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
+use App\Models\User;
 
 class UsersModuleTest extends TestCase
 {
 
-    use RefreshDatabase;
-    
-    private function _userAdmin()
-    {
-        Role::factory()
-            ->create();
-        return User::factory()
-            ->create([ "role" => "admin", "role_id" => 1 ]);
-    }
+    use RefreshDatabase, UserTestable;
 
     public function test_it_shows_the_users_list()
     {   //$this->withoutExceptionHandling();
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         User::factory()->create([ 'name' => 'John Doe' ]);
         User::factory()->create([ 'email' => 'user@email.ext' ]);
@@ -44,7 +36,7 @@ class UsersModuleTest extends TestCase
 
     public function test_it_show_the_user_detail()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $userId = User::factory()->create([
             'name' => 'John Doe',
@@ -64,7 +56,7 @@ class UsersModuleTest extends TestCase
    
     public function test_it_loads_the_new_user_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $response = $this->get('/users/create')            
             ->assertStatus(200);
@@ -75,7 +67,7 @@ class UsersModuleTest extends TestCase
 
     public function test_it_creates_a_new_user_including_credentials()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->post('/users/',[
             'name' => 'John Doe',
@@ -105,14 +97,15 @@ class UsersModuleTest extends TestCase
     
     public function test_the_name_is_required()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from('/users/create')
              ->post('/users/',[
                 'name' => null,
                 'email' => 'user@email.ext',
                 'password' => 'secret',
-                'role' => 'user'
+                'role' => 'user',
+                'role_id' => 2
             ])
             ->assertRedirect(route("users.create"))
             ->assertStatus(302);
@@ -126,12 +119,12 @@ class UsersModuleTest extends TestCase
 
          $this->assertDatabaseMissing('users', [
             'email' => 'user@email.ext'
-         ]);        
+         ]);
     }
     
     public function test_the_email_is_required()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from('/users/create')
              ->post('/users/',[
@@ -152,7 +145,7 @@ class UsersModuleTest extends TestCase
     
     public function test_the_email_must_be_unique()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
         
         $user = User::factory()->create([            
             'email' => 'user@email.ext',
@@ -173,7 +166,7 @@ class UsersModuleTest extends TestCase
     
     public function test_the_password_is_required()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
         
         $this->from('/users/create')
              ->post('/users/',[
@@ -190,7 +183,7 @@ class UsersModuleTest extends TestCase
     
     public function test_it_load_the_edit_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
  
         $userId = User::factory()->create([            
             'name' => 'John Doe',
@@ -210,7 +203,7 @@ class UsersModuleTest extends TestCase
     
     public function test_it_updates_a_record()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $user = User::factory()->create();
 
@@ -232,7 +225,7 @@ class UsersModuleTest extends TestCase
    
     public function test_the_name_is_required_when_updating_the_user()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $user = User::factory()->create();
 
@@ -251,7 +244,7 @@ class UsersModuleTest extends TestCase
     
     public function test_the_email_must_be_valid_when_updating_the_user()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $user = User::factory()->create(['name'=> 'Initial name']);
 
@@ -271,7 +264,7 @@ class UsersModuleTest extends TestCase
     
     public function test_the_email_must_be_unique_when_updating_the_user()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         User::factory()->create(['email' => 'existing-email@example.com']);
         
@@ -292,7 +285,7 @@ class UsersModuleTest extends TestCase
     
     public function test_the_password_is_optional_when_updating_the_user()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
         
         $oldPassword = 'PREVIOUS_PASSWORD';        
       
@@ -317,7 +310,7 @@ class UsersModuleTest extends TestCase
     
     public function test_the_users_email_can_stay_the_same_when_updating_the_user()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
         
         $user =  User::factory()->create(['email' => 'user@email.ext']);
 
@@ -338,7 +331,7 @@ class UsersModuleTest extends TestCase
     
     public function test_it_deletes_a_user()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
         
         $user =  User::factory()->create();
 

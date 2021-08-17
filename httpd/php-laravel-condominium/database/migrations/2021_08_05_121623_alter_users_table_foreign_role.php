@@ -13,14 +13,14 @@ class AlterUsersTableForeignRole extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        /*Schema::table('users', function (Blueprint $table) {
             $table->foreignId('role_id')
-                  ->nullable()
+                  //->nullable()
                   ->references('id')
                   ->on('roles')
-                  ->default(3);
+                  ->default(2);
                   //->after('current_team_id');
-        });
+        });*/
     }
 
     /**

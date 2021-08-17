@@ -1,28 +1,23 @@
 <?php
-
 namespace Tests\Feature;
 
+use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
-use App\Models\DwellingType;
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
+use App\Models\DwellingType;
 
 class DwellingTypesModuleTest extends TestCase
 {
-    use RefreshDatabase;
-    
-    private function _userAdmin()
-    {
-        \App\Models\Role::factory()->create();
-        return \App\Models\User::factory()->create([ "role" => "admin", "role_id" => 1 ]);
-    }
+    use RefreshDatabase, UserTestable;
 
     public function test_it_shows_the_dwealling_types_list()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
+
         DwellingType::create([ 'name' => 'Apartment', 'is_active' => false ]);
         DwellingType::create([ 'name' => 'Home', 'is_active' => true ]);
         DwellingType::create([ 'name' => 'Townhouse', 'is_active' => false ]);
@@ -41,9 +36,9 @@ class DwellingTypesModuleTest extends TestCase
 
     public function test_it_show_the_dwealling_type_detail()
     {   
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $dweallingTypeId = DwellingType::factory()->create([
             'name' => 'Apartment',
@@ -64,7 +59,7 @@ class DwellingTypesModuleTest extends TestCase
 
     public function test_it_loads_the_new_dwealling_type_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $response = $this->get('/dwelling-types/create')            
             ->assertStatus(200);
@@ -75,7 +70,7 @@ class DwellingTypesModuleTest extends TestCase
 
     public function test_it_creates_a_new_dwealling_type()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->post('/dwelling-types/',[
             'name' => 'Apartment',
@@ -91,7 +86,7 @@ class DwellingTypesModuleTest extends TestCase
 
     public function test_field_is_required_when_create_dwealling_type_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from('/dwelling-types/create')
              ->post('/dwelling-types/',[
@@ -109,7 +104,7 @@ class DwellingTypesModuleTest extends TestCase
     
     public function test_it_load_the_dwealling_type_edit_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
  
         $dwellingTypeId = DwellingType::factory()->create([
             'name' => 'Apartment',
@@ -128,7 +123,7 @@ class DwellingTypesModuleTest extends TestCase
     
     public function test_it_updates_a_dwealling_type_record()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $dwellingType = DwellingType::factory()->create([ "name"=>"Apartment", "is_active" => false ]);
         $this->from("/dwelling-types/{$dwellingType->id}/edit")
@@ -143,7 +138,7 @@ class DwellingTypesModuleTest extends TestCase
 
     public function test_field_is_required_when_update_dwealling_type_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $dwellingType = DwellingType::factory()->create([ "name"=>"Apartment", "is_active" => true ]);
         $this->from("/dwelling-types/{$dwellingType->id}/edit")

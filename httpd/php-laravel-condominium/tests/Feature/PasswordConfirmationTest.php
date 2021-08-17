@@ -1,11 +1,12 @@
 <?php
-
 namespace Tests\Feature;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Jetstream\Features;
+
 use Tests\TestCase;
+use Laravel\Jetstream\Features;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+
 
 class PasswordConfirmationTest extends TestCase
 {

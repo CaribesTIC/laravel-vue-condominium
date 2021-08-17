@@ -69,6 +69,7 @@ class UserController extends Controller
             "email" => $data["email"],
             "password" => $data["password"],
             "role" => $data["role"],
+            "role_id" => 1,
         ]);
 
         return redirect()

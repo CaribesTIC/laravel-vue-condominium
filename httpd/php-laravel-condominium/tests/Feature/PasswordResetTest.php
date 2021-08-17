@@ -2,16 +2,17 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use Tests\TestCase;
+use Tests\Feature\UserTestable;
+use Laravel\Fortify\Features;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Laravel\Fortify\Features;
-use Tests\TestCase;
+use App\Models\User;
 
 class PasswordResetTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTestable;
 
     public function test_reset_password_link_screen_can_be_rendered()
     {
@@ -31,7 +32,9 @@ class PasswordResetTest extends TestCase
         }
 
         Notification::fake();
-
+        
+        UserTestable::roleSeeder();
+        
         $user = User::factory()->create();
 
         $response = $this->post('/forgot-password', [
@@ -48,7 +51,9 @@ class PasswordResetTest extends TestCase
         }
 
         Notification::fake();
-
+        
+        UserTestable::roleSeeder();
+        
         $user = User::factory()->create();
 
         $response = $this->post('/forgot-password', [
@@ -71,7 +76,9 @@ class PasswordResetTest extends TestCase
         }
 
         Notification::fake();
-
+        
+        UserTestable::roleSeeder();
+        
         $user = User::factory()->create();
 
         $response = $this->post('/forgot-password', [

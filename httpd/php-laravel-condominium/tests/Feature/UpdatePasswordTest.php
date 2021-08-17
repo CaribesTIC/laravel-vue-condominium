@@ -2,19 +2,18 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
 
 class UpdatePasswordTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTestable;
 
     public function test_password_can_be_updated()
     {
-        \App\Models\Role::factory()->create();
-        $this->actingAs($user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]));
+        $this->actingAs($user = UserTestable::userAdmin());
 
         $response = $this->put('/user/password', [
             'current_password' => 'password',
@@ -27,8 +26,7 @@ class UpdatePasswordTest extends TestCase
 
     public function test_current_password_must_be_correct()
     {
-        \App\Models\Role::factory()->create();
-        $this->actingAs($user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]));
+        $this->actingAs($user = UserTestable::userAdmin());
 
         $response = $this->put('/user/password', [
             'current_password' => 'wrong-password',
@@ -43,8 +41,7 @@ class UpdatePasswordTest extends TestCase
 
     public function test_new_passwords_must_match()
     {
-        \App\Models\Role::factory()->create();
-        $this->actingAs($user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]));
+        $this->actingAs($user = UserTestable::userAdmin());
 
         $response = $this->put('/user/password', [
             'current_password' => 'password',

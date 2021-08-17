@@ -61,4 +61,12 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    /**
+     * Get the role that owns the user.
+     */
+    public function role()
+    {
+        return $this->belongsTo(\App\Models\Role::class);
+    }
+    
 }

@@ -17,4 +17,11 @@ class Role extends Model
         'menu_ids' => 'array'
     ];
 
+    /**
+     * Get the users for the role.
+     */
+    public function users()
+    {
+        return $this->hasMany(\App\Models\User::class);
+    }
 }
