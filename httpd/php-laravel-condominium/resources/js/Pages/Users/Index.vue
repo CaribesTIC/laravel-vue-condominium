@@ -3,9 +3,9 @@
     <page-header> Usuarios </page-header>
 
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('users.create')">
+      <Link class="btn btn-primary" :href="route('users.create')">
         <span>Crear</span>
-      </inertia-link>
+      </Link>
     </div>
 
     <div class="overflow-hidden panel mt-6">
@@ -43,13 +43,13 @@
           <tbody>
             <tr v-for="user in rows.data" :key="user.id" class="">
               <td class="">
-                <inertia-link
+                <Link
                   class="text-indigo-600 hover:text-indigo-800 underline"
                   :href="route('users.show', user.id)"
                   tabindex="-1"
                 >
                   {{ user.name }}
-                </inertia-link>
+                </Link>
               </td>
               <td class="">
                 {{ user.email }}
@@ -59,19 +59,19 @@
               </td>
               <td class="">
                 <div class="flex items-center space-x-1">
-                  <inertia-link
+                  <Link
                     :href="route('users.show', user.id)"
                     tabindex="-1"
                   >
                     <button class="btn btn-success btn-xs">Mostrar</button>
-                  </inertia-link>
+                  </Link>
 
-                  <inertia-link
+                  <Link
                     :href="route('users.edit', user.id)"
                     tabindex="-1"
                   >
                     <button class="btn btn-primary btn-xs">Editar</button>
-                  </inertia-link>
+                  </Link>
 
                   <button
                     @click="deleteRow(user.id)"
@@ -96,6 +96,7 @@
 <script>
 import { defineComponent } from "vue";
 import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import PageHeader from "@/Shared/PageHeader";
 import Pagination from "@/Shared/Pagination";
@@ -106,6 +107,7 @@ export default defineComponent({
   name: "Users",
   layout: Layout,
   components: {
+    Link,
     PageHeader,
     Pagination,
   },

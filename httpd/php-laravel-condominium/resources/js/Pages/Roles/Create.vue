@@ -2,9 +2,9 @@
   <div>
     <page-header> Crear rol </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('roles')">
+      <Link class="btn btn-primary" :href="route('roles')">
         Ver todos
-      </inertia-link>
+      </Link>
     </div>
 
     <div class="panel mt-6">
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -76,6 +77,7 @@ export default {
   name: "Create Role",
   layout: Layout,
   components: {
+    Link,
     LoadingButton,
     PageHeader,
   },

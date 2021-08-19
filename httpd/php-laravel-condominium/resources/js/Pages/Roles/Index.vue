@@ -3,9 +3,9 @@
     <page-header> Roles </page-header>
 
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('roles.create')">
+      <Link class="btn btn-primary" :href="route('roles.create')">
         <span>Crear</span>
-      </inertia-link>
+      </Link>
     </div>
 
     <div class="overflow-hidden panel mt-6">
@@ -47,19 +47,19 @@
               </td>
               <td class="">
                 <div class="flex items-center space-x-1">
-                  <inertia-link
+                  <Link
                     :href="route('roles.show', row.id)"
                     tabindex="-1"
                   >
                     <button class="btn btn-success btn-xs">Mostrar</button>
-                  </inertia-link>
+                  </Link>
 
-                  <inertia-link
+                  <Link
                     :href="route('roles.edit', row.id)"
                     tabindex="-1"
                   >
                     <button class="btn btn-primary btn-xs">Editar</button>
-                  </inertia-link>
+                  </Link>
 
                   <button
                     @click="deleteRow(row.id)"
@@ -84,6 +84,7 @@
 <script>
 import { defineComponent } from "vue";
 import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import PageHeader from "@/Shared/PageHeader";
 import Pagination from "@/Shared/Pagination";
@@ -93,6 +94,7 @@ export default defineComponent({
   name: "Roles",
   layout: Layout,
   components: {
+    Link,
     PageHeader,
     Pagination,
   },

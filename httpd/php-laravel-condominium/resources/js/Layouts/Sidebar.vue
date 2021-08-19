@@ -13,7 +13,7 @@
       class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 bg-gray-800 bg-gradient-to-b from-gray-700 to-gray-900"
     >
       <div class="px-1 py-1 w-full">
-        <inertia-link :href="route('dashboard')">          
+        <Link :href="route('dashboard')">          
           <svg class="h-60 w-60" version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="220.000000pt" height="229.000000pt" viewBox="0 0 220.000000 229.000000"
  preserveAspectRatio="xMidYMid meet">
@@ -42,7 +42,7 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
 0 -45 0 0 45 0 45 45 0 45 0 0 -45z"/>
 </g>
 </svg>
-        </inertia-link>
+        </Link>
       </div>
 
       <div class="font-bold text-center text-gray-100 text-lg">
@@ -51,20 +51,20 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
 
       <div class="flex justify-evenly mt-3 text-gray-100 text-xs">
 
-        <inertia-link
+        <Link
           :href="route('myprofile.edit')"
           class="block border border-gray-500 hover:bg-gray-500 px-2 py-1 rounded-sm"
         >
           Mi cuenta
-        </inertia-link>
+        </Link>
 
-        <inertia-link
+        <Link
           :href="route('logout')"
           class="block border border-gray-500 hover:bg-gray-500 px-2 py-1 rounded-sm"
           method="post"
           as="button">
             Cerrar sesión
-        </inertia-link>
+        </Link>
 
       </div>      
     
@@ -77,12 +77,14 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { Link } from '@inertiajs/inertia-vue3'
 import { useSidebar } from "../hooks/useSidebar.js";
 import RecursiveMenu from "@/Layouts/RecursiveMenu/Index";
 
 export default defineComponent({
 components: {
     //Icon,
+    Link,
     RecursiveMenu
   },
   setup() {
