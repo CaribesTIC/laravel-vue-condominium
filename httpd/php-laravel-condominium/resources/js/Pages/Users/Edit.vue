@@ -38,9 +38,9 @@
           <!-- role -->
           <label class="block">
             <span class="text-gray-700">Rol</span>
-            <select v-model="form.role" class="">
-              <option v-for="rol in roles" :value="rol" :key="rol">
-                {{ rol }}
+            <select v-model="form.role_id" class="">
+              <option v-for="role in roles" :value="role.id" :key="role">
+                {{ role.name }}
               </option>
             </select>
           </label>
@@ -91,7 +91,7 @@ export default {
         name: this.user.name,
         email: this.user.email,
         password: null,
-        role: this.user.role,
+        role_id: this.user.role_id,
       },
     };
   },
