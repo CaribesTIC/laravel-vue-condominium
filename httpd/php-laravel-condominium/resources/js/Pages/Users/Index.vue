@@ -55,7 +55,7 @@
                 {{ user.email }}
               </td>
               <td class="">
-                {{ user.role }}
+                {{ user.role.name }}
               </td>
               <td class="">
                 <div class="flex items-center space-x-1">

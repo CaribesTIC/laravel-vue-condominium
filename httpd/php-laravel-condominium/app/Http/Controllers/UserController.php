@@ -2,48 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\GeneralSettings;
 use Illuminate\Validation\Rule;
-use Illuminate\Http\Request;
+use Illuminate\Http\{
+    Request, //RedirectResponse
+};
 use Inertia\Inertia;
+use Inertia\Response;
+use App\GeneralSettings;
 use App\Models\User;
+use App\Http\Services\User\{
+    IndexUserService,
+    //ShowUserService,
+    //CreateUserService,
+    //StoreUserService,
+    //EditUserService,
+    //UpdateUserService,
+    //DestroyUserService    
+};
+
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index(Request $request, GeneralSettings $settings)
+    public function index(Request $request, GeneralSettings $settings): Response
     {
-        /* Initialize query */
-        $query = User::query();
-
-        /* search */
-        $search = $request->input("search");
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query
-                    ->where("name", "like", "%$search%")
-                    ->orWhere("email", "like", "%$search%");
-            });
-        }
-
-        /* sort */
-        $sort = $request->input("sort");
-        $direction = $request->input("direction") == "desc" ? "desc" : "asc";
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
-
-        /* get paginated results */
-        $users = $query
-            ->paginate($settings->default_pagination)
-            ->appends(request()->query());
-
-        return Inertia::render("Users/Index", [
-            "rows" => $users,
-            "sort" => $request->query("sort"),
-            "direction" => $request->query("direction"),
-            "search" => $request->query("search"),
-        ]);
+        return IndexUserService::execute($request, $settings);
     }
 
     public function create()
@@ -58,7 +41,6 @@ class UserController extends Controller
             "name" => ["required", "max:255"],
             "email" => ["required", "max:255", "email", Rule::unique("users")],
             "password" => ["required"],
-            //"role" => ["required"],
             "role_id" => ["required"],
         ]);
 
@@ -69,7 +51,6 @@ class UserController extends Controller
             "name" => $data["name"],
             "email" => $data["email"],
             "password" => $data["password"],
-           //"role" => $data["role"],
             "role_id" => $data["role_id"],
         ]);
 
@@ -104,7 +85,6 @@ class UserController extends Controller
                 Rule::unique("users")->ignore($user->id),
             ],
             "password" => ["nullable"],
-            //"role" => ["required"],
             "role_id" => ["required"],
         ]);
 
