@@ -58,7 +58,8 @@ class UserController extends Controller
             "name" => ["required", "max:255"],
             "email" => ["required", "max:255", "email", Rule::unique("users")],
             "password" => ["required"],
-            "role" => ["required"],
+            //"role" => ["required"],
+            "role_id" => ["required"],
         ]);
 
         // hash password
@@ -68,8 +69,8 @@ class UserController extends Controller
             "name" => $data["name"],
             "email" => $data["email"],
             "password" => $data["password"],
-            "role" => $data["role"],
-            "role_id" => 1,
+           //"role" => $data["role"],
+            "role_id" => $data["role_id"],
         ]);
 
         return redirect()
@@ -103,7 +104,8 @@ class UserController extends Controller
                 Rule::unique("users")->ignore($user->id),
             ],
             "password" => ["nullable"],
-            "role" => ["required"],
+            //"role" => ["required"],
+            "role_id" => ["required"],
         ]);
 
         // password, hash or remove

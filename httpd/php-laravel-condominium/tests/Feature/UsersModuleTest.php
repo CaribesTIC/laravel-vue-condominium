@@ -73,25 +73,25 @@ class UsersModuleTest extends TestCase
             'name' => 'John Doe',
             'email' => 'user@email.ext',
             'password' => 'secret', 
-            'role' => 'user'
+            'role_id' => 2 //user
         ])->assertRedirect(route("users.index"));
 
         $user = User::where("email","user@email.ext" )->first();
         $this->assertEquals([
             "name" => $user->name,
             "email" => $user->email,
-            "role" => $user->role
+            "role_id" => $user->role_id
         ], [
             "name" => "John Doe" ,
             "email" => "user@email.ext",
-            "role" => "user"
+            "role_id" => 2 //user
         ]);
 
         $this->assertCredentials([
             'name' => 'John Doe',
             'email' => 'user@email.ext',
             'password' => 'secret',
-            'role' => 'user'
+            'role_id' => 2 //user
         ], 'web'); 
     }
     
@@ -105,7 +105,7 @@ class UsersModuleTest extends TestCase
                 'email' => 'user@email.ext',
                 'password' => 'secret',
                 'role' => 'user',
-                'role_id' => 2
+                'role_id' => 2 //user
             ])
             ->assertRedirect(route("users.create"))
             ->assertStatus(302);
@@ -212,14 +212,14 @@ class UsersModuleTest extends TestCase
                  'name' => 'John Doe',
                  'email' => 'user@email.ext',
                  'password' => 'secret',
-                 'role' => 'user'
+                 'role_id' => 2 //user
             ])->assertRedirect(route("users.index"));
    
         $this->assertCredentials([
             'name' => 'John Doe',
             'email' => 'user@email.ext',
             'password' => 'secret',
-            'role' => 'user'       
+            'role_id' => 2 //user     
         ], 'web');
    }
    
@@ -296,7 +296,7 @@ class UsersModuleTest extends TestCase
                 'name' => 'John Doe',
                 'email' => 'user@email.ext',
                 'password' => '',
-                'role' => 'user'       
+                'role_id' => 2 //user     
             ])
             ->assertRedirect(route("users.index"));  
 
@@ -304,7 +304,7 @@ class UsersModuleTest extends TestCase
             'name' => 'John Doe',
 	        'email' => 'user@email.ext',
 	        'password' => $oldPassword, //VERY IMPORTANT
-	        'role' => 'user'
+	        'role_id' => 2 //user
         ], 'web');
     }
     
@@ -319,7 +319,7 @@ class UsersModuleTest extends TestCase
                 'name' => 'John Doe',
                 'email' => 'user@email.ext',
                 'password' => 'secret',
-                'role' => 'user'    
+                'role_id' => 2   //user  
             ])
             ->assertRedirect(route("users.index"));
 

@@ -108,6 +108,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     
     Route::prefix('users')->middleware(['role:admin'])->group(function () {
+    //Route::prefix('users')->middleware(['role:1'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/', [UserController::class, 'store'])->name('users.store');

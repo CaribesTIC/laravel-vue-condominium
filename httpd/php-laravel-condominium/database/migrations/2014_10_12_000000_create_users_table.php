@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('role')->default('user');
+            //$table->string('role')->default('user');
             $table->foreignId('role_id')->default(2)
                   ->references('id')
                   ->on('roles');

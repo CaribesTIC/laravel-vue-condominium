@@ -17,7 +17,7 @@ class PasswordConfirmationTest extends TestCase
         \App\Models\Role::factory()->create();
         $user = Features::hasTeamFeatures()
                         ? User::factory()->withPersonalTeam()->create()
-                        : User::factory()->create([ "role" => "admin", "role_id" => 1 ]);
+                        : User::factory()->create([ "role_id" => 1 ]); // admin
 
         $response = $this->actingAs($user)->get('/user/confirm-password');
 
@@ -27,7 +27,7 @@ class PasswordConfirmationTest extends TestCase
     public function test_password_can_be_confirmed()
     {
         \App\Models\Role::factory()->create();
-        $user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]);
+        $user = User::factory()->create([ "role_id" => 1 ]); // admin
 
         $response = $this->actingAs($user)->post('/user/confirm-password', [
             'password' => 'password',
@@ -40,7 +40,7 @@ class PasswordConfirmationTest extends TestCase
     public function test_password_is_not_confirmed_with_invalid_password()
     {
         \App\Models\Role::factory()->create();
-        $user = User::factory()->create([ "role" => "admin", "role_id" => 1 ]);
+        $user = User::factory()->create([ "role_id" => 1 ]); // admin
 
         $response = $this->actingAs($user)->post('/user/confirm-password', [
             'password' => 'wrong-password',
