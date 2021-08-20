@@ -47,13 +47,13 @@
           <!-- role -->
           <label class="block">
             <span class="text-gray-700">Rol</span>
-            <select v-model="form.role" class="">
-              <option v-for="rol in roles" :value="rol" :key="rol">
-                {{ rol }}
+            <select v-model="form.role_id" class="">
+              <option v-for="role in roles" :value="role.id" :key="role">
+                {{ role.name }}
               </option>
             </select>
-            <div v-if="errors.role" class="form-error">
-              {{ errors.role }}
+            <div v-if="errors.role_id" class="form-error">
+              {{ errors.role_id }}
             </div>
           </label>
         </div>
@@ -98,7 +98,7 @@ export default {
         name: null,
         email: null,
         password: null,
-        role: "User",
+        role_id: null,
       },
     };
   },

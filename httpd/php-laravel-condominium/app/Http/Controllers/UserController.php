@@ -12,8 +12,8 @@ use App\GeneralSettings;
 use App\Models\User;
 use App\Http\Services\User\{
     IndexUserService,
-    //ShowUserService,
-    //CreateUserService,
+    ShowUserService,
+    CreateUserService,
     //StoreUserService,
     //EditUserService,
     //UpdateUserService,
@@ -28,12 +28,16 @@ class UserController extends Controller
     {
         return IndexUserService::execute($request, $settings);
     }
-
-    public function create()
+    
+    public function show(User $user): Response
     {
-        $roles = config("roles.types");
-        return Inertia::render("Users/Create", compact("roles"));
-    }
+        return ShowUserService::execute($user); 
+    }   
+   
+    public function create(): Response
+    {
+        return CreateUserService::execute(); 
+    }   
 
     public function store(Request $request)
     {
@@ -57,13 +61,6 @@ class UserController extends Controller
         return redirect()
             ->route("users.index")
             ->with("success", "Usuario creado.");
-    }
-
-    public function show(User $user)
-    {
-        return Inertia::render("Users/Show", [
-            "user" => $user->only(["name", "email", "role"]),
-        ]);
     }
 
     public function edit(User $user)
