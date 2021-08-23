@@ -2,9 +2,9 @@
   <div>
     <page-header> Mostrar actividad </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('categories.index')">
+      <Link class="btn btn-primary" :href="route('categories.index')">
         Ver todos
-      </inertia-link>
+      </Link>
     </div>
     
     <div class="panel mt-6 p-4">      
@@ -58,12 +58,16 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import PageHeader from "@/Shared/PageHeader";
 
 export default {
   layout: Layout,
-  components: { PageHeader },
+  components: {
+    Link,
+    PageHeader
+  },
   props: { category: Object }
 };
 </script>

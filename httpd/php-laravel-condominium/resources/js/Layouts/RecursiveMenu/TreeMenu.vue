@@ -6,12 +6,12 @@
       </a>
     </div>
     <div v-else class="mb-2">  
-      <inertia-link class="items-center py-0" :href="route(menu.path)" preserve-scroll @click="activeNow">
+      <Link class="items-center py-0" :href="route(menu.path)" preserve-scroll @click="activeNow">
         <spam :class="[ isActive ? activeClass : inactiveClass]" class="flex items-center group py-0">
           <icon :name="menu.icon" class="w-5 h-5 mr-2"/>
           {{ menu.title }}
         </spam>
-      </inertia-link>
+      </Link>
     </div>  
     <ul v-if="menu.children_menus.length>0" style="padding-left: 21px">
       <tree-menu
@@ -24,11 +24,14 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue3'
 import Icon from './IconMenu'
+
 export default {
   name: 'tree-menu',  
   components: {
-    Icon
+    Icon,
+    Link,
   },  
   props: [ 'menu' ],
     data() {
@@ -36,14 +39,14 @@ export default {
        isActive:false,
        valor: false,
        pathNameUrl: window.location.pathname,     
-       showChildren: false,
+       showChildren: true,
        activeClass: "bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100",
        inactiveClass: "border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
      }
   },
   mounted(){
     this.pathNameUrl = window.location.pathname;
-    console.log(this.menu);
+    //console.log(this.menu);
   },
   computed: {
     iconClasses() {

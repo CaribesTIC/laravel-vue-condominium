@@ -2,8 +2,8 @@
   <div>
     <page-header> Crear tarea </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('tasks.index')"
-        >Ver todas</inertia-link
+      <Link class="btn btn-primary" :href="route('tasks.index')"
+        >Ver todas</Link
       >
     </div>
 
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -66,6 +67,7 @@ export default {
   name:"Tasks",
   layout: Layout,
   components: {
+    Link,
     LoadingButton,
     PageHeader,
   },

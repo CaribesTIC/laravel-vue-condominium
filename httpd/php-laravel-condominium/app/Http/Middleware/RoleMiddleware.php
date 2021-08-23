@@ -25,13 +25,14 @@ class RoleMiddleware
 
         // check roles
         $roles = explode("|", $roles);
+        
         foreach ($roles as $role) {
-            if ($user->role == $role) {
+            if ($user->role->name == $role) {
                 return $next($request);
             }
         }
 
         // deny
-        abort(403, "No tienes permisos suficientes para acceder (rol {$user->role})");
+        abort(403, "No tienes permisos suficientes para acceder (rol {$user->role->name})");
     }
 }

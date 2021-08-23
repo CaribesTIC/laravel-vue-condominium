@@ -2,9 +2,9 @@
   <div>
     <page-header> Mostrar journal </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('journals.index')">
+      <Link class="btn btn-primary" :href="route('journals.index')">
         Ver todas
-      </inertia-link>
+      </Link>
     </div>
     <div class="panel mt-6 p-4">      
       <div class="table-data__wrapper">
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -56,6 +57,7 @@ export default {
   name: 'Journal',
   layout: Layout,
   components: {
+    Link,
     LoadingButton,
     PageHeader,
   },

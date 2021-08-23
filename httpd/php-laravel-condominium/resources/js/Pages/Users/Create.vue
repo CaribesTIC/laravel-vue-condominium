@@ -2,8 +2,8 @@
   <div>
     <page-header> Crear usuario </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('users.index')"
-        >Ver todos</inertia-link
+      <Link class="btn btn-primary" :href="route('users.index')"
+        >Ver todos</Link
       >
     </div>
 
@@ -47,13 +47,13 @@
           <!-- role -->
           <label class="block">
             <span class="text-gray-700">Rol</span>
-            <select v-model="form.role" class="">
-              <option v-for="rol in roles" :value="rol" :key="rol">
-                {{ rol }}
+            <select v-model="form.role_id" class="">
+              <option v-for="role in roles" :value="role.id" :key="role">
+                {{ role.name }}
               </option>
             </select>
-            <div v-if="errors.role" class="form-error">
-              {{ errors.role }}
+            <div v-if="errors.role_id" class="form-error">
+              {{ errors.role_id }}
             </div>
           </label>
         </div>
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -81,6 +83,7 @@ export default {
   metaInfo: { title: "Create User" },
   layout: Layout,
   components: {
+    Link,
     LoadingButton,
     PageHeader,
   },
@@ -95,7 +98,7 @@ export default {
         name: null,
         email: null,
         password: null,
-        role: "User",
+        role_id: null,
       },
     };
   },

@@ -3,9 +3,9 @@
   <div>
     <page-header> Editar usuario </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('users.index')">
+      <Link class="btn btn-primary" :href="route('users.index')">
         Ver todos
-      </inertia-link>
+      </Link>
     </div>
 
     <div class="panel mt-6">
@@ -38,9 +38,9 @@
           <!-- role -->
           <label class="block">
             <span class="text-gray-700">Rol</span>
-            <select v-model="form.role" class="">
-              <option v-for="rol in roles" :value="rol" :key="rol">
-                {{ rol }}
+            <select v-model="form.role_id" class="">
+              <option v-for="role in roles" :value="role.id" :key="role">
+                {{ role.name }}
               </option>
             </select>
           </label>
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { Inertia } from "@inertiajs/inertia";
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -73,6 +75,7 @@ export default {
   },
   layout: Layout,
   components: {
+    Link,
     LoadingButton,
     PageHeader,
   },
@@ -88,7 +91,7 @@ export default {
         name: this.user.name,
         email: this.user.email,
         password: null,
-        role: this.user.role,
+        role_id: this.user.role_id,
       },
     };
   },

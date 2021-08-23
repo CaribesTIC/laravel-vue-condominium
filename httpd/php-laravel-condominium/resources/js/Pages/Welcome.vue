@@ -35,29 +35,29 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
       </div>
 
       <div v-if="canLogin" class="flex justify-center text-lg mt-10 space-x-5">
-        <inertia-link
+        <Link
           v-if="$page.props.user"
           href="/dashboard"
           class="block border border-gray-300 hover:bg-gray-300 px-4 py-1 rounded"
         >
           Dashboard
-        </inertia-link>
+        </Link>
 
         <template v-else>
-          <inertia-link
+          <Link
             :href="route('login')"
             class="btn btn-primary"
           >
             Iniciar sesión
-          </inertia-link>
+          </Link>
 
-          <inertia-link
+          <Link
             v-if="canRegister"
             :href="route('register')"
             class="btn btn-default"
           >
             Registrarse
-          </inertia-link>
+          </Link>
         </template>
       </div>
     </div>
@@ -65,7 +65,10 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
 </template>
 
 <script>
-export default {  
+import { Link } from '@inertiajs/inertia-vue3'
+
+export default {
+  components: { Link },
   props: {
     canLogin: Boolean,
     canRegister: Boolean,

@@ -1,15 +1,15 @@
 <?php
-
 namespace Tests\Feature;
 
-use App\Models\User;
+use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+
 
 class RoleMiddlewareTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTestable;
 
     public function test_role_middleware_not_logged_in()
     {
@@ -19,20 +19,14 @@ class RoleMiddlewareTest extends TestCase
 
     public function test_role_middleware_deny_role()
     {
-        $user = User::factory()->create([
-            "role" => "user",
-        ]);
-        $this->actingAs($user);
+        $this->actingAs(UserTestable::userCommon());
         $response = $this->get(route("users.index"));
         $response->assertStatus(403);
     }
 
     public function test_role_middleware_allow_role()
     {
-        $user = User::factory()->create([
-            "role" => "admin",
-        ]);
-        $this->actingAs($user);
+        $this->actingAs(UserTestable::userAdmin());
         $response = $this->get(route("users.index"));
         $response->assertStatus(200);
     }
