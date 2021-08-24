@@ -107,8 +107,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/', [GeneralSettingsController::class, 'update'])->name('settings.update');
     });
     
-    Route::prefix('users')->middleware(['role:admin'])->group(function () {
-    //Route::prefix('users')->middleware(['role:1'])->group(function () {
+    Route::prefix('users')->middleware(['role:admin'])->group(function () {    
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/', [UserController::class, 'store'])->name('users.store');
@@ -136,6 +135,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/{dwellingType}/edit', [DwellingTypeController::class, 'edit'])->name('dwelling-types.edit');
         Route::put('/{dwellingType}', [DwellingTypeController::class, 'update'])->name('dwelling-types.update');
         Route::delete('/{dwellingType}', [DwellingTypeController::class, 'destroy'])->name('dwelling-types.destroy');
+    });
+    
+    Route::prefix('dwellings')->group(function () {
+        Route::get('/', fn()=> Inertia::render("Dwellings/Main", ["article" => []]));    
     });
     
     /*Route::prefix('dwellings')->group(function () {
