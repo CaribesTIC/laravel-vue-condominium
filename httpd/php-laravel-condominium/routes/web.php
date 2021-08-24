@@ -137,8 +137,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::delete('/{dwellingType}', [DwellingTypeController::class, 'destroy'])->name('dwelling-types.destroy');
     });
     
-    Route::prefix('dwellings')->group(function () {
-        Route::get('/', fn()=> Inertia::render("Dwellings/Main", ["article" => []]));    
+    Route::prefix('dwellings')->group(function () {            
+        Route::get('/', fn()=> Inertia::render("Dwellings/Index", [
+                "home" => "myhome",
+                "posts" => ["myposts"],
+                "archive" => ["myarchive"=>"myarchive"]
+        ]));            
     });
     
     /*Route::prefix('dwellings')->group(function () {
