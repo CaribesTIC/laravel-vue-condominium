@@ -13,6 +13,7 @@ services:
     networks:
       - web_condominium
       - postgresql_condominium
+      - selenium_condominium
     #restart: always
 
   pgsql:
@@ -36,6 +37,8 @@ services:
   pgadmin:
     container_name: pgadmin_condominium
     image: dpage/pgadmin4
+    depends_on:
+      - pgsql
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
@@ -47,8 +50,59 @@ services:
       - postgresql_condominium
     #restart: always
 
+  selenium-hub:
+    container_name: selenium_condominium
+    image: selenium/hub:4.0.0-rc-1-prerelease-20210823
+    depends_on:
+      - condominium
+    environment:
+      - logger.level=DEBUG
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+    networks:
+      - selenium_condominium
+
+  chrome:
+    container_name: chrome_condominium
+    image: selenium/node-chrome:4.0.0-rc-1-prerelease-20210823
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - logger.level=DEBUG
+    ports:
+      - "6900:5900"
+    networks:
+      - selenium_condominium
+      - web_condominium
+    extra_hosts:
+      - "condominium.com.ve:172.26.0.2"
+
+#  firefox:
+#    container_name: firefox_condominium
+#    image: selenium/node-firefox:4.0.0-rc-1-prerelease-20210823
+#   shm_size: 2gb
+#    depends_on:
+#      - selenium-hub
+#    environment:
+#      - SE_EVENT_BUS_HOST=selenium-hub
+#     - SE_EVENT_BUS_PUBLISH_PORT=4442
+#      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+#    ports:
+#      - "6902:5900"
+#    networks:
+#      - selenium_condominium
+
+
 networks:
   web_condominium:
     external: true
   postgresql_condominium:
+    external: true
+  selenium_condominium:
     external: true
