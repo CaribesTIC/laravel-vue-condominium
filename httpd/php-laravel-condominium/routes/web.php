@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\{
   CategoryController,
+  DwellingController,
   DwellingTypeController,
   JournalController,  
   GeneralSettingsController,
@@ -125,7 +126,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/{zone}/edit', [ZoneController::class, 'edit'])->name('zones.edit');
         Route::put('/{zone}', [ZoneController::class, 'update'])->name('zones.update');
         Route::delete('/{zone}', [ZoneController::class, 'destroy'])->name('zones.destroy');
-    });
+    });   
     
     Route::prefix('dwelling-types')->group(function () {
         Route::get('/', [DwellingTypeController::class, 'index'])->name('dwelling-types.index');
@@ -136,13 +137,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/{dwellingType}', [DwellingTypeController::class, 'update'])->name('dwelling-types.update');
         Route::delete('/{dwellingType}', [DwellingTypeController::class, 'destroy'])->name('dwelling-types.destroy');
     });
-    
-    Route::prefix('dwellings')->group(function () {            
-        Route::get('/', fn()=> Inertia::render("Dwellings/Index", [
+
+    Route::prefix('dwellings')->group(function () {
+        Route::get('/', [DwellingController::class, 'index'])->name('dwellings.index');          
+        Route::get('/tabs', fn()=> Inertia::render("Dwellings/Tabs", [
                 "home" => "myhome",
                 "posts" => ["myposts"],
                 "archive" => ["myarchive"=>"myarchive"]
-        ]));            
+        ]))->name('dwellings');            
     });
     
     /*Route::prefix('dwellings')->group(function () {

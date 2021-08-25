@@ -16,35 +16,7 @@ class DwellingController extends Controller
      */
     public function index()
     {
-                /* Initialize query */
-        $query = Zone::query();
-
-        /* search */
-        $search = $request->input("search");
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where("name", "like", "%$search%");
-            });
-        }
-
-        /* sort */
-        $sort = $request->input("sort");
-        $direction = $request->input("direction") == "desc" ? "desc" : "asc";
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
-
-        /* get paginated results */
-        $zones = $query
-            ->paginate($settings->default_pagination)
-            ->appends(request()->query());
-
-        return Inertia::render("Zones/Index", [
-            "rows" => $zones,
-            "sort" => $request->query("sort"),
-            "direction" => $request->query("direction"),
-            "search" => $request->query("search"),
-        ]);
+    
     }
 
     /**

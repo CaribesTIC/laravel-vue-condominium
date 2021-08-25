@@ -123,5 +123,14 @@ class MenuSeeder extends Seeder
             "icon" => "settings",
             "sort" => 8
         ]);
+        
+        
+        Menu::create([
+            "title" => "Viviendas",
+            "menu_id" => 2,
+            "path" => "dwellings",
+            "icon" => "settings",
+            "sort" => 3
+        ]);
     }
 }

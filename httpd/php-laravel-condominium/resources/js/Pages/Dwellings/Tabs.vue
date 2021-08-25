@@ -1,4 +1,17 @@
 <template>
+<div>
+    <page-header> Viviendas  </page-header>
+    <div class="flex space-x-2">
+      <Link class="btn btn-primary" :href="route('dwellings')">
+        Ver todas
+      </Link>
+    </div>
+
+    <div class="panel mt-6">
+
+
+
+
   <div id="dynamic-component-demo" class="demo">
     <button
       v-for="tab in tabs"
@@ -15,10 +28,17 @@
       :propiedad="currentTabProps">
     </component>
   </div>
+  
+  
+  </div>
+  </div>
+  
 </template>
 
 <script>
 import Layout from "@/Layouts/AppLayout";
+import LoadingButton from "@/Shared/LoadingButton";
+import PageHeader from "@/Shared/PageHeader";
 import TabHome from './TabHome.vue'
 import TabPosts from './TabPosts.vue'
 import TabArchive from './TabArchive.vue'
@@ -28,7 +48,9 @@ export default {
   components: {    
     TabHome,
     TabPosts,
-    TabArchive
+    TabArchive,
+    LoadingButton,
+    PageHeader,
   },
   props: {    
     home: String,
