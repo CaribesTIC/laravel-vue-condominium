@@ -32,7 +32,8 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             //'role' => $this->faker->randomElement(config('roles.types')),
             //'role' => $this->faker->randomElement(['admin']),
-            'role_id' => $this->faker->randomElement( [ 1, 2, 3, 4 ] ),
+            //'role_id' => $this->faker->randomElement( [ 1, 2, 3, 4 ] ),
+            'role_id' => $this->faker->randomElement( [ 2 ] ),
         ];
     }
 

@@ -1,41 +1,35 @@
 <template>
-<div>
+  <div>
     <page-header> Viviendas  </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('dwellings')">
+      <Link class="btn btn-primary" :href="route('dwellings.index')">
         Ver todas
       </Link>
     </div>
 
     <div class="panel mt-6">
+      <div id="dynamic-component-demo" class="demo">
+        <button
+          v-for="tab in tabs"
+          v-bind:key="tab"
+          v-bind:class="['tab-button', { active: currentTab === tab }]"
+          v-on:click="currentTab = tab"
+        >
+          {{ tab }}
+        </button>
 
-
-
-
-  <div id="dynamic-component-demo" class="demo">
-    <button
-      v-for="tab in tabs"
-      v-bind:key="tab"
-      v-bind:class="['tab-button', { active: currentTab === tab }]"
-      v-on:click="currentTab = tab"
-    >
-      {{ tab }}
-    </button>
-    
-    <component
-      v-bind:is="currentTabComponent"
-      class="tab"
-      :propiedad="currentTabProps">
-    </component>
-  </div>
-  
-  
-  </div>
-  </div>
-  
+        <component
+          v-bind:is="currentTabComponent"
+          class="tab"
+          :propiedad="currentTabProps">
+        </component>
+      </div>
+    </div>
+  </div>  
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -45,15 +39,17 @@ import TabArchive from './TabArchive.vue'
 
 export default {
   layout: Layout,
-  components: {    
+  components: {
+    Link,  
     TabHome,
     TabPosts,
     TabArchive,
     LoadingButton,
     PageHeader,
   },
-  props: {    
-    home: String,
+  props: {
+    errors: Object,  
+    home: Object,
     posts: Array,
     archive: Object
   },
@@ -72,7 +68,7 @@ export default {
       return 'tab-' + this.currentTab.toLowerCase()
     },
     currentTabProps() {
-      return this.$props[this.currentTab.toLowerCase()]
+      return [this.$props[this.currentTab.toLowerCase()], this.errors]
     }
   }
 }
@@ -83,7 +79,7 @@ export default {
   font-family: sans-serif;
   border: 1px solid #eee;
   border-radius: 2px;
-  padding: 20px 30px;
+  padding: 0px 0px;
   margin-top: 1em;
   margin-bottom: 40px;
   user-select: none;

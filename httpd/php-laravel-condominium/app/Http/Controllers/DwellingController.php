@@ -2,10 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\GeneralSettings;
-use Inertia\Inertia;
 use App\Models\Dwelling;
+use App\Http\Services\Dwelling\{
+    IndexDwellingService,
+    EditDwellingService,
+    /*ShowDwellingService,
+    CreateDwellingService,
+    StoreDwellingService,
+    EditDwellingService,
+    UpdateDwellingService,
+    DestroyDwellingService*/
+};
+use Illuminate\Http\{
+    Request,
+    RedirectResponse
+};
+use Inertia\{
+    Inertia,
+    Response
+};
 
 class DwellingController extends Controller
 {
@@ -14,9 +30,9 @@ class DwellingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, GeneralSettings $settings): Response
     {
-    
+        return IndexDwellingService::execute($request, $settings);
     }
 
     /**
@@ -56,10 +72,10 @@ class DwellingController extends Controller
      *
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
-     */
-    public function edit(Dwelling $dwelling)
+     */    
+    public function edit(Dwelling $dwelling): Response
     {
-        //
+        return EditDwellingService::execute($dwelling); 
     }
 
     /**

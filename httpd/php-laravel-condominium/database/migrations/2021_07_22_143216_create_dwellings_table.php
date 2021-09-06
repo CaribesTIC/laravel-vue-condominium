@@ -15,7 +15,7 @@ class CreateDwellingsTable extends Migration
     {
         Schema::create('dwellings', function (Blueprint $table) {
             $table->id();
-            $table->string('number', 3);
+            $table->string('name', 10)->unique();
             $table->integer('location');
             $table->foreignId('user_id')->references('id')->on('users');            
             $table->timestamps();

@@ -128,7 +128,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Viviendas",
             "menu_id" => 2,
-            "path" => "dwellings",
+            "path" => "dwellings.index",
             "icon" => "settings",
             "sort" => 3
         ]);
