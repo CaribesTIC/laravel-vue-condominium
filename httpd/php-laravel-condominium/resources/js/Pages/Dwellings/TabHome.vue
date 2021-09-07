@@ -13,13 +13,13 @@
           </label>
           <label class="block">
             <span class="text-gray-700">Tipo de Vivienda</span>
-            <select v-model="form.category_id" class="">
+            <select v-model="form.dwelling_type_id" class="">
               <option v-for="dwellingType in dwellingTypes" :value="dwellingType.id" :key="dwellingType.id">
                 {{ dwellingType.name }}
               </option>
             </select>
-            <div v-if="errors.category_id" class="form-error">
-              {{ errors.category_id }}
+            <div v-if="errors.dwelling_type_id" class="form-error">
+              {{ errors.dwelling_type_id }}
             </div>
           </label>          
         </div>

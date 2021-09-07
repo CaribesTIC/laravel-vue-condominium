@@ -24,9 +24,18 @@ class Dwelling extends Model
     protected $fillable = [
         'name',
         'location',
+        'dwelling_type_id',
         'user_id'
     ];
-    
+
+    /**
+     * Get the dwelling_type for the dwelling.
+     */
+    public function dwelling_type()
+    {        
+        return $this->belongsTo(\App\Models\DwellingType::class);
+    }
+
     /**
      * Get the user for the dwelling.
      */
