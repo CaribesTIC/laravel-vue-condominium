@@ -14,19 +14,21 @@ class UserSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {        
         User::factory()->create([
-            "email" => "dev@dev.com",
+            "email" => "admin@admin.com",
             "password" => Hash::make("asdf"),
-            "role" => "admin",
+            //"role" => "admin",
+            "role_id" => 1,
         ]);
 
         User::factory()->create([
             "email" => "user@user.com",
             "password" => Hash::make("asdf"),
-            "role" => "user",
+            //"role" => "user",
+            "role_id" => 2,
         ]);
         
-        User::factory(10)->create();
+        User::factory(10)->create();        
     }
 }

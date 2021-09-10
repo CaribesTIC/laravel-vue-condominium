@@ -7,8 +7,10 @@ use App\Http\Controllers\{
   DwellingTypeController,
   JournalController,  
   GeneralSettingsController,
+  MenuController,
   MyProfileController,
   PostController,
+  RoleController,
   TaskController,
   UserController,  
   ZoneController,
@@ -57,7 +59,25 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::delete('/{journal}', [JournalController::class, 'destroy'])->name('journals.destroy');
     });
      
-    Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');  
+    Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
+    
+    Route::prefix('menus')->group(function () {
+        Route::get('/', [MenuController::class, 'index'])->name('menus');
+        Route::get('/children/{menuId}', [MenuController::class, 'children']);
+        Route::post('/store', [MenuController::class, 'store'])->name('menus.store');  
+        Route::put('/{menu}', [MenuController::class, 'update'])->name('menus.update');
+        Route::delete('/{id}', [MenuController::class,'destroy'])->name('menus.destroy');
+    });
+
+    Route::prefix('roles')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('roles');
+        Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::get('/{role}/show', [RoleController::class, 'show'])->name('roles.show');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');  
+        Route::post('/store', [RoleController::class, 'store'])->name('roles.store');  
+        Route::put('/{role}', [RoleController::class, 'update'])->name('roles.update');
+        Route::delete('/{id}', [RoleController::class,'destroy'])->name('roles.destroy');
+    });
 
     Route::prefix('myprofile')->group(function () {
       Route::get('/edit', [MyProfileController::class, 'edit'])->name('myprofile.edit');      
@@ -88,6 +108,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     
     Route::prefix('users')->middleware(['role:admin'])->group(function () {
+    //Route::prefix('users')->middleware(['role:1'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/', [UserController::class, 'store'])->name('users.store');

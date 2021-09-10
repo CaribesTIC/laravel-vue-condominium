@@ -1,11 +1,12 @@
 <?php
-
 namespace Tests\Feature;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Jetstream\Features;
+
 use Tests\TestCase;
+use Laravel\Jetstream\Features;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+
 
 class PasswordConfirmationTest extends TestCase
 {
@@ -13,9 +14,10 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_confirm_password_screen_can_be_rendered()
     {
+        \App\Models\Role::factory()->create();
         $user = Features::hasTeamFeatures()
                         ? User::factory()->withPersonalTeam()->create()
-                        : User::factory()->create();
+                        : User::factory()->create([ "role_id" => 1 ]); // admin
 
         $response = $this->actingAs($user)->get('/user/confirm-password');
 
@@ -24,7 +26,8 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_can_be_confirmed()
     {
-        $user = User::factory()->create();
+        \App\Models\Role::factory()->create();
+        $user = User::factory()->create([ "role_id" => 1 ]); // admin
 
         $response = $this->actingAs($user)->post('/user/confirm-password', [
             'password' => 'password',
@@ -36,7 +39,8 @@ class PasswordConfirmationTest extends TestCase
 
     public function test_password_is_not_confirmed_with_invalid_password()
     {
-        $user = User::factory()->create();
+        \App\Models\Role::factory()->create();
+        $user = User::factory()->create([ "role_id" => 1 ]); // admin
 
         $response = $this->actingAs($user)->post('/user/confirm-password', [
             'password' => 'wrong-password',

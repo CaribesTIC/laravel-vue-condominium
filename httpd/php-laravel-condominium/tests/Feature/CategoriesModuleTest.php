@@ -1,28 +1,24 @@
 <?php
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
+use App\Models\Category;
 
 class CategoriesModuleTest extends TestCase
 {
 
-    use RefreshDatabase;
-    
-    private function _userAdmin()
-    {
-        return \App\Models\User::factory()->create([ "role" => "admin" ]);
-    }
+    use RefreshDatabase, UserTestable;
+
 
     public function test_it_shows_the_categories_list()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         Category::create([ 'name' => 'Principal' ]);
         Category::create([ 'name' => 'Secondary' ]);
@@ -42,7 +38,7 @@ class CategoriesModuleTest extends TestCase
     
     public function test_it_show_the_category_detail()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $categoryId = Category::factory()->create([
             'name' => 'Principal'            
@@ -60,7 +56,7 @@ class CategoriesModuleTest extends TestCase
     
     public function test_it_loads_the_new_category_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $response = $this->get('/categories/create')            
             ->assertStatus(200);
@@ -71,7 +67,7 @@ class CategoriesModuleTest extends TestCase
     
     public function test_it_creates_a_new_category()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->post('/categories/',[
             'name' => 'Principal'
@@ -84,7 +80,7 @@ class CategoriesModuleTest extends TestCase
     
     public function test_field_is_required_when_create_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from('/categories/create')
              ->post('/categories/',[
@@ -100,7 +96,7 @@ class CategoriesModuleTest extends TestCase
     
     public function test_it_load_the_edit_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
  
         $categoryId = Category::factory()->create([
             'name' => 'Principal'            
@@ -118,7 +114,7 @@ class CategoriesModuleTest extends TestCase
     
     public function test_it_updates_a_record()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $category = Category::factory()->create(["name"=>"Principal"]);
         $this->from("/categories/{$category->id}/edit")
@@ -131,7 +127,7 @@ class CategoriesModuleTest extends TestCase
 
     public function test_field_is_required_when_update_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $category = Category::factory()->create(["name"=>"Principal"]);
         $this->from("/categories/{$category->id}/edit")

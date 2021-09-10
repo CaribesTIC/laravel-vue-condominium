@@ -3,9 +3,9 @@
   <div>
     <page-header> Editar zona </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('zones.index')">
+      <Link class="btn btn-primary" :href="route('zones.index')">
         Ver todas
-      </inertia-link>
+      </Link>
     </div>
 
     <div class="panel mt-6">
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
@@ -43,6 +44,7 @@ import PageHeader from "@/Shared/PageHeader";
 export default {
   layout: Layout,
   components: {
+    Link,
     LoadingButton,
     PageHeader,
   },

@@ -30,7 +30,6 @@ class Category extends Model
      */
     public function tasks()
     {
-        //return $this->hasMany('App\Models\Task');
         return $this->hasMany(\App\Models\Task::class);
     }
     

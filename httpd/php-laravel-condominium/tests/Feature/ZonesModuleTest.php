@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -10,19 +11,15 @@ use App\Models\Zone;
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
 
+
 class ZonesModuleTest extends TestCase
 {
-
-    use RefreshDatabase;
-    
-    private function _userAdmin()
-    {
-        return \App\Models\User::factory()->create([ "role" => "admin" ]);
-    }
+    use RefreshDatabase, UserTestable;
 
     public function test_it_shows_the_tasks_list()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
+
         Zone::create([ 'name' => 'Corral' ]);
         Zone::create([ 'name' => 'Parcel' ]);
         Zone::create([ 'name' => 'Land' ]);
@@ -41,7 +38,7 @@ class ZonesModuleTest extends TestCase
     
     public function test_it_show_the_zone_detail()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $zoneId = Zone::factory()->create([
             'name' => 'Land'           
@@ -59,7 +56,7 @@ class ZonesModuleTest extends TestCase
     
     public function test_it_loads_the_new_zone_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $response = $this->get('/zones/create')            
             ->assertStatus(200);
@@ -70,7 +67,7 @@ class ZonesModuleTest extends TestCase
     
     public function test_it_creates_a_new_zone()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->post('/zones/',[
             'name' => 'Land'
@@ -84,7 +81,7 @@ class ZonesModuleTest extends TestCase
     
     public function test_field_is_required_when_create_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from('/zones/create')
              ->post('/zones/',[
@@ -100,7 +97,7 @@ class ZonesModuleTest extends TestCase
     
     public function test_it_load_the_edit_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
  
         $zoneId = Zone::factory()->create([
             'name' => 'Land'           
@@ -118,7 +115,7 @@ class ZonesModuleTest extends TestCase
     
     public function test_it_updates_a_record()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $zone = Zone::factory()->create(["name"=>"Land"]);
         $this->from("/zones/{$zone->id}/edit")
@@ -131,7 +128,7 @@ class ZonesModuleTest extends TestCase
 
     public function test_field_is_required_when_update_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $zone = Zone::factory()->create(["name"=>"Land"]);
         $this->from("/zones/{$zone->id}/edit")

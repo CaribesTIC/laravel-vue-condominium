@@ -1,29 +1,23 @@
 <?php
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Tests\Feature\UserTestable;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use App\Models\Task;
-use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use Inertia\Testing\Assert;
+use App\Models\{Task, Category};
 
 class TasksModuleTest extends TestCase
 {
 
-    use RefreshDatabase;
-    
-    private function _userAdmin()
-    {
-        return \App\Models\User::factory()->create([ "role" => "admin" ]);
-    }
-
+    use RefreshDatabase, UserTestable;   
+ 
     public function test_it_shows_the_categories_list()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         Task::factory()->create([ 'name' => 'Sow' ]);
         Task::factory()->create([ 'description' => 'Plant the seeds' ]);
@@ -43,7 +37,7 @@ class TasksModuleTest extends TestCase
     
     public function test_it_show_the_task_detail()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $taskId = Task::factory()->create([
             'name' => 'Sow',
@@ -65,7 +59,7 @@ class TasksModuleTest extends TestCase
     
     public function test_it_loads_the_new_task_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $response = $this->get('/tasks/create')            
             ->assertStatus(200);
@@ -78,7 +72,7 @@ class TasksModuleTest extends TestCase
     
     public function test_it_creates_a_new_task()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
         
         $categoryId = Category::create([ 'name' => 'Principal' ])->id;
         
@@ -102,7 +96,7 @@ class TasksModuleTest extends TestCase
     
     public function test_fields_are_required_when_create_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $this->from('/tasks/create')
              ->post('/tasks/',[
@@ -122,7 +116,7 @@ class TasksModuleTest extends TestCase
 
     public function test_it_load_the_edit_page()
     {
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $taskId = Task::factory()->create([
             'name' => 'Sow',
@@ -145,7 +139,7 @@ class TasksModuleTest extends TestCase
     
     public function test_it_updates_a_record()
     {
-        $this->actingAs(self::_userAdmin());        
+        $this->actingAs(UserTestable::userAdmin());        
 
         $task = Task::factory()->create([
             "name"=>"Sow",
@@ -168,7 +162,7 @@ class TasksModuleTest extends TestCase
 
     public function test_field_is_required_when_update_record()
     {   
-        $this->actingAs(self::_userAdmin());
+        $this->actingAs(UserTestable::userAdmin());
 
         $task = Task::factory()->create([
             "name"=>"Sow",

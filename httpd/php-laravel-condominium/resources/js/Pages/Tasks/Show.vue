@@ -2,9 +2,9 @@
   <div>
     <page-header> Mostrar usuario </page-header>
     <div class="flex space-x-2">
-      <inertia-link class="btn btn-primary" :href="route('tasks.index')">
+      <Link class="btn btn-primary" :href="route('tasks.index')">
         Ver todos
-      </inertia-link>
+      </Link>
     </div>
     <div class="panel mt-6 p-4">      
       <div class="table-data__wrapper">
@@ -36,12 +36,16 @@
 </template>
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import PageHeader from "@/Shared/PageHeader";
 
 export default {
   layout: Layout,
-  components: { PageHeader },
+  components: {
+    Link,
+    PageHeader
+  },
   props: { task: Object }
 };
 </script>
