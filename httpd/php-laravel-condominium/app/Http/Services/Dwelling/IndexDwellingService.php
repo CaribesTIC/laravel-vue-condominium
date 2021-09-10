@@ -21,7 +21,7 @@ class IndexDwellingService
     static public function execute(Request $request, GeneralSettings $settings): \Inertia\Response    
     {
         /* Initialize query */
-        $query = Dwelling::query()->with("user");
+        $query = Dwelling::query()->with("dwelling_type", "user");
 
         /* search */
         $search = $request->input("search");        

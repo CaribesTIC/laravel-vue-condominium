@@ -18,11 +18,14 @@
           {{ tab }}
         </button>
 
-        <component
-          v-bind:is="currentTabComponent"
-          class="tab"
-          :propiedad="currentTabProps">
-        </component>
+        <!--keep-alive-->
+          <component
+            v-bind:is="currentTabComponent"
+            class="tab"
+            :propiedad="currentTabProps">
+          </component>
+        <!--/keep-alive-->
+
       </div>
     </div>
   </div>  
@@ -31,7 +34,6 @@
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
-import LoadingButton from "@/Shared/LoadingButton";
 import PageHeader from "@/Shared/PageHeader";
 import TabHome from './TabHome.vue'
 import TabPosts from './TabPosts.vue'
@@ -44,8 +46,7 @@ export default {
     TabHome,
     TabPosts,
     TabArchive,
-    LoadingButton,
-    PageHeader,
+    PageHeader
   },
   props: {
     errors: Object,  

@@ -6,13 +6,12 @@ use App\GeneralSettings;
 use App\Models\Dwelling;
 use App\Http\Services\Dwelling\{
     IndexDwellingService,
-    EditDwellingService,
-    /*ShowDwellingService,
-    CreateDwellingService,
-    StoreDwellingService,
+    //ShowDwellingService,
+    //CreateDwellingService,
+    //StoreDwellingService,
     EditDwellingService,
     UpdateDwellingService,
-    DestroyDwellingService*/
+    //DestroyDwellingService
 };
 use Illuminate\Http\{
     Request,
@@ -85,9 +84,9 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dwelling $dwelling)
-    {
-        //
+    public function update(Request $request, $id)//: RedirectResponse
+    {        
+        return UpdateDwellingService::execute($request, $id);
     }
 
     /**

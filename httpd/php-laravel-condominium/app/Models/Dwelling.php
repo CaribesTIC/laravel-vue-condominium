@@ -24,6 +24,8 @@ class Dwelling extends Model
     protected $fillable = [
         'name',
         'location',
+        'aliquot',
+        'is_habited',
         'dwelling_type_id',
         'user_id'
     ];

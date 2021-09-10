@@ -17,6 +17,8 @@ class CreateDwellingsTable extends Migration
             $table->id();
             $table->string('name', 10)->unique();
             $table->integer('location');
+            $table->float('aliquot');
+            $table->boolean('is_habited')->default(true);
             $table->foreignId('dwelling_type_id')->references('id')->on('dwelling_types');            
             $table->foreignId('user_id')->references('id')->on('users');            
             $table->timestamps();

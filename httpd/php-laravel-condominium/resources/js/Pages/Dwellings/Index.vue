@@ -32,7 +32,13 @@
                 <a href="#" @click.prevent="setSort('name')">Name</a>
               </th>
               <th class="">
+                <a href="#" @click.prevent="setSort('dwelling_type')">Tipo de Vivienda</a>
+              </th>
+              <th class="">
                 <a href="#" @click.prevent="setSort('location')">Location</a>
+              </th>
+              <th class="">
+                <a href="#" @click.prevent="setSort('aliquot')">Alícuota</a>
               </th>
               <th class="">
                 <a href="#" @click.prevent="setSort('user')">User</a>
@@ -46,7 +52,13 @@
                 {{ row.name }}
               </td>
               <td class="">
+                {{ row.dwelling_type.name }}
+              </td>
+              <td class="">
                 {{ row.location }}
+              </td>
+              <td class="">
+                {{ row.aliquot }}
               </td>
               <td class="">            
                 <Link

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Services\Dwelling;
 
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class EditDwellingService
     {
         return Inertia::render("Dwellings/Tabs", [
             "home" => [
+	        "isCreate" => false,
                 "form" => $dwelling->load("dwelling_type")->toArray(),
                 "users" => User::select('id', 'name')->get()->toArray(),
                 "dwellingTypes" => DwellingType::select('id', 'name')->get()->toArray()                
