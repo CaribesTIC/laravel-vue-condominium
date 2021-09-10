@@ -54,6 +54,8 @@ COPY virtualhost.conf /etc/apache2/sites-available/
 
 RUN (cd /etc/apache2/sites-available ; a2ensite virtualhost.conf)
 
+RUN (echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf)
+
 ARG uid=1000
 RUN useradd -G www-data,root -u $uid -d /home/tecnologia tecnologia
 RUN mkdir -p /home/tecnologia/.composer && \
