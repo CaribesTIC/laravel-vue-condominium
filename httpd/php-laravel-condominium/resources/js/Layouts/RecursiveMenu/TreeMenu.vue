@@ -7,10 +7,10 @@
     </div>
     <div v-else class="mb-2">  
       <Link class="items-center py-0" :href="route(menu.path)" preserve-scroll @click="activeNow">
-        <spam :class="[ isActive ? activeClass : inactiveClass]" class="flex items-center group py-0">
+        <span :class="[ isActive ? activeClass : inactiveClass]" class="flex items-center group py-0">
           <icon :name="menu.icon" class="w-5 h-5 mr-2"/>
           {{ menu.title }}
-        </spam>
+        </span>
       </Link>
     </div>  
     <ul v-if="menu.children_menus.length>0" style="padding-left: 21px">

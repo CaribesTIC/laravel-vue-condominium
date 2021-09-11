@@ -11,6 +11,9 @@ class UpdateDwellingService
     static public function execute($request, $id)//: \Illuminate\Http\RedirectResponse
     {
         return response()->json($request);
+        //return response()->json([
+        //        'message' => 'Record not found.'
+        //    ], 404);
     }
 
 }

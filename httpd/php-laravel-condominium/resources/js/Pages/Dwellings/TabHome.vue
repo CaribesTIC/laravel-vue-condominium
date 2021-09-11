@@ -63,15 +63,24 @@
           </label>
        
         </div>
-        <div class="mt-4 px-2 border-gray-100 flex justify-end space-x-2">
+
+        <!--div class="mt-4 px-2 border-gray-100 flex justify-end space-x-2">
           <loading-button
             :loading="sending"
             class="btn btn-primary ml-auto"
+            type="submit"            
+          >{{ sending ? 'Guardando...' : 'Guardar' }}</loading-button>
+        </div-->
+
+        <div class="mt-4 px-2 border-gray-100 flex justify-end space-x-2">
+          <input
+            :disabled="sending"
             type="submit"
-          >
-            Guardar
-          </loading-button>
+            class="btn btn-primary"
+            :value="sending ? 'Guardando...' : 'Guardar'"
+          />
         </div>
+        
       </form>
     </div>
     <!--span>{{ this.propiedad[1] }}</span-->
@@ -88,10 +97,11 @@ export default {
     LoadingButton
   },
   props: {    
-    propiedad: Array
+    propiedad: Object
   },
   data() {
     return {
+      sending: false,
       isCreate: this.propiedad[0].isCreate,
       form: this.propiedad[0].form,
       users: this.propiedad[0].users,
@@ -100,8 +110,8 @@ export default {
     }
   },
   methods: {
-    submit() {
-      this.isCreate ? this.create() : this.update();
+    submit() {      
+      this.isCreate ? this.create() : this.update();      
     },
     create() {
       alert('create');
@@ -110,12 +120,44 @@ export default {
       //);
     },
     async update() {
+      this.sending = true;
+      axios.interceptors.response.use(
+        res => res,
+        err => Promise.reject(err)
+      );
+
       this.form._method = 'PUT';      
-      axios.post(`../../dwellings/${this.form.id}`, this.form  ).then((res) => {
-        console.log(res.data);     
-      })
+      axios.post(`../../dwellings/${this.form.id}`, this.form)
+        .then(res => { 
+          console.log(res.data);
+          this.$page.props.flash.success="Excelente"
+        })
+        .catch(err => {
+         // alert(err.message)
+          this.$page.props.flash.error=err.message;
+          }
+        )
+        .finally(() => this.sending = false);
     }
   }
 
 }
+/*
+https://thedutchlab.com/blog/using-axios-interceptors-for-refreshing-your-api-token
+https://blog.clairvoyantsoft.com/intercepting-requests-responses-using-axios-df498b6cab62
+https://masteringjs.io/tutorials/axios/interceptors
+https://axios-http.com/docs/interceptors
+https://stackoverflow.com/questions/52737078/how-can-you-use-axios-interceptors
+https://www.bezkoder.com/axios-interceptors-refresh-token/
+https://www.it-swarm-es.com/es/javascript/como-puedes-usar-los-interceptores-axios/806909494/
+https://www.it-swarm-es.com/es/javascript/como-puedes-usar-los-interceptores-axios/806909494/
+*/
 </script>
+
+
+
+
+
+
+
+
