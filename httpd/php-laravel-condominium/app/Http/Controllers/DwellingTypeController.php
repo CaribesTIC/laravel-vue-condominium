@@ -3,140 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Models\DwellingType;
-use Illuminate\Http\Request;
 use App\GeneralSettings;
-use Inertia\Inertia;
+use Illuminate\Http\{
+    Request,
+    RedirectResponse
+};
+use Inertia\{
+    Inertia,
+    Response
+};
+use App\Http\Services\DwellingType\{
+    IndexDwellingTypeService,
+    ShowDwellingTypeService,
+    CreateDwellingTypeService,
+    StoreDwellingTypeService,
+    EditDwellingTypeService,
+    UpdateDwellingTypeService,
+    DestroyDwellingTypeService,
+};
+
 
 class DwellingTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, GeneralSettings $settings)
+
+    public function index(Request $request, GeneralSettings $settings): Response
     {
-                /* Initialize query */
-        $query = DwellingType::query();
-
-        /* search */
-        $search = $request->input("search");
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where("name", "like", "%$search%");
-            });
-        }
-
-        /* sort */
-        $sort = $request->input("sort");
-        $direction = $request->input("direction") == "desc" ? "desc" : "asc";
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
-
-        /* get paginated results */
-        $dwellingTypes = $query
-            ->paginate($settings->default_pagination)
-            ->appends(request()->query());
-
-        return Inertia::render("DwellingTypes/Index", [
-            "rows" => $dwellingTypes,
-            "sort" => $request->query("sort"),
-            "direction" => $request->query("direction"),
-            "search" => $request->query("search"),
-        ]);
+        return IndexDwellingTypeService::execute($request, $settings);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show(DwellingType $dwellingType): Response
     {
-        return Inertia::render("DwellingTypes/Create");    
+        return ShowDwellingTypeService::execute($dwellingType);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function create():Response
     {
-        $data = $request->validate([
-            "name" => ["required", "max:50"], 
-            "is_active" => ["required"]
-        ]);
-
-        DwellingType::create([
-            "name" => $data["name"],
-            "is_active" => $data["is_active"]
-        ]);
-
-        return redirect()
-            ->route("dwelling-types.index")
-            ->with("success", "Tipo de vivienda creada.");    
+        return CreateDwellingTypeService::execute();   
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DwellingType  $dwellingType
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DwellingType $dwellingType)
+    public function store(Request $request): RedirectResponse
     {
-        return Inertia::render("DwellingTypes/Show", [
-            "dwellingType" => $dwellingType->only(["name", "is_active"]),
-        ]);
+        return StoreDwellingTypeService::execute($request);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DwellingType  $dwellingType
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DwellingType $dwellingType)
+    public function edit(DwellingType $dwellingType): Response
     {
-        return Inertia::render("DwellingTypes/Edit", [
-            "dwellingType" => $dwellingType->only(["id", "name", "is_active"]),
-        ]);    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DwellingType  $dwellingType
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DwellingType $dwellingType)
-    {
-        $data = $request->validate([
-            "name" => ["required", "max:50"],
-            "is_active" => ["required"]
-        ]);
-
-        $dwellingType->update($data);
-
-        return redirect()
-            ->route("dwelling-types.index")
-            ->with("success", "Tipo de vivienda actualizada.");
+        return EditDwellingTypeService::execute($dwellingType);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DwellingType  $dwellingType
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DwellingType $dwellingType)
+    public function update(Request $request, DwellingType $dwellingType): RedirectResponse
     {
-        $dwellingType->delete();
+        return UpdateDwellingTypeService::execute($request, $dwellingType);
+    }
 
-        return redirect()
-            ->route("dwelling-types.index")
-            ->with("success", "Tipo de vivienda eliminada.");    }
+    public function destroy(DwellingType $dwellingType): RedirectResponse
+    {
+        DestroyDwellingTypeService::execute($dwellingType);
+    }
+
 }
