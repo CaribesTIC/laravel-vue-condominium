@@ -8,7 +8,7 @@
             <span class="text-gray-700">Nombre de la vivienda</span>
             <input v-model="form.name" type="text" class="" />
             <div v-if="errors.name" class="form-error">
-              {{ errors.name }}
+              {{ errors.name[0] }}
             </div>
           </label>
           <!-- dwelling_type_id -->
@@ -39,7 +39,7 @@
             <span class="text-gray-700">Alícuota</span> 
             <input v-model="form.aliquot" type="number" step=".01" class="" />
             <div v-if="errors.aliquot" class="form-error">
-              {{ errors.aliquot }}
+              {{ errors.aliquot[0] }}
             </div>
           </label>
         </div>
@@ -129,12 +129,14 @@ export default {
       this.form._method = 'PUT';      
       axios.post(`../../dwellings/${this.form.id}`, this.form)
         .then(res => { 
-          console.log(res.data);
-          this.$page.props.flash.success="Excelente"
+	  this.errors = {};
+          this.$page.props.flash.success = res.data.success;
         })
         .catch(err => {
-         // alert(err.message)
-          this.$page.props.flash.error=err.message;
+	  if (err.response.data.errors){ 
+	    this.errors = err.response.data.errors;
+            //this.$page.props.flash.error=err.response.data.message;
+	    }
           }
         )
         .finally(() => this.sending = false);

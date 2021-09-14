@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GeneralSettings;
 use App\Models\Dwelling;
+use App\Http\Requests\Dewelling\UpdateDwellingRequest;
 use App\Http\Services\Dwelling\{
     IndexDwellingService,
     //ShowDwellingService,
@@ -84,7 +85,7 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)//: RedirectResponse
+    public function update(UpdateDwellingRequest $request, $id)//: RedirectResponse
     {        
         return UpdateDwellingService::execute($request, $id);
     }

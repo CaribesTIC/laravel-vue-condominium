@@ -3,17 +3,19 @@ namespace App\Http\Services\Dwelling;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Http\Requests\Dewelling\UpdateDwellingRequest;
 use App\Models\Dwelling;
 
 class UpdateDwellingService
 {
 
-    static public function execute($request, $id)//: \Illuminate\Http\RedirectResponse
+    static public function execute(UpdateDwellingRequest $request, $id)//: \Illuminate\Http\RedirectResponse
     {
-        return response()->json($request);
-        //return response()->json([
-        //        'message' => 'Record not found.'
-        //    ], 404);
+
+        $dwelling = Dwelling::findOrFail($id);
+	$dwelling->update($request->toArray()); 
+        return response()->json(["success" => "Vivienda actualizada."], 201);
+
     }
 
 }
