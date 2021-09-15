@@ -10,7 +10,7 @@
           {{ $page.props.flash.success }}
         </div>
       </div>
-      <button type="button" class="group mr-2 p-2" @click="show = false">
+      <button type="button" class="group mr-2 p-2" @click="close">
         <FlashMessagesIcon name="close-x" />
       </button>
     </div>
@@ -25,7 +25,7 @@
           {{ $page.props.flash.error }}
         </div>
       </div>
-      <button type="button" class="group mr-2 p-2" @click="show = false">
+      <button type="button" class="group mr-2 p-2" @click="close">
         <FlashMessagesIcon name="close-x" />
       </button>
     </div>
@@ -48,6 +48,14 @@ export default {
         this.show = true
       },
       deep: true
+    }
+  },
+  methods: {
+    close(){
+      this.show = false;
+      this.$page.props.flash.success= null;
+      this.$page.props.flash.error = null;
+      this.show = true;
     }
   }
 };

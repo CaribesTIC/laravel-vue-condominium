@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\{
   CategoryController,
+  DwellingController,
   DwellingTypeController,
   JournalController,  
   GeneralSettingsController,
@@ -107,8 +108,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/', [GeneralSettingsController::class, 'update'])->name('settings.update');
     });
     
-    Route::prefix('users')->middleware(['role:admin'])->group(function () {
-    //Route::prefix('users')->middleware(['role:1'])->group(function () {
+    Route::prefix('users')->middleware(['role:admin'])->group(function () {    
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/', [UserController::class, 'store'])->name('users.store');
@@ -126,7 +126,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/{zone}/edit', [ZoneController::class, 'edit'])->name('zones.edit');
         Route::put('/{zone}', [ZoneController::class, 'update'])->name('zones.update');
         Route::delete('/{zone}', [ZoneController::class, 'destroy'])->name('zones.destroy');
-    });
+    });   
     
     Route::prefix('dwelling-types')->group(function () {
         Route::get('/', [DwellingTypeController::class, 'index'])->name('dwelling-types.index');
@@ -137,17 +137,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/{dwellingType}', [DwellingTypeController::class, 'update'])->name('dwelling-types.update');
         Route::delete('/{dwellingType}', [DwellingTypeController::class, 'destroy'])->name('dwelling-types.destroy');
     });
-    
-    /*Route::prefix('dwellings')->group(function () {
+
+    Route::prefix('dwellings')->group(function () {
         Route::get('/', [DwellingController::class, 'index'])->name('dwellings.index');
         Route::get('/create', [DwellingController::class, 'create'])->name('dwellings.create');
         Route::post('/', [DwellingController::class, 'store'])->name('dwellings.store');
         Route::get('/{dwelling}/show', [DwellingController::class, 'show'])->name('dwellings.show');
         Route::get('/{dwelling}/edit', [DwellingController::class, 'edit'])->name('dwellings.edit');
         Route::put('/{dwelling}', [DwellingController::class, 'update'])->name('dwellings.update');
-        Route::delete('/{dwelling}', [DwellingController::class, 'destroy'])->name('dwellings.destroy');
-    });*/
-
+        Route::delete('/{dwelling}', [DwellingController::class, 'destroy'])->name('dwellings.destroy');        
+    });
+    
     Route::get('search', SearchController::class)->name('search');
     
 });

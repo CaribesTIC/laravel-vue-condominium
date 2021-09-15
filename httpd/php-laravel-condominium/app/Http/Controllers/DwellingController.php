@@ -2,10 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\GeneralSettings;
-use Inertia\Inertia;
 use App\Models\Dwelling;
+use App\Http\Requests\Dwelling\{
+    StoreDwellingRequest,
+    UpdateDwellingRequest
+};
+use App\Http\Services\Dwelling\{
+    IndexDwellingService,
+    ShowDwellingService,
+    CreateDwellingService,
+    StoreDwellingService,
+    EditDwellingService,
+    UpdateDwellingService,
+    DestroyDwellingService
+};
+use Illuminate\Http\{
+    RedirectResponse,
+    Request,
+    JsonResponse
+};
+use Inertia\{
+    Inertia,
+    Response
+};
 
 class DwellingController extends Controller
 {
@@ -14,37 +34,9 @@ class DwellingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, GeneralSettings $settings): Response
     {
-                /* Initialize query */
-        $query = Zone::query();
-
-        /* search */
-        $search = $request->input("search");
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where("name", "like", "%$search%");
-            });
-        }
-
-        /* sort */
-        $sort = $request->input("sort");
-        $direction = $request->input("direction") == "desc" ? "desc" : "asc";
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
-
-        /* get paginated results */
-        $zones = $query
-            ->paginate($settings->default_pagination)
-            ->appends(request()->query());
-
-        return Inertia::render("Zones/Index", [
-            "rows" => $zones,
-            "sort" => $request->query("sort"),
-            "direction" => $request->query("direction"),
-            "search" => $request->query("search"),
-        ]);
+        return IndexDwellingService::execute($request, $settings);
     }
 
     /**
@@ -52,9 +44,9 @@ class DwellingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
-        //
+      return CreateDwellingService::execute();
     }
 
     /**
@@ -63,9 +55,9 @@ class DwellingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDwellingRequest $request): JsonResponse
     {
-        //
+        return StoreDwellingService::execute($request);
     }
 
     /**
@@ -74,20 +66,21 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function show(Dwelling $dwelling)
+    public function show(Dwelling $dwelling): Response
     {
-        //
+        return ShowDwellingService::execute($dwelling);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
-     */
-    public function edit(Dwelling $dwelling)
+     */    
+    public function edit(Dwelling $dwelling): Response
     {
-        //
+        return EditDwellingService::execute($dwelling); 
     }
 
     /**
@@ -97,9 +90,9 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dwelling $dwelling)
-    {
-        //
+    public function update(Dwelling $dwelling, UpdateDwellingRequest $request): JsonResponse
+    {        
+        return UpdateDwellingService::execute($dwelling, $request);
     }
 
     /**
@@ -108,8 +101,8 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dwelling $dwelling)
+    public function destroy(Dwelling $dwelling): RedirectResponse
     {
-        //
+        return DestroyDwellingService::execute($dwelling);
     }
 }
