@@ -3,7 +3,7 @@
     <page-header> Viviendas </page-header>
 
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('dwellings.index')">
+      <Link class="btn btn-primary" :href="route('dwellings.create')">
         <span>Crear</span>
       </Link>
     </div>

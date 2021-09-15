@@ -144,13 +144,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/', [DwellingController::class, 'store'])->name('dwellings.store');
         Route::get('/{dwelling}/show', [DwellingController::class, 'show'])->name('dwellings.show');
         Route::get('/{dwelling}/edit', [DwellingController::class, 'edit'])->name('dwellings.edit');
-        Route::put('/{id}', [DwellingController::class, 'update'])->name('dwellings.update');
+        Route::put('/{dwelling}', [DwellingController::class, 'update'])->name('dwellings.update');
         Route::delete('/{dwelling}', [DwellingController::class, 'destroy'])->name('dwellings.destroy');        
-        /*Route::get('/tabs', fn()=> Inertia::render("Dwellings/Tabs", [
-                "home" => "myhome",
-                "posts" => ["myposts"],
-                "archive" => ["myarchive"=>"myarchive"]
-        ]))->name('dwellings.tabs');*/
     });
     
     /*Route::prefix('dwellings')->group(function () {

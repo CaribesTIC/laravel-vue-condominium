@@ -4,19 +4,22 @@ namespace App\Http\Controllers;
 
 use App\GeneralSettings;
 use App\Models\Dwelling;
-use App\Http\Requests\Dewelling\UpdateDwellingRequest;
+use App\Http\Requests\Dwelling\{
+    StoreDwellingRequest,
+    UpdateDwellingRequest
+};
 use App\Http\Services\Dwelling\{
     IndexDwellingService,
     //ShowDwellingService,
-    //CreateDwellingService,
-    //StoreDwellingService,
+    CreateDwellingService,
+    StoreDwellingService,
     EditDwellingService,
     UpdateDwellingService,
     //DestroyDwellingService
 };
 use Illuminate\Http\{
     Request,
-    RedirectResponse
+    JsonResponse
 };
 use Inertia\{
     Inertia,
@@ -40,9 +43,9 @@ class DwellingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
-        //
+      return CreateDwellingService::execute();
     }
 
     /**
@@ -51,9 +54,9 @@ class DwellingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDwellingRequest $request): JsonResponse
     {
-        //
+        return StoreDwellingService::execute($request);
     }
 
     /**
@@ -85,9 +88,9 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDwellingRequest $request, $id)//: RedirectResponse
+    public function update(Dwelling $dwelling, UpdateDwellingRequest $request): JsonResponse
     {        
-        return UpdateDwellingService::execute($request, $id);
+        return UpdateDwellingService::execute($dwelling, $request);
     }
 
     /**

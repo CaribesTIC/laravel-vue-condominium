@@ -20,7 +20,7 @@
               </option>
             </select>
             <div v-if="errors.dwelling_type_id" class="form-error">
-              {{ errors.dwelling_type_id }}
+              {{ errors.dwelling_type_id[0] }}
             </div>
           </label> 
         </div>
@@ -31,7 +31,7 @@
             <span class="text-gray-700">Localización</span>            
             <input v-model="form.location" type="number" class="" />
             <div v-if="errors.location" class="form-error">
-              {{ errors.location }}
+              {{ errors.location[0] }}
             </div>
           </label>
           <!-- type -->
@@ -53,7 +53,7 @@
               </option>
             </select>
             <div v-if="errors.user_id" class="form-error">
-              {{ errors.user_id }}
+              {{ errors.user_id[0] }}
             </div>
           </label>
           <!-- is_habited -->
@@ -113,11 +113,28 @@ export default {
     submit() {      
       this.isCreate ? this.create() : this.update();      
     },
-    create() {
-      alert('create');
-      //Inertia.visit(
-      //  route("dwellins.create", { this.form })
-      //);
+    create() {      
+      this.sending = true;
+      axios.interceptors.response.use(
+        res => res,
+        err => Promise.reject(err)
+      );
+
+      axios.post("../../dwellings", this.form)
+        .then(res => { 
+          this.form.id = res.data.id;
+	      this.isCreate = false;
+	      this.errors = {};
+          this.$page.props.flash.success = res.data.success;
+        })
+        .catch(err => {
+	      if (err.response.data.errors){ 
+	        this.errors = err.response.data.errors;
+            this.$page.props.flash.error=err.response.data.message;
+	    }
+          }
+        )
+        .finally(() => this.sending = false);
     },
     async update() {
       this.sending = true;
