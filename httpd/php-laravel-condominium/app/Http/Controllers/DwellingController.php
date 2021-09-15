@@ -15,9 +15,10 @@ use App\Http\Services\Dwelling\{
     StoreDwellingService,
     EditDwellingService,
     UpdateDwellingService,
-    //DestroyDwellingService
+    DestroyDwellingService
 };
 use Illuminate\Http\{
+    RedirectResponse,
     Request,
     JsonResponse
 };
@@ -99,8 +100,8 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dwelling $dwelling)
+    public function destroy(Dwelling $dwelling): RedirectResponse
     {
-        //
+        return DestroyDwellingService::execute($dwelling);
     }
 }
