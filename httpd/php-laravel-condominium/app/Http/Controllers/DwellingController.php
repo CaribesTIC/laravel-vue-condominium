@@ -10,7 +10,7 @@ use App\Http\Requests\Dwelling\{
 };
 use App\Http\Services\Dwelling\{
     IndexDwellingService,
-    //ShowDwellingService,
+    ShowDwellingService,
     CreateDwellingService,
     StoreDwellingService,
     EditDwellingService,
@@ -66,10 +66,11 @@ class DwellingController extends Controller
      * @param  \App\Models\Dwelling  $dwelling
      * @return \Illuminate\Http\Response
      */
-    public function show(Dwelling $dwelling)
+    public function show(Dwelling $dwelling): Response
     {
-        //
+        return ShowDwellingService::execute($dwelling);
     }
+
 
     /**
      * Show the form for editing the specified resource.

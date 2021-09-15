@@ -32,7 +32,7 @@
                 <a href="#" @click.prevent="setSort('name')">Name</a>
               </th>
               <th class="">
-                <a href="#" @click.prevent="setSort('dwelling_type')">Tipo de Vivienda</a>
+                <a href="#" @click.prevent="setSort('dwelling_type_id')">Tipo de Vivienda</a>
               </th>
               <th class="">
                 <a href="#" @click.prevent="setSort('location')">Location</a>
