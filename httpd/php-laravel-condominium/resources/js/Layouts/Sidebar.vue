@@ -75,7 +75,7 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, ref } from "vue";
 import { Link } from '@inertiajs/inertia-vue3'
 import { useSidebar } from "../hooks/useSidebar.js";
