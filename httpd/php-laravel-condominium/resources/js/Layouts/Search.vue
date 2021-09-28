@@ -22,7 +22,7 @@
       class="w-32 sm:w-64 rounded-md pl-10 pr-4 focus:border-indigo-600"
       placeholder="Buscar"
     />
-    <ul id="autocomplete-results" v-show="isOpen" class="autocomplete-results">
+    <ul id="autocomplete-results" v-show="isOpen" class="z-40 autocomplete-results">
       <li class="loading" v-if="isLoading">Cargando...</li>
       <li
         v-else
