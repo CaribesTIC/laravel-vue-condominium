@@ -10,7 +10,7 @@
 
     <div
       :class="isOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-      class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 bg-gray-800 bg-gradient-to-b from-gray-700 to-gray-900"
+      class="bg-green-900 fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform overflow-y-auto lg:translate-x-0 lg:static lg:inset-0"
     >
       <div class="px-1 py-1 w-full">
         <Link :href="route('dashboard')">          
@@ -44,30 +44,7 @@ m-110 -115 l0 -45 -45 0 -45 0 0 45 0 45 45 0 45 0 0 -45z m110 0 l0 -45 -45
 </svg>
         </Link>
       </div>
-
-      <div class="font-bold text-center text-gray-100 text-lg">
-        {{ $page.props.username }}
-      </div>
-
-      <div class="flex justify-evenly mt-3 text-gray-100 text-xs">
-
-        <Link
-          :href="route('myprofile.edit')"
-          class="block border border-gray-500 hover:bg-gray-500 px-2 py-1 rounded-sm"
-        >
-          Mi cuenta
-        </Link>
-
-        <Link
-          :href="route('logout')"
-          class="block border border-gray-500 hover:bg-gray-500 px-2 py-1 rounded-sm"
-          method="post"
-          as="button">
-            Cerrar sesión
-        </Link>
-
-      </div>      
-    
+ 
       <RecursiveMenu />    
 
     </div>
@@ -104,3 +81,4 @@ components: {
   },
 });
 </script>
+

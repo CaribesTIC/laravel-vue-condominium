@@ -6,3 +6,8 @@
 @import "./buttons.css";
 @import "./tables.css";
 @import "./panels.css";
+@import "./modal.css";
+
+.headcolor {
+    background-color: #38383D;
+}

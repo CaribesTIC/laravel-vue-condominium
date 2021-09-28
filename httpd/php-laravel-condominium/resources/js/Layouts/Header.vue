@@ -1,6 +1,6 @@
 <template>
   <header
-    class="bg-white border-b-2 border-red-700 flex items-center justify-between px-6 py-4"
+    class="bg-green-700 border-b-2 border-red-700 flex items-center justify-between px-6 py-4"
   >
     <div class="flex items-center">
       <button
@@ -8,7 +8,7 @@
         class="text-gray-500 focus:outline-none lg:hidden"
       >
         <svg
-          class="h-5 w-5 text-gray-500"
+          class="h-5 w-5 text-white"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
     <!--div class="flex items-center"></div-->
 
 <div class="flex items-center">
-        <button class="flex mx-4 text-black focus:outline-none">
+        <button class="flex mx-4 text-white focus:outline-none">
 
 
         <svg
@@ -97,7 +97,7 @@
 
           <svg
             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-            aria-hidden="true" class="w-8 h-10 text-black rounded-full"
+            aria-hidden="true" class="w-8 h-10 text-white rounded-full"
           >
             <path
               d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z">
@@ -122,21 +122,23 @@
  
          <div
            v-show="dropdownOpen"
-           class="absolute right-0 mt-2 py-2 w-48 bg-gray-600 rounded-md shadow-xl z-20"
+           class="absolute right-0 mt-2 py-2 w-48 bg-green-500 rounded-md shadow-xl z-20"
+           @click="dropdownOpen=false"
          >
-           <router-link
-             to="/profile"
+           <Link
+             :href="route('myprofile.edit')"
              class="block px-4 py-2 text-sm text-white hover:bg-gray-400"
            >
-             {{ authUser ? authUser.name : 'Profile'}}
-           </router-link>
+             {{ $page.props.username}}
+           </Link>
  
-           <router-link
-             to="/"
+           <Link
+             :href="route('logout')"
              class="block px-4 py-2 text-sm text-white hover:bg-gray-400"                             
+             method="post"
            >
              <Logout />
-           </router-link>        
+           </Link>        
          </div>        
        </div>
 
@@ -146,6 +148,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
+import { Link } from '@inertiajs/inertia-vue3';
 import { useSidebar } from "../hooks/useSidebar";
 import Search from "./Search";
 import Logout from "./Logout";
@@ -153,7 +156,8 @@ import Logout from "./Logout";
 export default defineComponent({
   components: {
     Search,
-    Logout
+    Logout,
+    Link
   },
 
   setup(_, { emit }) {
@@ -167,3 +171,4 @@ export default defineComponent({
   },
 });
 </script>
+

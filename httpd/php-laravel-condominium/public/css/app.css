@@ -33599,6 +33599,31 @@ input[type="text"], input[type="email"], input[type="url"], input[type="password
   }
 }
 
+.modalbg {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 20;
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+  opacity: 0.5;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+@media (min-width: 1024px) {
+  .modalbg {
+    display: none;
+  }
+}
+
+.headcolor {
+  background-color: #38383D;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
