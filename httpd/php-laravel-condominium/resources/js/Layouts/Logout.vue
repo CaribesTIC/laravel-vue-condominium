@@ -1,16 +1,14 @@
 <template>
-
-<div class="inline-flex items-center space-x-2">
-
+  <div class="inline-flex items-center space-x-2">
     <span class="hidden sm:inline">Logout</span>
-    <LogoutIcon class="w-6 h-6 text-white" />
-</div>
+    <IconLogout class="w-6 h-6 text-white" />
+  </div>
 </template>
 
 <script>
-import LogoutIcon from "./LogoutIcon";
+import IconLogout from "../Shared/Icons/Logout";
 export default {
-  components: { LogoutIcon },
+  components: { IconLogout },
   name: "Logout",
   /*methods: {
     logout() {
