@@ -13,6 +13,10 @@ use App\Http\Services\User\{
     UpdateUserService,
     DestroyUserService    
 };
+use App\Http\Requests\User\{
+    StoreUserRequest,
+    UpdateUserRequest
+};
 use Illuminate\Http\{
     Request,
     RedirectResponse
@@ -39,7 +43,7 @@ class UserController extends Controller
         return CreateUserService::execute(); 
     }
     
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         return StoreUserService::execute($request);
     }
@@ -49,7 +53,7 @@ class UserController extends Controller
         return EditUserService::execute($user); 
     }
     
-    public function update(User $user, Request $request): RedirectResponse
+    public function update(User $user, UpdateUserRequest $request): RedirectResponse
     {
         return UpdateUserService::execute($user, $request);
     }
