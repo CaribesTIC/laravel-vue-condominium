@@ -148,6 +148,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::delete('/{dwelling}', [DwellingController::class, 'destroy'])->name('dwellings.destroy');        
     });
     
-    Route::get('search', SearchController::class)->name('search');
+    Route::get('search', SearchController::class)->name('search');    
     
+});
+
+Route::prefix('error')->group(function () {
+    Route::get('/', function(){ 
+        abort(500);
+    });
+    Route::get('/custom', function(){ 
+        throw new \App\Exceptions\CustomException('Levi Strauss', 501);
+    });    
 });
