@@ -27,7 +27,7 @@ class UpdateDwellingTypeService
         $dwellingType->update($data);
 
         return redirect()
-            ->route("dwelling-types.index")
+            ->route("dwelling-types")
             ->with("success", "Tipo de vivienda actualizada.");
     }
 

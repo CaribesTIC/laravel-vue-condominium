@@ -2,7 +2,7 @@
   <div>
     <page-header> Mostrar actividad </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('categories.index')">
+      <Link class="btn btn-primary" :href="route('categories')">
         Ver todos
       </Link>
     </div>
@@ -45,7 +45,7 @@
                   {{ task.description }}
                 </td>
               </tr>
-              <tr v-if="activity.tasks.length === 0">
+              <tr v-if="category.tasks.length === 0">
                 <td class="" colspan="4">Categorías no encontradas.</td>
               </tr>
             </tbody>

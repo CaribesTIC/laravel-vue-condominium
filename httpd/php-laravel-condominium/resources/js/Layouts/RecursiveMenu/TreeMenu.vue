@@ -1,13 +1,19 @@
 <template>
   <li>
-    <div v-if="menu.path==='#'" class="mb-2">
+    <div v-if="menu.path==='#'" class="mb-2 border-l-2 px-2">
       <a href="#" @click="toggleChildren" style="color:white" class="flex items-center group py-0">                
         {{ menu.title }}
       </a>
     </div>
-    <div v-else class="mb-2">  
-      <Link class="items-center py-0" :href="route(menu.path)" preserve-scroll @click="activeNow">
-        <span :class="[ isActive ? activeClass : inactiveClass]" class="flex items-center group py-0">
+    <div v-else
+      class="mb-2 px-2"
+      :class="[ isActive ? activeClass : inactiveClass]"
+    >  
+      <Link
+        class="items-center py-0" 
+        :href="route(menu.path)"
+      >
+        <span class="flex items-center group py-0">
           <icon :name="menu.icon" class="w-5 h-5 mr-2"/>
           {{ menu.title }}
         </span>
@@ -46,9 +52,11 @@ export default {
   },
   mounted(){
     this.pathNameUrl = window.location.pathname;
-    //console.log(this.menu);
   },
   computed: {
+    isActive () {
+      return this.$page.url.startsWith('/' + this.menu.path);
+    },
     iconClasses() {
       return {
         'fa-plus-square-o': !this.showChildren,
@@ -63,11 +71,8 @@ export default {
     }
   },
   methods: {
-    activeNow(){
-      this.isActive = this.route().current(this.menu.path+'*');      
-    },
     toggleChildren() {
-       true; this.showChildren = !this.showChildren;       
+       return this.showChildren = !this.showChildren; 
     }    
   } 
 }

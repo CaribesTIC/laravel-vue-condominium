@@ -14,7 +14,7 @@ class DestroyUserService
         $user->delete();
 
         return redirect()
-            ->route("users.index")
+            ->route("users")
             ->with("success", "Usuario eliminado.");
 
     }

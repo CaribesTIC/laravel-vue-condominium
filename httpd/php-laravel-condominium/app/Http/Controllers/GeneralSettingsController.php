@@ -26,7 +26,7 @@ class GeneralSettingsController extends Controller
         $settings->footer_message = $data["footer_message"];
         $settings->save();
         return redirect()
-            ->route("settings.edit")
+            ->route("settings")
             ->with("success", "Ajustes guardados");
     }
 }

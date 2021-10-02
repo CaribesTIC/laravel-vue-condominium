@@ -3,7 +3,7 @@
   <div>
     <page-header> Editar usuario </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('users.index')">
+      <Link class="btn btn-primary" :href="route('users')">
         Ver todos
       </Link>
     </div>

@@ -19,7 +19,7 @@ class DestrviceroyDwellingTypeService
         $dwellingType->delete();
 
         return redirect()
-            ->route("dwelling-types.index")
+            ->route("dwelling-types")
             ->with("success", "Tipo de vivienda eliminada.");    }
 
     }

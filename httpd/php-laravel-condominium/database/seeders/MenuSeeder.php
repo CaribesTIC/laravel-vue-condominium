@@ -48,7 +48,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Publicaciones",
             "menu_id" =>  2,
-            "path" => "posts.index",
+            "path" => "posts",
             "icon" => "posts",
             "sort" => 2
         ]);
@@ -56,7 +56,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Jornales",
             "menu_id" =>  2,
-            "path" => "journals.index",
+            "path" => "journals",
             "icon" => "journals",
             "sort" => 3
         ]);
@@ -64,7 +64,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Tipos de Vivienda",
             "menu_id" => 3,
-            "path" => "dwelling-types.index",
+            "path" => "dwelling-types",
             "icon" => "dwelling-types",
             "sort" => 1
         ]);
@@ -72,7 +72,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Categorías",
             "menu_id" => 3,
-            "path" => "categories.index",
+            "path" => "categories",
             "icon" => "categories",
             "sort" => 2
         ]);
@@ -80,14 +80,14 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Tareas",
             "menu_id" => 3,
-            "path" => "tasks.index",
+            "path" => "tasks",
             "icon" => "tasks", "sort" => 3
         ]);
 
         Menu::create([
             "title" => "Zonas",
             "menu_id" => 3,
-            "path" => "zones.index",
+            "path" => "zones",
             "icon" => "zones",
             "sort" => 4
         ]);
@@ -111,7 +111,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Usuarios",
             "menu_id" => 3,
-            "path" => "users.index",
+            "path" => "users",
             "icon" => "users",
             "sort" => 7
         ]);
@@ -119,7 +119,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Ajustes",
             "menu_id" => 3,
-            "path" => "settings.edit",
+            "path" => "settings",
             "icon" => "settings",
             "sort" => 8
         ]);
@@ -128,7 +128,7 @@ class MenuSeeder extends Seeder
         Menu::create([
             "title" => "Viviendas",
             "menu_id" => 2,
-            "path" => "dwellings.index",
+            "path" => "dwellings",
             "icon" => "settings",
             "sort" => 3
         ]);

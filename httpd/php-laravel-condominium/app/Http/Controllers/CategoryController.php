@@ -54,7 +54,7 @@ class CategoryController extends Controller
         Category::create(["name" => $data["name"]]);
 
         return redirect()
-            ->route("categories.index")
+            ->route("categories")
             ->with("success", "Categoría creada.");
     }
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
         $category->update($data);
 
         return redirect()
-            ->route("categories.index")
+            ->route("categories")
             ->with("success", "Categoría actualizada.");
     }
 
@@ -89,7 +89,7 @@ class CategoryController extends Controller
     {
         if ($category->tasks()->count()) {
             return redirect()
-                ->route("categories.index")
+                ->route("categories")
                 ->with("error", "Esta categoría tiene tareas.");
         }
 

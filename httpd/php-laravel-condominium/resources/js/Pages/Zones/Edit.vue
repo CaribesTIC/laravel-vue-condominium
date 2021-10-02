@@ -3,7 +3,7 @@
   <div>
     <page-header> Editar zona </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('zones.index')">
+      <Link class="btn btn-primary" :href="route('zones')">
         Ver todas
       </Link>
     </div>

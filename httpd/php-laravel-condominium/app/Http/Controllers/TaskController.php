@@ -77,7 +77,7 @@ class TaskController extends Controller
         ]);
 
         return redirect()
-            ->route("tasks.index")
+            ->route("tasks")
             ->with("success", "Tarea creada.");
     }
 
@@ -108,7 +108,7 @@ class TaskController extends Controller
         $task->update($data);
 
         return redirect()
-            ->route("tasks.index")
+            ->route("tasks")
             ->with("success", "Tarea actualizada.");
     }
 
@@ -117,7 +117,7 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()
-            ->route("tasks.index")
+            ->route("tasks")
             ->with("success", "Tarea eliminada.");
     }
 }
