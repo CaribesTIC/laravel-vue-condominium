@@ -2,7 +2,7 @@
   <div>
     <page-header> Crear tarea </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('tasks.index')"
+      <Link class="btn btn-primary" :href="route('tasks')"
         >Ver todas</Link
       >
     </div>

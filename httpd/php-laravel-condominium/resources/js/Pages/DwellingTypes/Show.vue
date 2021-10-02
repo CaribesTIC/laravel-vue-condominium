@@ -2,7 +2,7 @@
   <div>
     <page-header> Mostrar Tipo de Vivienda </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('dwelling-types.index')">
+      <Link class="btn btn-primary" :href="route('dwelling-types')">
         Ver todos
       </Link>
     </div>

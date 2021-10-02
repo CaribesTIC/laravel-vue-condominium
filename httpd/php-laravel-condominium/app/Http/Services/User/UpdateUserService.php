@@ -20,7 +20,7 @@ class UpdateUserService
         $user->update($data);
 
         return redirect()
-            ->route("users.index")
+            ->route("users")
             ->with("success", "Usuario actualizado.");       
 
   }

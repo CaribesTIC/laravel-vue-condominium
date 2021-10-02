@@ -2,7 +2,7 @@
   <div>
     <page-header> Mostrar zona </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('zones.index')">
+      <Link class="btn btn-primary" :href="route('zones')">
         Ver todos
       </Link>
     </div>

@@ -2,7 +2,7 @@
   <div>
     <page-header> Crear categoría </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('categories.index')">
+      <Link class="btn btn-primary" :href="route('categories')">
         Ver todas
       </Link>
     </div>

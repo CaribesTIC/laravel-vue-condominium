@@ -2,7 +2,7 @@
   <div>
     <page-header> Mostrar journal </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('journals.index')">
+      <Link class="btn btn-primary" :href="route('journals')">
         Ver todas
       </Link>
     </div>

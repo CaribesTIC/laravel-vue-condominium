@@ -132,7 +132,7 @@ class JournalController extends Controller
         ]);
 
         return redirect()
-            ->route("journals.index")
+            ->route("journals")
             ->with("success", "Journal creado.");
     }
 
@@ -176,7 +176,7 @@ class JournalController extends Controller
         $journal->update($data);
 
         return redirect()
-            ->route("journals.index")
+            ->route("journals")
             ->with("success", "Journal actualizado.");
     }
 
@@ -185,7 +185,7 @@ class JournalController extends Controller
         $journal->delete();
 
         return redirect()
-            ->route("journals.index")
+            ->route("journals")
             ->with("success", "Journal eliminado.");
     }
 }

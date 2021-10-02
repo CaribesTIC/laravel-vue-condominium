@@ -2,7 +2,7 @@
   <div>
     <page-header> Mostrar usuario </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('dwellings.index')">
+      <Link class="btn btn-primary" :href="route('dwellings')">
         Ver todos
       </Link>
     </div>

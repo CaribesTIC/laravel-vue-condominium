@@ -20,7 +20,7 @@ class StoreUserService
         ]);
 
         return redirect()
-            ->route("users.index")
+            ->route("users")
             ->with("success", "Usuario creado.");        
 
     }

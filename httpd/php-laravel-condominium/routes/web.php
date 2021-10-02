@@ -41,7 +41,7 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::prefix('categories')->group(function () {
-        Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/', [CategoryController::class, 'index'])->name('categories');
         Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
         Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
         Route::get('/{category}/show', [CategoryController::class, 'show'])->name('categories.show');
@@ -51,7 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     
     Route::prefix('journals')->group(function () {
-        Route::get('/', [JournalController::class, 'index'])->name('journals.index');
+        Route::get('/', [JournalController::class, 'index'])->name('journals');
         Route::get('/create', [JournalController::class, 'create'])->name('journals.create');
         Route::post('/', [JournalController::class, 'store'])->name('journals.store');
         Route::get('/{journal}/show', [JournalController::class, 'show'])->name('journals.show');
@@ -87,14 +87,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     
     Route::prefix('posts')->group(function () {
-        Route::get('/', [PostController::class, 'index'])->name('posts.index');        
+        Route::get('/', [PostController::class, 'index'])->name('posts');        
         Route::post('/', [PostController::class, 'store'])->name('posts.store');        
         Route::put('/{post}', [PostController::class, 'update'])->name('posts.update');
         Route::delete('/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     });
     
     Route::prefix('tasks')->group(function () {
-        Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/', [TaskController::class, 'index'])->name('tasks');
         Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/', [TaskController::class, 'store'])->name('tasks.store');
         Route::get('/{task}/show', [TaskController::class, 'show'])->name('tasks.show');
@@ -104,12 +104,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     
     Route::prefix('settings')->group(function () {
-        Route::get('/', [GeneralSettingsController::class, 'edit'])->name('settings.edit');    
+        Route::get('/', [GeneralSettingsController::class, 'edit'])->name('settings');    
         Route::put('/', [GeneralSettingsController::class, 'update'])->name('settings.update');
     });
     
     Route::prefix('users')->middleware(['role:admin'])->group(function () {    
-        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::get('/', [UserController::class, 'index'])->name('users');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/', [UserController::class, 'store'])->name('users.store');
         Route::get('/{user}/show', [UserController::class, 'show'])->name('users.show');
@@ -119,7 +119,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
     
     Route::prefix('zones')->group(function () {
-        Route::get('/', [ZoneController::class, 'index'])->name('zones.index');
+        Route::get('/', [ZoneController::class, 'index'])->name('zones');
         Route::get('/create', [ZoneController::class, 'create'])->name('zones.create');
         Route::post('/', [ZoneController::class, 'store'])->name('zones.store');
         Route::get('/{zone}/show', [ZoneController::class, 'show'])->name('zones.show');
@@ -129,7 +129,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });   
     
     Route::prefix('dwelling-types')->group(function () {
-        Route::get('/', [DwellingTypeController::class, 'index'])->name('dwelling-types.index');
+        Route::get('/', [DwellingTypeController::class, 'index'])->name('dwelling-types');
         Route::get('/create', [DwellingTypeController::class, 'create'])->name('dwelling-types.create');
         Route::post('/', [DwellingTypeController::class, 'store'])->name('dwelling-types.store');
         Route::get('/{dwellingType}/show', [DwellingTypeController::class, 'show'])->name('dwelling-types.show');
@@ -139,7 +139,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     Route::prefix('dwellings')->group(function () {
-        Route::get('/', [DwellingController::class, 'index'])->name('dwellings.index');
+        Route::get('/', [DwellingController::class, 'index'])->name('dwellings');
         Route::get('/create', [DwellingController::class, 'create'])->name('dwellings.create');
         Route::post('/', [DwellingController::class, 'store'])->name('dwellings.store');
         Route::get('/{dwelling}/show', [DwellingController::class, 'show'])->name('dwellings.show');

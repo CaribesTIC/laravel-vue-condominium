@@ -54,7 +54,7 @@ class ZoneController extends Controller
         Zone::create(["name" => $data["name"]]);
 
         return redirect()
-            ->route("zones.index")
+            ->route("zones")
             ->with("success", "Zona creada.");
     }
 
@@ -81,7 +81,7 @@ class ZoneController extends Controller
         $zone->update($data);
 
         return redirect()
-            ->route("zones.index")
+            ->route("zones")
             ->with("success", "Zona actualizada.");
     }
 
@@ -90,7 +90,7 @@ class ZoneController extends Controller
         $zone->delete();
 
         return redirect()
-            ->route("zones.index")
+            ->route("zones")
             ->with("success", "Zona eliminada.");
     }
 }

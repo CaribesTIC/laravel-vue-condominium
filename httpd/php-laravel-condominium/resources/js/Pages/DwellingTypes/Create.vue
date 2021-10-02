@@ -2,7 +2,7 @@
   <div>
     <page-header> Crear tipos de vivienda  </page-header>
     <div class="flex space-x-2">
-      <Link class="btn btn-primary" :href="route('dwelling-types.index')">
+      <Link class="btn btn-primary" :href="route('dwelling-types')">
         Ver todas
       </Link>
     </div>

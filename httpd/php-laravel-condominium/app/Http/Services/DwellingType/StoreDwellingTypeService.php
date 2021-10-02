@@ -30,7 +30,7 @@ class StoreDwellingTypeService
             "is_active" => $data["is_active"]
         ]);
 
-        return redirect::route("dwelling-types.index")
+        return redirect::route("dwelling-types")
             ->with("success", "Tipo de vivienda creada.");    
     }
 

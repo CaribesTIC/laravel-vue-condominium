@@ -14,7 +14,7 @@ class DestroyDwellingService
         $dwelling->delete();
 
         return redirect()
-            ->route("dwellings.index")
+            ->route("dwellings")
             ->with("success", "Vivienda eliminada.");
 
     }
