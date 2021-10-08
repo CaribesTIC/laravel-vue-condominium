@@ -1,3 +1,13 @@
+<script setup>
+  import { ref } from "vue"
+  import { Link } from '@inertiajs/inertia-vue3'
+  import Icon from './IconMenu'
+  
+  const props = defineProps({ menu: Array })
+  const showChildren = ref(true)
+  const toggleChildren = ()=> showChildren.value = !showChildren.value
+</script>
+
 <template>
   <li>
     <div v-if="menu.path==='#'" class="mb-2 border-l-2 px-2">
@@ -17,7 +27,7 @@
       </Link>
     </div>  
     <ul v-if="menu.children_menus.length>0" style="padding-left: 21px">
-      <tree-menu
+      <TreeMenu
         v-if="showChildren"
         v-for="(menu, index) in menu.children_menus"
         :key="index"
@@ -26,25 +36,3 @@
   </li>    
 </template>
 
-<script>
-import { defineComponent, ref, computed } from "vue";
-import { Link } from '@inertiajs/inertia-vue3'
-import Icon from './IconMenu'
-
-export default defineComponent({
-  name: 'tree-menu',  
-  components: {
-    Icon,
-    Link    
-  },  
-  props: [ 'menu' ],
-  setup(props, context) {  
-    const showChildren = ref(true);
-    const toggleChildren = ()=> showChildren.value = !showChildren.value
-    return {
-      showChildren,
-      toggleChildren
-    };    
-  }
-});
-</script>
