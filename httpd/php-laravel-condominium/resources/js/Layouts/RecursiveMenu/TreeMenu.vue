@@ -1,27 +1,27 @@
 <script setup>
   import { ref } from "vue"
   import { Link } from '@inertiajs/inertia-vue3'
-  import Icon from './IconMenu'
   
   const props = defineProps({ menu: Array })
+  const urlImg = `${process.env.MIX_APP_URL}../storage/menu/`
   const showChildren = ref(true)
   const toggleChildren = ()=> showChildren.value = !showChildren.value
 </script>
 
 <template>
   <li>
-    <div v-if="menu.path==='#'" class="mb-2 border-l-2 px-2">
+    <div v-if="menu.path==='#'" class="mb-2">
       <a href="#" @click="toggleChildren" style="color:white" class="flex items-center group py-0">
         {{ menu.title }}
       </a>
     </div>
     <div v-else
-      class="mb-2 px-2"
+      class="mb-2"
       :class="[$page.url.startsWith('/' + menu.path) ? 'activeClass' : 'inactiveClass']"
     >  
-      <Link class="items-center py-0" :href="route(menu.path)">
+      <Link :href="route(menu.path)">
         <span class="flex items-center group py-0">
-          <icon :name="menu.icon" class="w-5 h-5 mr-2"/>          
+          <img :src="urlImg + menu.icon" class="w-5 h-5 mr-2"/>
           {{ menu.title }}
         </span>
       </Link>

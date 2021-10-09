@@ -20,7 +20,7 @@
             <tr>
               <td colspan="2">
                 <table id="id_table_padre" style="width: 100%">                       
-                  <tr v-for="(selTex, index) in selTexs">
+                  <tr v-for="(selTex, index) in selTexs" class="font-bold">
                     <td width="50%" class="bg-gray-100 py-2">{{ selTex.title }}</td>
                     <td class="bg-gray-100 py-2">( nivel {{ selTex.nivel }} )</td>
                     <td class="bg-gray-100 py-2">
