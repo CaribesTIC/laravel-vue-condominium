@@ -18,7 +18,7 @@ class MenuSeeder extends Seeder
             "title" => "Dashboard",
             "menu_id" => null,
             "path" => "dashboard",
-            "icon" => "dashboard",
+            "icon" => "dashboard.svg",
             "sort" => 1
         ]);
 
@@ -26,7 +26,7 @@ class MenuSeeder extends Seeder
             "title" => "Registrar",
             "menu_id" =>  null,
             "path" => "#",
-            "icon" => "dashboard",
+            "icon" => "dashboard.svg",
             "sort" => 2
         ]);
 
@@ -34,22 +34,15 @@ class MenuSeeder extends Seeder
             "title" => "Administración",
             "menu_id" =>  null,
             "path" => "#",
-            "icon" => "dashboard",
+            "icon" => "dashboard.svg",
             "sort" => 3
         ]);
-
-        /*Menu::create([
-            "title" => "Viviendas",
-            "menu_id" => 2,
-            "path" => "users.index",
-            "icon" => "dashboard", "sort" => 1
-        ]);*/
 
         Menu::create([
             "title" => "Publicaciones",
             "menu_id" =>  2,
             "path" => "posts",
-            "icon" => "posts",
+            "icon" => "posts.svg",
             "sort" => 2
         ]);
 
@@ -57,7 +50,7 @@ class MenuSeeder extends Seeder
             "title" => "Jornales",
             "menu_id" =>  2,
             "path" => "journals",
-            "icon" => "journals",
+            "icon" => "journals.svg",
             "sort" => 3
         ]);
 
@@ -65,7 +58,7 @@ class MenuSeeder extends Seeder
             "title" => "Tipos de Vivienda",
             "menu_id" => 3,
             "path" => "dwelling-types",
-            "icon" => "dwelling-types",
+            "icon" => "dwelling-types.svg",
             "sort" => 1
         ]);
 
@@ -73,7 +66,7 @@ class MenuSeeder extends Seeder
             "title" => "Categorías",
             "menu_id" => 3,
             "path" => "categories",
-            "icon" => "categories",
+            "icon" => "categories.svg",
             "sort" => 2
         ]);
 
@@ -81,14 +74,14 @@ class MenuSeeder extends Seeder
             "title" => "Tareas",
             "menu_id" => 3,
             "path" => "tasks",
-            "icon" => "tasks", "sort" => 3
+            "icon" => "tasks.svg", "sort" => 3
         ]);
 
         Menu::create([
             "title" => "Zonas",
             "menu_id" => 3,
             "path" => "zones",
-            "icon" => "zones",
+            "icon" => "zones.svg",
             "sort" => 4
         ]);
 
@@ -96,7 +89,7 @@ class MenuSeeder extends Seeder
             "title" => "Menús",
             "menu_id" => 3,
             "path" => "menus",
-            "icon" => "menus",
+            "icon" => "menus.svg",
             "sort" => 5
         ]);
 
@@ -104,7 +97,7 @@ class MenuSeeder extends Seeder
             "title" => "Roles",
             "menu_id" => 3,
             "path" => "roles",
-            "icon" => "dashboard",
+            "icon" => "dashboard.svg",
             "sort" => 6
         ]);
 
@@ -112,7 +105,7 @@ class MenuSeeder extends Seeder
             "title" => "Usuarios",
             "menu_id" => 3,
             "path" => "users",
-            "icon" => "users",
+            "icon" => "users.svg",
             "sort" => 7
         ]);
 
@@ -120,7 +113,7 @@ class MenuSeeder extends Seeder
             "title" => "Ajustes",
             "menu_id" => 3,
             "path" => "settings",
-            "icon" => "settings",
+            "icon" => "settings.svg",
             "sort" => 8
         ]);
         
@@ -129,7 +122,7 @@ class MenuSeeder extends Seeder
             "title" => "Viviendas",
             "menu_id" => 2,
             "path" => "dwellings",
-            "icon" => "settings",
+            "icon" => "settings.svg",
             "sort" => 3
         ]);
     }
