@@ -147,6 +147,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/{dwelling}', [DwellingController::class, 'update'])->name('dwellings.update');
         Route::delete('/{dwelling}', [DwellingController::class, 'destroy'])->name('dwellings.destroy');        
     });
+
+    Route::prefix('monthly-movements')->group(function () {
+        Route::get('/', [MonthlyMovementController::class, 'index'])->name('monthly-movements');
+        Route::get('/create', [MonthlyMovementController::class, 'create'])->name('monthly-movements.create');
+        Route::post('/', [MonthlyMovementController::class, 'store'])->name('monthly-movements.store');
+        Route::get('/{monthly-movement}/show', [MonthlyMovementController::class, 'show'])->name('monthly-movements.show');
+        Route::get('/{monthly-movement}/edit', [MonthlyMovementController::class, 'edit'])->name('monthly-movements.edit');
+        Route::put('/{monthly-movement}', [MonthlyMovementController::class, 'update'])->name('monthly-movements.update');
+        Route::delete('/{monthly-movement}', [MonthlyMovementController::class, 'destroy'])->name('monthly-movements.destroy');        
+    });
     
     Route::get('search', SearchController::class)->name('search');    
     
