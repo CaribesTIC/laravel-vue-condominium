@@ -1,14 +1,14 @@
 <template>
-  <div class="demo-tab">
-    Home component<br>
-    <span>{{ propiedad }}</span>
-  </div>  
+    <div class="demo-tab">
+        Home component<br />
+        <span>{{ "monthlyMovement" }}</span>
+    </div>
 </template>
 
 <script>
 export default {
-  props: {
-    propiedad: String
-  }
-}
+    props: {
+        monthlyMovement: Object,
+    },
+};
 </script>

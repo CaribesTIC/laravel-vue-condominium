@@ -25,7 +25,7 @@
                 <component
                     v-bind:is="currentTabComponent"
                     class="tab"
-                    :propiedad="currentTabProps"
+                    :monthlyMovement="currentTabProps"
                 >
                 </component>
                 <!--/keep-alive-->

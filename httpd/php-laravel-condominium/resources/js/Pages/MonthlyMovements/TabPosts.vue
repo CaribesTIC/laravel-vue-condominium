@@ -1,14 +1,14 @@
 <template>
     <div class="demo-tab">
         Posts component<br />
-        <span>{{ propiedad }}</span>
+        <span>{{ "monthlyMovement" }}</span>
     </div>
 </template>
 
 <script>
 export default {
     props: {
-        propiedad: String,
+        monthlyMovement: Object,
     },
 };
 </script>
