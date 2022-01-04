@@ -2,8 +2,8 @@
   import { ref } from "vue"
   import { Link } from '@inertiajs/inertia-vue3'
   
-  const props = defineProps({ menu: Array })
-  const urlImg = `${process.env.MIX_APP_URL}img/menu/`
+  const props = defineProps({ menu: Object })
+  const urlImg = `${process.env.MIX_APP_URL}/menu/`
   const showChildren = ref(true)
   const toggleChildren = ()=> showChildren.value = !showChildren.value
 </script>

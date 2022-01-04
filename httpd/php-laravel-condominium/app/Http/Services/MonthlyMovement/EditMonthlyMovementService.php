@@ -16,6 +16,20 @@ class EditMonthlyMovementService
         return Inertia::render("MonthlyMovements/Tabs", [
             "home" => [
 	            "isCreate" => false,
+                "months" => [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                ],
                 "form" => $monthlyMovement->toArray(),
             ],
             "posts" => ["myposts"],

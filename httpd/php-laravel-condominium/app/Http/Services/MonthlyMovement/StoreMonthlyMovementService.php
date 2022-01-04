@@ -12,7 +12,7 @@ class StoreMonthlyMovementService
     {
         return response()->json([
             "id"=> MonthlyMovement::create([
-                    "yead" => $request->year,
+                    "year" => $request->year,
                     "month" => $request->month,
                     "fund" => $request->fund
                 ])->id,

@@ -6,16 +6,20 @@
                     <!-- year -->
                     <label class="block">
                         <span class="text-gray-700">Año</span>
-                        <input v-model="form.year" type="text" class="" />
-                        <div v-if="errors.name" class="form-error">
+                        <input v-model="form.year" type="number" min="1900" max="2099" required/>
+                        <div v-if="errors.year" class="form-error">
                             {{ errors.year[0] }}
                         </div>
                     </label>
                     <!-- month -->
                     <label class="block">
                         <span class="text-gray-700">Mes</span>
-                        <input v-model="form.month" type="text" class="" />
-                        <div v-if="errors.name" class="form-error">
+                        <select v-model="form.month" class="">
+                            <option v-for="(month, index) in monthlyMovement[0].months" :value="month" :key="month.index" required>
+                              {{ month }}
+                            </option>
+                        </select>
+                        <div v-if="errors.month" class="form-error">
                             {{ errors.month[0] }}
                         </div>
                     </label>
@@ -25,7 +29,8 @@
                     <!-- fund -->
                     <label class="block">
                         <span class="text-gray-700">Fondo</span>
-                        <input v-model="form.fund" type="number" class="" />
+                        <input v-model="form.fund" type="number" class="" step=".01" required/>
+
                         <div v-if="errors.fund" class="form-error">
                             {{ errors.fund[0] }}
                         </div>
@@ -66,14 +71,14 @@ export default {
         LoadingButton,
     },
     props: {
-        monthlyMovement: Object,
+        monthlyMovement: Array,
     },
     data() {
         return {
             sending: false,
             isCreate: this.monthlyMovement[0].isCreate,
             form: this.monthlyMovement[0].form,
-            errors: this.monthlyMovement[1],
+            errors: this.monthlyMovement[1]
         };
     },
     methods: {
@@ -98,8 +103,7 @@ export default {
                 .catch((err) => {
                     if (err.response.data.errors) {
                         this.errors = err.response.data.errors;
-                        this.$page.props.flash.error =
-                            err.response.data.message;
+                        this.$page.props.flash.error = err.response.data.message;
                     }
                 })
                 .finally(() => (this.sending = false));

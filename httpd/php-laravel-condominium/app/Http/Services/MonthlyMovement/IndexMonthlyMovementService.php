@@ -37,7 +37,9 @@ class IndexMonthlyMovementService
         $sort = $request->input("sort");
         $direction = $request->input("direction") == "desc" ? "desc" : "asc";
         
-        $query->orderBy($sort, $direction);
+        if ($sort) {
+            $query->orderBy($sort, $direction);
+        }
 
         /* get paginated results */
         $monthlyMovements = $query

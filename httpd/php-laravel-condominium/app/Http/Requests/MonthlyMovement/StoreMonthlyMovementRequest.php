@@ -21,11 +21,15 @@ class StoreMonthlyMovementRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules()    
     {
         return [
-            "year" => "required|digits:4|between:".(date('Y')-1).",".(date('Y')),
+            "year" => "required|numeric|between:" . (date('Y')-1) . "," . (date('Y')),
 	        "month" => "required|between:1,12",
+            "fund" => "required|numeric|between:0,999999.99"
         ];
     }
 }
+
+
+
