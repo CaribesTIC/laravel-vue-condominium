@@ -9,11 +9,11 @@ use App\Models\MonthlyMovement;
 class UpdateMonthlyMovementService
 {
 
-    static public function execute(MonthlyMovement $monthlyMovement, UpdateMonthlyMovementRequest $request): \Illuminate\Http\JsonResponse
+    static public function execute(MonthlyMovement $monthlyMovement, UpdateMonthlyMovementRequest $request): JsonResponse
     {
 	    $monthlyMovement->update($request->toArray());
 
-        return response()->json(["success" => "Vivienda actualizada."], 200);
+        return response()->json(["success" => "Movimiento mensual actualizado."], 200);
     }
 
 }

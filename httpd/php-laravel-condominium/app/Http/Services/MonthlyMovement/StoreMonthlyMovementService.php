@@ -10,14 +10,19 @@ class StoreMonthlyMovementService
 
     static public function execute(StoreMonthlyMovementRequest $request): JsonResponse
     {
+
+        $monthlyMovement = new MonthlyMovement;
+        $monthlyMovement->year = $request->year;
+        $monthlyMovement->month = $request->month;
+        $monthlyMovement->fund = $request->fund;
+        $monthlyMovement->save();
+        $monthlyMovement->refresh();
+
         return response()->json([
-            "id"=> MonthlyMovement::create([
-                    "year" => $request->year,
-                    "month" => $request->month,
-                    "fund" => $request->fund
-                ])->id,
+            "id"=> $monthlyMovement->id,
             "success" => "Movimiento mensual creado."
         ], 201);
     }
 
 }
+

@@ -71,6 +71,9 @@ export default {
             return [this.$props[this.currentTab.toLowerCase()], this.errors];
         },
     },
+    mounted() {
+        console.log(this.posts);
+    }
 };
 </script>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\{    
     MonthlyMovement,
+    MonthlyMovementDetail
 };
 
 class EditMonthlyMovementService
@@ -13,6 +14,8 @@ class EditMonthlyMovementService
 
     static public function execute(MonthlyMovement $monthlyMovement): \Inertia\Response
     {
+        $monthlyMovementDetail = MonthlyMovementDetail::findOrNew($monthlyMovement->id);
+
         return Inertia::render("MonthlyMovements/Tabs", [
             "home" => [
 	            "isCreate" => false,
@@ -32,7 +35,7 @@ class EditMonthlyMovementService
                 ],
                 "form" => $monthlyMovement->toArray(),
             ],
-            "posts" => ["myposts"],
+            "posts" => $monthlyMovementDetail->toArray(),
             "archive" => ["myarchive"=>"myarchive"]
         ]);
     }

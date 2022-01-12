@@ -28,6 +28,14 @@ class MonthlyMovement extends Model
         'is_generated'
     ];
 
+    /**
+     * Get the MonthlyMovementDetails for the MonthlyMovement.
+     */
+    public function MonthlyMovementDetails()
+    {
+        return $this->hasMany(\App\Models\MonthlyMovementDetail::class);
+    }
+
 
     public function getMonthAttribute($value)
     {
