@@ -38,29 +38,26 @@
 import { Link } from "@inertiajs/inertia-vue3";
 import Layout from "@/Layouts/AppLayout";
 import PageHeader from "@/Shared/PageHeader";
-import TabHome from "./TabHome.vue";
-import TabPosts from "./TabPosts.vue";
-import TabArchive from "./TabArchive.vue";
+import TabBasic from "./TabBasic.vue";
+import TabDetails from "./TabDetails.vue";
 
 export default {
     layout: Layout,
     components: {
         Link,
-        TabHome,
-        TabPosts,
-        TabArchive,
         PageHeader,
+        TabBasic,
+        TabDetails        
     },
     props: {
         errors: Object,
-        home: Object,
-        posts: Array,
-        archive: Object,
+        basic: Object,
+        details: Array        
     },
     data() {
         return {
-            currentTab: "Home",
-            tabs: ["Home", "Posts", "Archive"],
+            currentTab: "Basic",
+            tabs: ["Basic", "Details"],
         };
     },
     computed: {
@@ -72,7 +69,7 @@ export default {
         },
     },
     mounted() {
-        console.log(this.posts);
+        //console.log(this.details);
     }
 };
 </script>

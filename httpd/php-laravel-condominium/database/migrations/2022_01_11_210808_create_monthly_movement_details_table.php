@@ -17,11 +17,11 @@ class CreateMonthlyMovementDetailsTable extends Migration
             $table->id();
             $table->foreignId('monthly_movement_id')->references('id')->on('monthly_movements');           
             $table->text('description')->default('');
-            $table->decimal("amount", 12, 2)->default("0");
-            $table->boolean("is_expense")->default(true);
-            $table->boolean("is_ordinal")->default(true);
-            $table->boolean("is_general")->default(true);
-            $table->foreignId('dwelling_id')->references('id')->on('dwellings')->nullable();
+            $table->decimal('amount', 12, 2)->default('0');
+            $table->boolean('is_expense')->default(true);
+            $table->boolean('is_ordinal')->default(true);
+            $table->boolean('is_general')->default(true);
+            $table->foreignId('dwelling_id')->nullable()->references('id')->on('dwellings');
             $table->timestamps();
         });
     }

@@ -31,7 +31,7 @@ class MonthlyMovement extends Model
     /**
      * Get the MonthlyMovementDetails for the MonthlyMovement.
      */
-    public function MonthlyMovementDetails()
+    public function monthlyMovementDetails()
     {
         return $this->hasMany(\App\Models\MonthlyMovementDetail::class);
     }

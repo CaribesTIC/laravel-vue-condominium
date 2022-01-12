@@ -13,11 +13,13 @@ class EditMonthlyMovementService
 {
 
     static public function execute(MonthlyMovement $monthlyMovement): \Inertia\Response
-    {
-        $monthlyMovementDetail = MonthlyMovementDetail::findOrNew($monthlyMovement->id);
+    {             
+        //dd($monthlyMovement->with("monthlyMovementDetails")->get());
+        $monthlyMovementDetail = MonthlyMovementDetail::where('monthly_movement_id', $monthlyMovement->id)->get();
+        //dd($monthlyMovementDetail->toArray());
 
         return Inertia::render("MonthlyMovements/Tabs", [
-            "home" => [
+            "basic" => [
 	            "isCreate" => false,
                 "months" => [
                     "Enero",
@@ -35,8 +37,7 @@ class EditMonthlyMovementService
                 ],
                 "form" => $monthlyMovement->toArray(),
             ],
-            "posts" => $monthlyMovementDetail->toArray(),
-            "archive" => ["myarchive"=>"myarchive"]
+            "details" => $monthlyMovementDetail->toArray()
         ]);
     }
 

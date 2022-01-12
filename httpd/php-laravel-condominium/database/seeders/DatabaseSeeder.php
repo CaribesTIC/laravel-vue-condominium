@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ZoneSeeder::class);
         $this->call(JournalSeeder::class);
         $this->call(DwellingTypeSeeder::class);
-        $this->call(DwellingSeeder::class);      
+        $this->call(DwellingSeeder::class);
+        $this->call(MonthlyMovementSeeder::class);
     }
 }
