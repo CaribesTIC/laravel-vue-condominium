@@ -97,7 +97,7 @@ export default {
                 is_expense: true,
                 is_ordinal: true,
                 is_general: true
-            },
+            },            
             errors: {
                 description: '',
                 amount: '',
@@ -107,7 +107,32 @@ export default {
             },
             sending: false
         }
+    },
+    inject: ['formId'],    
+    methods: {
+        submit(){
+            this.sending = true;
+            this.form.monthly_movement_id = this.formId;
+            console.log(this.form)
+            axios.interceptors.response.use(
+                (res) => res,
+                (err) => Promise.reject(err)
+            );
+            axios
+                .post("../../monthly-movement-details", this.form)
+                .then((res) => {
+                    //this.form.id = res.data.id;
+                    this.errors = {};
+                    this.$page.props.flash.success = res.data.success;
+                })
+                .catch((err) => {
+                    if (err.response.data.errors) {
+                        this.errors = err.response.data.errors;
+                        this.$page.props.flash.error = err.response.data.message;
+                    }
+                })
+                .finally(() => (this.sending = false));
+        }
     }
-
 };
 </script>

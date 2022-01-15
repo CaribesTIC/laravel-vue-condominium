@@ -52,13 +52,18 @@ export default {
     props: {
         errors: Object,
         basic: Object,
-        details: Array        
+        details: Array 
     },
     data() {
         return {
             currentTab: "Basic",
             tabs: ["Basic", "Details"],
         };
+    },
+    provide() {
+        return {
+          formId: this.basic.form.id
+        }
     },
     computed: {
         currentTabComponent() {
@@ -67,10 +72,7 @@ export default {
         currentTabProps() {
             return [this.$props[this.currentTab.toLowerCase()], this.errors];
         },
-    },
-    mounted() {
-        //console.log(this.details);
-    }
+    }    
 };
 </script>
 

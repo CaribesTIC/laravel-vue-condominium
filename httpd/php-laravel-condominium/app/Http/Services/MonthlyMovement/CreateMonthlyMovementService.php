@@ -31,7 +31,7 @@ class CreateMonthlyMovementService
       ];
 
         return Inertia::render("MonthlyMovements/Tabs", [
-            "home" => [
+            "basic" => [
 	            "isCreate" => true,
                 "months" => $months,
                 "form" => [
@@ -40,8 +40,7 @@ class CreateMonthlyMovementService
          	        "fund" => null 
                 ]               
             ],
-            "posts" => [],
-            "archive" => []
+            "details" => []
         ]);
   }
 

@@ -91,7 +91,6 @@ export default {
                 (res) => res,
                 (err) => Promise.reject(err)
             );
-
             axios
                 .post("../../monthly-movements", this.form)
                 .then((res) => {

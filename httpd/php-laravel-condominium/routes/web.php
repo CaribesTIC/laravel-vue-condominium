@@ -8,6 +8,7 @@ use App\Http\Controllers\{
   DwellingTypeController,
   JournalController,
   MonthlyMovementController,  
+  MonthlyMovementDetailController,  
   GeneralSettingsController,
   MenuController,
   MyProfileController,
@@ -29,6 +30,7 @@ use App\Http\Controllers\{
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/monthly-movement-details/{id}', [MonthlyMovementDetailController::class, 'get'])->name('monthly-movement-details');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -158,6 +160,19 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::put('/{monthlyMovement}', [MonthlyMovementController::class, 'update'])->name('monthly-movements.update');
         Route::delete('/{monthlyMovement}', [MonthlyMovementController::class, 'destroy'])->name('monthly-movements.destroy');        
     });
+
+    Route::prefix('monthly-movement-details')->group(function () {
+        Route::get('/', [MonthlyMovementDetailController::class, 'get'])->name('monthly-movement-details');
+        Route::post('/', [MonthlyMovementDetailController::class, 'store'])->name('monthly-movement-details.store');
+        /*
+        Route::get('/create', [MonthlyMovementDetailController::class, 'create'])->name('monthly-movements.create');
+        Route::post('/', [MonthlyMovementDetailController::class, 'store'])->name('monthly-movements.store');
+        Route::get('/{monthlyMovement}/show', [MonthlyMovementDetailController::class, 'show'])->name('monthly-movements.show');
+        Route::get('/{monthlyMovement}/edit', [MonthlyMovementDetailController::class, 'edit'])->name('monthly-movements.edit');
+        Route::put('/{monthlyMovement}', [MonthlyMovementDetailController::class, 'update'])->name('monthly-movements.update');
+        Route::delete('/{monthlyMovement}', [MonthlyMovementDetailController::class, 'destroy'])->name('monthly-movements.destroy');*/
+    });
+
     
     Route::get('search', SearchController::class)->name('search');    
     
