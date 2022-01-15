@@ -25,7 +25,6 @@
                 <component
                     v-bind:is="currentTabComponent"
                     class="tab"
-                    :monthlyMovement="currentTabProps"
                 >
                 </component>
                 <!--/keep-alive-->
@@ -50,9 +49,8 @@ export default {
         TabDetails        
     },
     props: {
+        data: Object,
         errors: Object,
-        basic: Object,
-        details: Array 
     },
     data() {
         return {
@@ -62,15 +60,13 @@ export default {
     },
     provide() {
         return {
-          formId: this.basic.form.id
+          data: this.data,
+          errors: this.errors
         }
     },
     computed: {
         currentTabComponent() {
             return "tab-" + this.currentTab.toLowerCase();
-        },
-        currentTabProps() {
-            return [this.$props[this.currentTab.toLowerCase()], this.errors];
         },
     }    
 };

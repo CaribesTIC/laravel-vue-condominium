@@ -7,7 +7,7 @@
             {{ !isShowingPanel ? "Mostrar Panel": "Ocultar Panel" }}
         </ShowFormButton>
         <DetailsForm v-if="isShowingPanel"/>
-        <DetailsTable :details="details" />        
+        <DetailsTable /> 
     </div>
 </template>
 
@@ -22,26 +22,10 @@ export default {
         DetailsTable,
         ShowFormButton
     },
-    props: {
-        monthlyMovement: Array,
-    },
     data() {
         return {
             isShowingPanel: false,
-            form: {                
-                description: '',
-                amount: 0,
-                is_expense: true,
-                is_ordinal: true,
-                is_general: true
-            },
-            details: [],
-            errors: {}
         }
-    },
-    mounted() {       
-       this.details = this.monthlyMovement[0].length ? this.monthlyMovement[0] : this.details;
-       this.erros = this.monthlyMovement[1]
     }
 };
 </script>

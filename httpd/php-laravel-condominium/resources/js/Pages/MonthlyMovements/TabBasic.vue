@@ -15,7 +15,7 @@
                     <label class="block">
                         <span class="text-gray-700">Mes</span>
                         <select v-model="form.month" class="">
-                            <option v-for="(month, index) in monthlyMovement[0].months" :value="month" :key="month.index" required>
+                            <option v-for="(month, index) in months" :value="month" :key="month.index" required>
                               {{ month }}
                             </option>
                         </select>
@@ -37,14 +37,6 @@
                     </label>
                 </div>
 
-                <!--div class="mt-4 px-2 border-gray-100 flex justify-end space-x-2">
-          <loading-button
-            :loading="sending"
-            class="btn btn-primary ml-auto"
-            type="submit"            
-          >{{ sending ? 'Guardando...' : 'Guardar' }}</loading-button>
-        </div-->
-
                 <div
                     class="mt-4 px-2 border-gray-100 flex justify-end space-x-2"
                 >
@@ -57,7 +49,6 @@
                 </div>
             </form>
         </div>
-        <!--span>{{ this.monthlyMovement[1] }}</span-->
     </div>
 </template>
 
@@ -70,15 +61,19 @@ export default {
         Inertia,
         LoadingButton,
     },
-    props: {
-        monthlyMovement: Array,
-    },
+    inject:["data", "errors"],
     data() {
         return {
             sending: false,
-            isCreate: this.monthlyMovement[0].isCreate,
-            form: this.monthlyMovement[0].form,
-            errors: this.monthlyMovement[1]
+            isCreate: this.data.isCreate,
+            form: {
+                id: this.data.monthlyMovement.id,
+                year: this.data.monthlyMovement.year,
+                month: this.data.monthlyMovement.month,
+                fund: this.data.monthlyMovement.fund,
+                is_generated: this.data.monthlyMovement.is_generated,
+            },
+            months: this.data.months,
         };
     },
     methods: {
@@ -131,14 +126,5 @@ export default {
         },
     },
 };
-/*
-https://thedutchlab.com/blog/using-axios-interceptors-for-refreshing-your-api-token
-https://blog.clairvoyantsoft.com/intercepting-requests-responses-using-axios-df498b6cab62
-https://masteringjs.io/tutorials/axios/interceptors
-https://axios-http.com/docs/interceptors
-https://stackoverflow.com/questions/52737078/how-can-you-use-axios-interceptors
-https://www.bezkoder.com/axios-interceptors-refresh-token/
-https://www.it-swarm-es.com/es/javascript/como-puedes-usar-los-interceptores-axios/806909494/
-https://www.it-swarm-es.com/es/javascript/como-puedes-usar-los-interceptores-axios/806909494/
-*/
 </script>
+

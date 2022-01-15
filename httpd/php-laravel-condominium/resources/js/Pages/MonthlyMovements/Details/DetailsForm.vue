@@ -98,21 +98,14 @@ export default {
                 is_ordinal: true,
                 is_general: true
             },            
-            errors: {
-                description: '',
-                amount: '',
-                is_expense: '',
-                is_ordinal: '',
-                is_general: ''
-            },
             sending: false
         }
     },
-    inject: ['formId'],    
+    inject: ['data', 'errors'],    
     methods: {
         submit(){
             this.sending = true;
-            this.form.monthly_movement_id = this.formId;
+            this.form.monthly_movement_id = this.data.monthlyMovement.id;
             console.log(this.form)
             axios.interceptors.response.use(
                 (res) => res,

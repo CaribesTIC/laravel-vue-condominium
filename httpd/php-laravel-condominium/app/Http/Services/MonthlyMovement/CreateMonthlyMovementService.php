@@ -14,36 +14,36 @@ class CreateMonthlyMovementService
 
   static public function execute(): Response
   {
-
-      $months = [
-          "Enero",
-          "Febrero",
-          "Marzo",
-          "Abril",
-          "Mayo",
-          "Junio",
-          "Julio",
-          "Agosto",
-          "Septiembre",
-          "Octubre",
-          "Noviembre",
-          "Diciembre"
-      ];
+        $months = [
+            "Enero", "Febrero", "Marzo"     , "Abril"  , "Mayo"     , "Junio",
+            "Julio", "Agosto" , "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
 
         return Inertia::render("MonthlyMovements/Tabs", [
-            "basic" => [
-	            "isCreate" => true,
+            "data" => [
+                "isCreate" => true,
                 "months" => $months,
-                "form" => [
+                "monthlyMovement" => [
                     "year" => date("Y"),
                     "month" => $months[date("n") -1 ],
-         	        "fund" => null 
-                ]               
-            ],
-            "details" => []
+                    "fund" => null,
+         	        "monthly_movement_details" => []
+         	    ]
+            ]
         ]);
   }
 
 }
-
+/*
+[
+    "id" => 1,
+    "monthly_movement_id" => 1,
+    "description" => "Expense by X",
+    "amount" => "123123.30",
+    "is_expense" => true,
+    "is_ordinal" => true,
+    "is_general" => true,
+    "dwelling_id" => null
+]
+*/
 

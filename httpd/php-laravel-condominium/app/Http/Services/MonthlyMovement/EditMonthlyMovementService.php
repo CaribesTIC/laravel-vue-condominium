@@ -3,7 +3,10 @@
 namespace App\Http\Services\MonthlyMovement;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Inertia\{
+    Inertia,
+    Response
+};
 use App\Models\{    
     MonthlyMovement,
     MonthlyMovementDetail
@@ -13,31 +16,20 @@ class EditMonthlyMovementService
 {
 
     static public function execute(MonthlyMovement $monthlyMovement): \Inertia\Response
-    {             
-        //dd($monthlyMovement->with("monthlyMovementDetails")->get());
-        $monthlyMovementDetail = MonthlyMovementDetail::where('monthly_movement_id', $monthlyMovement->id)->get();
-        //dd($monthlyMovementDetail->toArray());
+    {
+        $months = [
+            "Enero", "Febrero", "Marzo"     , "Abril"  , "Mayo"     , "Junio",
+            "Julio", "Agosto" , "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
 
         return Inertia::render("MonthlyMovements/Tabs", [
-            "basic" => [
-	            "isCreate" => false,
-                "months" => [
-                    "Enero",
-                    "Febrero",
-                    "Marzo",
-                    "Abril",
-                    "Mayo",
-                    "Junio",
-                    "Julio",
-                    "Agosto",
-                    "Septiembre",
-                    "Octubre",
-                    "Noviembre",
-                    "Diciembre"
-                ],
-                "form" => $monthlyMovement->toArray(),
-            ],
-            "details" => $monthlyMovementDetail->toArray()
+            "data" => [            
+                "isCreate" => false,
+	            "months" => $months,
+                "monthlyMovement" => $monthlyMovement
+                    ->load("monthlyMovementDetails")
+                    ->toArray()
+            ]
         ]);
     }
 

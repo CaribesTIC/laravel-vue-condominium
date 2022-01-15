@@ -52,11 +52,13 @@
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 
-
 export default {
     components: { Link },
-    props: {
-        details: Array,
-    }
+    inject: ["data", "errors"],
+    data () {
+        return {
+            details: this.data.monthlyMovement.monthly_movement_details
+        }
+    },
 };
 </script>
