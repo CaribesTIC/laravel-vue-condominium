@@ -115,8 +115,7 @@ class MenuSeeder extends Seeder
             "path" => "settings",
             "icon" => "settings.svg",
             "sort" => 8
-        ]);
-        
+        ]);        
         
         Menu::create([
             "title" => "Viviendas",
@@ -125,5 +124,15 @@ class MenuSeeder extends Seeder
             "icon" => "settings.svg",
             "sort" => 3
         ]);
+
+        Menu::create([
+            "title" => "Mensualidades",
+            "menu_id" => 2,
+            "path" => "monthly-movements",
+            "icon" => "settings.svg",
+            "sort" => 4
+        ]);
+
     }
 }
+
