@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:8.1-apache
 
 RUN apt-get update
 
@@ -24,7 +24,7 @@ RUN apt-get install -y \
     tdsodbc freetds-common unixodbc-dev \
     software-properties-common libcurl4-gnutls-dev
 
-RUN (curl -sL https://deb.nodesource.com/setup_14.x | bash -) 
+RUN (curl -sL https://deb.nodesource.com/setup_17.x | bash -) 
 
 RUN apt-get install -y \
     nodejs libc-client-dev libkrb5-dev
@@ -41,7 +41,8 @@ RUN docker-php-ext-install \
     zip \
     gd xml \
     pgsql pdo_pgsql \
-    tokenizer ctype 
+    #tokenizer
+    ctype 
     #json 
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl && docker-php-ext-install imap
