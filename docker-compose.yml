@@ -9,7 +9,7 @@ services:
     environment:
       VIRTUALHOST: ${VIRTUALHOST}
     volumes:
-      - "./httpd/php-laravel-condominium:/var/www/html"
+      - "./httpd/src:/var/www/html"
     networks:
       - web_condominium
       - postgresql_condominium
